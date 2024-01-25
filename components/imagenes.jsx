@@ -64,7 +64,7 @@ const CarouselComponent = () => {
     speed: 1000, // Velocidad de transición en milisegundos
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: true, // Activar la reproducción automática
+    autoplay: true, // se activa la reproducción automática
     autoplaySpeed: 3000, // Velocidad de cambio de imagen en milisegundos
     nextArrow: <CustomNextArrow />,
     prevArrow: <CustomPrevArrow />,

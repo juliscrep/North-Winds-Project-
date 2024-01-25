@@ -1,4 +1,4 @@
-/* especialidades.module.css
+/* 
 
 .especialidadesContainer {
     display: flex;
@@ -29,7 +29,7 @@
   }
   
 
-   /* En el archivo especialidades.module.css */
+   
 
 /* .especialidadesFlexContainer {
   display: flex;
@@ -38,13 +38,10 @@
   
 }
 
-.especialidadFlexItem {
-  width: 48%; /* Ajusta según tus necesidades */
-  /* margin-bottom: 20px;
-  
-}  */
 
-/* En el archivo especialidades.module.css */
+  */
+
+
 
 .especialidadesFlexContainer {
   display: flex;
@@ -66,7 +63,7 @@
 }
 
 .especialidadFlexItem {
-  width: 40%; /* Ajusta según tus necesidades */
+  width: 40%; 
   margin-bottom: 20px;
   display: flex;
   align-items: center;

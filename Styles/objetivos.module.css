@@ -1,5 +1,4 @@
 
-/* objetivos.module.css */
 
 .twoColumnsContainer {
   display: flex;
@@ -93,13 +92,13 @@
   background: transparent;
 }
 
-/* Define la animación de agrandar y achicar */
+
 @keyframes zoomInOut {
   0% {
     transform: scale(1); /* Escala original */
   }
   90% {
-    transform: scale(1.05); /* Escala al 120% a la mitad de la animación */
+    transform: scale(1.05); /* Escala al 105% a la mitad de la animación */
   }
   100% {
     transform: scale(1); /* Vuelve a la escala original al final de la animación */

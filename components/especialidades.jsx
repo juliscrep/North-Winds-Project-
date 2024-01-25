@@ -1,4 +1,3 @@
-// components/Especialidades.js
 import React from "react";
 import styles from "../Styles/especialidades.module.css";
 
