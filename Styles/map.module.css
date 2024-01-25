@@ -1,0 +1,20 @@
+.mapouter {
+    position: relative;
+    text-align: center; /* Alinea el contenido al centro */
+    /* height: 560px;
+    width: 820px; */
+    height: 400px; /* ajusta la altura según tus necesidades */
+    width: 100%;
+    margin: 0 auto; /* Centra el contenedor horizontalmente */
+  }
+  
+  .gmap_canvas {
+    overflow: hidden;
+    background: none !important;
+    /* height: 560px;
+    width: 820px; */
+    height: 400px; /* ajusta la altura según tus necesidades */
+    width: 100%;
+    margin: 0 auto; /* Centra el contenedor horizontalmente */
+  }
+  

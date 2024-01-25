@@ -1,0 +1,36 @@
+.footer {
+    padding: 3rem;    
+    text-align: center;
+    background-color: black;
+    color:white;
+    font-size: 19px;
+}
+
+@media (min-width: 768px){
+    .contenido {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+.navegacion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+@media(min-width: 768px){
+    .navegacion{
+        flex-direction: row;
+    }
+}
+.navegacion a,
+.copyrigth {
+    color: var(--white);
+    font-size: 2.2rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+.copyrigth {
+    text-align: center;
+}

@@ -1,0 +1,107 @@
+
+/* objetivos.module.css */
+
+.twoColumnsContainer {
+  display: flex;
+  background-color: rgb(247, 247, 247);
+
+}
+
+.column {
+  padding:40px;
+  margin-left: 40px;
+  
+  
+}
+
+.image {
+  
+  border-radius: 5px; 
+}
+
+.image:hover{
+  animation: zoomInOut 4s infinite;
+}
+
+.textColumn {
+  padding: 20px; 
+  color: black;
+}
+
+
+.text {
+  font-size:25px;
+  text-align: justify;
+  margin-right: 30px;
+  margin-bottom: 65px;
+}
+
+.title{
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  font-size:70px;
+  font-weight: bold;
+}
+
+.title2{
+  color: #990000; 
+  text-align: center;
+  margin-bottom: 40px;
+  font-size:70px;
+
+}
+.btn{
+  align-items: center;
+  text-align: center;
+}
+
+
+.bn39 {
+  background-color:transparent;
+  box-sizing: border-box;
+  color: rgb(13, 37, 54);
+  display: block;
+  height: 55px;
+  font-size: 1.4em;
+  font-weight: 600;
+  padding: 4px;
+  position: relative;
+  text-decoration: none;
+  width: 14em;
+  z-index: 2;
+  border: 2px solid rgb(13, 37, 54);
+}
+
+.bn39:hover {
+  color:#990000;
+  border: 2px solid #990000;
+}
+
+.bn39 .bn39span {
+  align-items: center;
+  background: transparent;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  transition: background 0.5s ease;
+  width: 100%;
+}
+
+.bn39:hover .bn39span {
+  background: transparent;
+}
+
+/* Define la animación de agrandar y achicar */
+@keyframes zoomInOut {
+  0% {
+    transform: scale(1); /* Escala original */
+  }
+  90% {
+    transform: scale(1.05); /* Escala al 120% a la mitad de la animación */
+  }
+  100% {
+    transform: scale(1); /* Vuelve a la escala original al final de la animación */
+  }
+}

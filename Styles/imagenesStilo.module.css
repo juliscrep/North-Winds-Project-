@@ -1,0 +1,65 @@
+
+.carouselContainer {
+  margin-top: 110px;
+}
+
+.imageContainer {
+  position: relative;
+  overflow: hidden; 
+
+}
+
+.imageOverlay {
+  position: relative;
+}
+
+.descriptionOverlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff; 
+  font-size: 170px; 
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+
+
+.customNextArrow,
+.customPrevArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 120px;
+  color:white; 
+  background-color: transparent;
+  padding: 10px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: color 0.3s ease;
+}
+
+.customNextArrow:hover,
+.customPrevArrow:hover {
+  color: #990000; 
+}
+
+.customNextArrow::before,
+.customPrevArrow::before {
+  font-family: 'Arial', sans-serif; 
+}
+
+
+
+.customNextArrow {
+  right: 10px;
+}
+
+.customPrevArrow {
+  left: 10px;
+  z-index: 1; 
+}
+

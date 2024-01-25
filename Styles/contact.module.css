@@ -1,0 +1,73 @@
+/* En el archivo contact.module.css */
+
+.contactText {
+  max-width: 600px;
+  margin: 0 auto; 
+  padding: 30px;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-top: 80px;
+ 
+}
+
+.contactText h2 {
+  color: #333;
+  text-align: center;
+}
+
+.stm_contacts_widget {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.especialidadSection {
+  display: flex;
+  align-items: center;
+  color: #333;
+  text-align: center;
+  padding: 10px;
+  font-size: x-large;
+}
+
+.iconBox {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.iconBoxTitle {
+  margin: 0;
+}
+
+
+.elementor-button-wrapper {
+  text-align: center;
+  background-color: #333 !important;
+}
+
+.elementor-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.elementor-button:hover {
+  background-color: #333 !important;
+}
+
+.btnDark {
+  background-color: #000;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 20px;
+  width: 40%;
+  align-items: center;
+  text-decoration: none;
+  display: inline-block;
+}

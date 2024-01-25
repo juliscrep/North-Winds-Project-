@@ -1,0 +1,84 @@
+/* especialidades.module.css
+
+.especialidadesContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .especialidadSection {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+   */
+   
+   /* .iconBox {
+   
+  }
+  
+  .iconBoxTitle {
+    font-size: 18px;
+    color: #ffffff;
+  }
+  
+  .iconBoxDescription {
+    font-size: 14px;
+    color: #ffffff;
+  }
+  
+
+   /* En el archivo especialidades.module.css */
+
+/* .especialidadesFlexContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  
+}
+
+.especialidadFlexItem {
+  width: 48%; /* Ajusta según tus necesidades */
+  /* margin-bottom: 20px;
+  
+}  */
+
+/* En el archivo especialidades.module.css */
+
+.especialidadesFlexContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 40px;
+  align-items: center;
+ 
+  max-width: 100%;
+  margin: 0 auto; 
+  background-color: white;
+  color: black;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-top: 80px;
+  margin-bottom: 80px;
+ 
+}
+
+.especialidadFlexItem {
+  width: 40%; /* Ajusta según tus necesidades */
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  font-size:xx-large;
+  padding: 20px;
+}
+
+.iconBox {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.textContainer {
+  flex: 1;
+}
