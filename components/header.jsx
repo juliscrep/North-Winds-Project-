@@ -25,7 +25,7 @@ function Header() {
           <Link href="/about" className={styles.itemsColor}>
             Acerca de
           </Link>
-          <Link href="/servicios" className={styles.itemsColor}>
+          <Link href="/services" className={styles.itemsColor}>
            Servicios
           </Link>
           <Link href="/contact" className={styles.itemsColor}>

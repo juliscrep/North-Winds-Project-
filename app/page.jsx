@@ -22,23 +22,23 @@ function Home (){
           <Card
             image="/img/maquina6.jpeg"
             title="Operación y mantenimiento en general"
-            slug="servicios"
+            slug="services"
           />
           <Card
             image="/img/parque1.jpg"
             title="Grandes correctivos"
-            slug="servicios"
+            slug="services"
           />
            <Card
             image="/img/maquina1.jpeg"
             title="Torqueo y tensionado"
-            slug="servicios"
+            slug="services"
           />
 
           <Card
             image="/img/maquina2.jpeg"
             title="Revisión y reparación de palas"
-             slug="servicios"
+             slug="services"
           />
         
       </div>

@@ -35,23 +35,43 @@ const AboutPage = () => {
         </div>    
 
     </div>
-    <div className={styles.aboutText}>
+    <div>
 
-        <h1 className={styles.title2}>Certificaciones</h1>
-        <p> En North Winds, creemos que el progreso empresarial y la responsabilidad social van de la mano. Es por eso que hemos
-          abrazado con entusiasmo las normas de calidad, sostenibilidad y ética más rigurosas del mundo, certificándonos bajo la prestigiosas
-          WTC (wind training center)
+        <h1 className={styles.title2}>Certificación</h1>
+        <p className={styles.aboutText}> Hemos obtenido la certificación del Wind Training Center (WTC). 
+          Esta distinción representa nuestro compromiso inquebrantable con los estándares 
+          más rigurosos de calidad, sostenibilidad y ética en la industria de la energía eólica.
+          Al obtener la certificación del WTC, reafirmamos nuestro compromiso con la excelencia en la formación y 
+          capacitación en el sector de energía renovable. Esta certificación no solo valida nuestra dedicación a la 
+          seguridad y la calidad, sino que también demuestra nuestro esfuerzo continuo por mejorar y destacarnos en un 
+          mercado cada vez más exigente.
         </p>
 
-        <p>
-          Al obtener y mantener estas certificaciones, no solo demostramos nuestro compromiso con la calidad, la sostenibilidad,
-          la seguridad y la ética, sino que también contribuimos a mejorar el mundo.
+        <p className={styles.aboutText}>
+          En North Winds, consideramos que esta certificación es un testimonio de nuestra misión de proporcionar 
+          servicios de alta calidad y sostenibles en el campo de la energía eólica. Estamos emocionados de seguir
+          contribuyendo al avance de la industria y de brindar a nuestros clientes la garantía de trabajar con un
+          equipo certificado y comprometido con la excelencia.
         </p>
 
-        <p>
-          En North winds, vemos estas certificaciones como nuestro deber y nuestra forma de marcar la diferencia en el mundo.
-          Creemos que cada paso que damos hacia la excelencia y la responsabilidad contribuye a un futuro más brillante y sostenible para todos.
-        </p>
+        <div className={styles.pdfContainer}>
+            <a href="/img/certificado1.pdf" target="_blank">
+              <Image src="/img/fotoCertificado1.png" alt="Icono de PDF" width={250} height={200} />
+            </a>
+            <a href="/img/certificado2.pdf" target="_blank">
+              <Image src="/img/fotoCertificado2.png" alt="Icono de PDF" width={250} height={200} />
+            </a>
+            <a href="/img/certificado3.pdf" target="_blank">
+              <Image src="/img/fotoCertificado3.png" alt="Icono de PDF" width={250} height={200} />
+            </a>
+            <a href="/img/certificado4.pdf" target="_blank">
+              <Image src="/img/fotoCertificado4.png" alt="Icono de PDF" width={250} height={200} />
+            </a>
+            <a href="/img/certificado5.pdf" target="_blank">
+              <Image src="/img/fotoCertificado5.png" alt="Icono de PDF" width={250} height={200} />
+            </a>
+        </div>
+
       </div>   
     
     </>

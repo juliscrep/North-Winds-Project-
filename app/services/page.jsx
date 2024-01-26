@@ -1,6 +1,6 @@
 import Especialidades from "../../components/Especialidades";
 
-function Servicios(){
+function ServicesPage(){
 
     return(
         <Especialidades></Especialidades>
@@ -8,4 +8,4 @@ function Servicios(){
 
 }
 
-export default Servicios;
+export default ServicesPage;
