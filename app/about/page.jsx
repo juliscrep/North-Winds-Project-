@@ -1,6 +1,5 @@
 import React from "react";
 import Layout from "../layout";
-import Mapa from "../../components/map";
 import styles from "../../Styles/about.module.css";
 import Image from 'next/image'
 
@@ -20,19 +19,25 @@ const AboutPage = () => {
           </div>
 
           <div>
-            <h1>Acerca de la empresa</h1>
+            <h1 className={styles.colorTitle}>Acerca de la empresa</h1>
               <p className={styles.aboutText}>
-                La empresa fue fundada en 2023 por un equipo de profesionales con una amplia trayectoria en el sector de energías renovables,
-                acumulando experiencia desde el año 2010. Durante este periodo, participaron en diversos proyectos a nivel nacional e internacional,
-                abarcando regiones como Venezuela, La Guajira, Brasil (Acarahu y Tarema), Uruguay (Cierra los Caracoles), Argentina
-                (Arauco, La Rioja, Bahía Blanca, Río Negro Pomona, Córdoba, Achiras, Chubut, Puerto Madrid), entre otros.
+              La fundación de nuestra empresa tuvo lugar en el año 2023, impulsada por un equipo de profesionales 
+              comprometidos con el sector de la energía renovable desde 2010. A lo largo de los años, hemos participado 
+              activamente en diversos proyectos a nivel nacional e internacional, abarcando áreas como Venezuela, 
+              La Guajira, Brasil (Acarau e Itarema), Uruguay (Cierra los Caracoles) y Argentina (Arauco, La Rioja, 
+              Bahía Blanca, Río Negro Pomona, Córdoba, Achiras, Chubut, Puerto Madrid). Durante este tiempo, hemos 
+              desempeñado roles clave en la ejecución de tareas relacionadas con aerogeneradores.
               </p>
+
+              <p className={styles.aboutText}>En la actualidad, desde North Winds, continuamos ofreciendo servicios y 
+              soluciones a nuestros clientes con el más alto nivel de responsabilidad y compromiso. Estamos comprometidos
+               a mantener la excelencia en la prestación de nuestros servicios en el sector de energía renovable.</p>
         </div>    
 
     </div>
     <div className={styles.aboutText}>
 
-        <h1 className={styles.title2}>Somos North Winds. Una empresa sostenible.</h1>
+        <h1 className={styles.title2}>Certificaciones</h1>
         <p> En North Winds, creemos que el progreso empresarial y la responsabilidad social van de la mano. Es por eso que hemos
           abrazado con entusiasmo las normas de calidad, sostenibilidad y ética más rigurosas del mundo, certificándonos bajo la prestigiosas
           WTC (wind training center)
@@ -49,7 +54,7 @@ const AboutPage = () => {
         </p>
       </div>   
     
-    <Mapa></Mapa></>
+    </>
 
   );
 };
