@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "../Styles/map.module.css";
 
-const Mapa = () => {
+const Map = () => {
   return (
     <div className={styles.mapouter}>
       <div className={styles.gmap_canvas}>
@@ -25,5 +25,5 @@ const Mapa = () => {
   );
 };
 
-export default Mapa;
+export default Map;
 

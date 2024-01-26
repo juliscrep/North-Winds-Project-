@@ -1,5 +1,5 @@
 import styles from "../../Styles/contact.module.css";
-import Mapa from "../../components/map";
+import Map from "../../components/map";
 
 function ContactPage(){
 
@@ -45,7 +45,7 @@ function ContactPage(){
                 </div>
             </div>
 
-        </div><Mapa></Mapa></>
+        </div><Map></Map></>
     )
 }
 

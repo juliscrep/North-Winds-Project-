@@ -1,9 +1,9 @@
-import Especialidades from "../../components/Especialidades";
+import ServicesList from "../../components/servicesList";
 
 function ServicesPage(){
 
     return(
-        <Especialidades></Especialidades>
+       <ServicesList></ServicesList>
     )
 
 }

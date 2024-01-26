@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import styles from '../Styles/imagenesStilo.module.css';
+import styles from '../Styles/carousel.module.css';
 import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
 
 const images = [
@@ -57,7 +57,7 @@ const CustomPrevArrow = (props) => {
   );
 };
 
-const CarouselComponent = () => {
+const Carousel = () => {
   const settings = {
     dots: false,
     infinite: true,
@@ -87,4 +87,4 @@ const CarouselComponent = () => {
 };
 
 
-export default CarouselComponent;
+export default Carousel;

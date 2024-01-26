@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import styles from './page.module.css';
-import CarouselComponent from '../components/imagenes';
-import Objetivos from '@/components/objetivos';
+import Carousel from '../components/carousel';
+import Objectives from '@/components/objectives';
 import Card from '@/components/card';
 
 function Home (){
@@ -10,11 +10,11 @@ function Home (){
     <main className={styles.main}>
 
        <div className={styles.carouselSt}>
-      <CarouselComponent/>
+      <Carousel/>
       </div>     
 
 
-      <Objetivos></Objetivos>
+      <Objectives></Objectives>
 
       <div className={styles.container}>
         <h1 className={styles.title}>Nos especializamos en</h1>

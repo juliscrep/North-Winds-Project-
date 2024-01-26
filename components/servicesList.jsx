@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "../Styles/especialidades.module.css";
+import styles from "../Styles/servicesList.module.css";
 
-const Especialidades = () => {
+const ServicesList = () => {
   return (
     <div className={styles.especialidadesContainer}>
       <section className={styles.especialidadSection}>
@@ -61,4 +61,4 @@ const Especialidades = () => {
   );
 };
 
-export default Especialidades;
+export default ServicesList;

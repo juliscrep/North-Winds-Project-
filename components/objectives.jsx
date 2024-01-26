@@ -1,9 +1,9 @@
 import React from 'react';
-import styles from '../Styles/objetivos.module.css';
+import styles from '../Styles/objectives.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const Objetivos = () => {
+const Objectives = () => {
 
   return (
 
@@ -35,4 +35,4 @@ const Objetivos = () => {
 };
 
 
-export default Objetivos;
+export default Objectives;
