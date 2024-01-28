@@ -1,37 +1,55 @@
 
-.especialidadesFlexContainer {
+
+.twoColumnsContainer {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 40px;
-  align-items: center;
- 
-  max-width: 100%;
-  margin: 0 auto; 
-  background-color: white;
+  margin-top: 40px;
+}
+
+.column {
+  padding:30px;
+  margin-left: 40px; 
+}
+
+.image {
+  border-radius: 2px; 
+}
+
+.icon {
+  font-size: 3em; 
+  margin: 0;  
+  color:rgb(183, 16, 16); 
+}
+
+
+.textColumn {
+  padding: 20px; 
   color: black;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+}
+
+
+.text {
+  font-size:22px;
+  text-align: justify;
+  margin-right: 30px;
+  margin-bottom: 65px;
+  line-height: 1.5;
+}
+
+
+.title{
+  margin-top: 180px;
   text-align: center;
-  margin-top: 80px;
-  margin-bottom: 80px;
- 
+  font-size: 40px;
 }
 
-.especialidadFlexItem {
-  width: 40%; 
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  font-size:xx-large;
-  padding: 20px;
+
+.title2{
+  text-align: justify;
+  margin-top: 85px;
+  margin-bottom: 40px;
+  font-size: 40px;
+  margin-left: 50px;
+   color: #990000; 
 }
 
-.iconBox {
-  font-size: 24px;
-  margin-right: 10px;
-}
-
-.textContainer {
-  flex: 1;
-}
