@@ -7,7 +7,7 @@ function ContactPage(){
     return(
     <><div className={styles.twoColumnsContainer}>
     <div>
-      <Image src="/img/videoParque.gif" alt="Imagen" className={styles.image}  width={600} height={500}/>
+      <Image src="/img/videoParque.gif" alt="Imagen" className={styles.image}  width={650} height={500}/>
     </div>
     
      <div className={styles.textColumn}>
