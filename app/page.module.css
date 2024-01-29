@@ -10,8 +10,8 @@
 
 .imageContainer {
   position: relative;
-  width: 700px;
-  height: 700px; 
+  width: 500px;
+  height: 500px; 
 }
 
 
@@ -49,5 +49,4 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  height: 100%;
 }

@@ -1,10 +1,10 @@
 
   .aboutTitle{
     text-align: center;
-    margin-top: 120px; 
+    margin-top: 50px; 
     margin-left: 0px;
     margin-right:0px;
-    font-size:28px;    
+    font-size:25px;    
     display: flex;
     background-color: rgb(247, 247, 247);
     padding-bottom: 80px;
@@ -32,10 +32,10 @@
 
   .aboutText{
     margin-top: 30px; 
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     margin-left: 80px;
     margin-right: 80px;
-    font-size:22px;
+    font-size:20px;
     text-align: justify;
     line-height: 1.5;
     color: black;

@@ -3,7 +3,7 @@
 .card {
     position: relative;
     overflow: hidden;
-    width: 300px;
+    width: 260px;
     margin: 30px;
     border-radius: 5px;
   }
@@ -40,10 +40,3 @@
     margin: 0;
   }
   
-
-  @media (max-width: 767px) {
-    .card {
-        width: 100%; /* Ancho completo en dispositivos móviles */
-        margin: 10px 0; /* Márgenes más pequeños */
-    }
-}

@@ -2,12 +2,11 @@
 
 .twoColumnsContainer {
   display: flex;
-  margin-top: 40px;
+  margin-top: 10px;
 }
 
 .column {
-  padding:30px;
-  margin-left: 40px; 
+  padding:50px;
 }
 
 .image {
@@ -38,7 +37,7 @@
 
 
 .title{
-  margin-top: 180px;
+  margin-top: 170px;
   text-align: center;
   font-size: 30px;
 }
@@ -46,7 +45,7 @@
 
 .title2{
   text-align: justify;
-  margin-top: 85px;
+  margin-top: 35px;
   margin-bottom: 40px;
   font-size: 30px;
   margin-left: 50px;

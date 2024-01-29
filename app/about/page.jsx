@@ -56,19 +56,19 @@ const AboutPage = () => {
 
         <div className={styles.pdfContainer}>
             <a href="/img/certificado1.pdf" target="_blank">
-              <Image src="/img/fotoCertificado1.png" alt="Icono de PDF" width={250} height={200} />
+              <Image src="/img/fotoCertificado1.png" alt="Icono de PDF" width={240} height={190} />
             </a>
             <a href="/img/certificado2.pdf" target="_blank">
-              <Image src="/img/fotoCertificado2.png" alt="Icono de PDF" width={250} height={200} />
+              <Image src="/img/fotoCertificado2.png" alt="Icono de PDF" width={240} height={190} />
             </a>
             <a href="/img/certificado3.pdf" target="_blank">
-              <Image src="/img/fotoCertificado3.png" alt="Icono de PDF" width={250} height={200} />
+              <Image src="/img/fotoCertificado3.png" alt="Icono de PDF" width={240} height={190} />
             </a>
             <a href="/img/certificado4.pdf" target="_blank">
-              <Image src="/img/fotoCertificado4.png" alt="Icono de PDF" width={250} height={200} />
+              <Image src="/img/fotoCertificado4.png" alt="Icono de PDF" width={240} height={190} />
             </a>
             <a href="/img/certificado5.pdf" target="_blank">
-              <Image src="/img/fotoCertificado5.png" alt="Icono de PDF" width={250} height={200} />
+              <Image src="/img/fotoCertificado5.png" alt="Icono de PDF" width={240} height={190} />
             </a>
         </div>
 
