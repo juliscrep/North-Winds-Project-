@@ -9,7 +9,7 @@ const Objectives = () => {
 
      <div className={styles.twoColumnsContainer}>
        <div className={styles.column}>
-         <Image src="/img/maquina12.jpeg" alt="Imagen" className={styles.image}  width={500} height={600}/>
+         <Image src="/img/maquina12.jpeg" alt="Imagen" className={styles.image}  width={400} height={500}/>
        </div>
        
         <div className={styles.textColumn}>

@@ -11,8 +11,8 @@ function Header() {
             <Image
             alt="logo"
             src={"/img/logo.jpeg"}
-            width= {170} 
-            height= {120}
+            width= {160} 
+            height= {105}
             />
           </Link>
 

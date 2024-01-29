@@ -76,7 +76,7 @@ const Carousel = () => {
         {images.map((image) => (
           <div key={image.id} className={styles.imageContainer}>
             <div className={styles.imageOverlay}>
-              <Image src={image.src} alt={image.title} width={1700} height={700} />
+              <Image src={image.src} alt={image.title} width={1600} height={650} />
               <div className={styles.descriptionOverlay}>{image.description}</div>
             </div>
           </div>
