@@ -1,51 +1,48 @@
 import styles from "../../Styles/contact.module.css";
 import Map from "../../components/map";
+import Image from 'next/image';
 
 function ContactPage(){
 
     return(
-    <><div className={styles.contactText}>
-            <h2>¡Contáctenos!</h2>
-            <br></br>
-            <div class="stm_contacts_widget  style_1">
+    <><div className={styles.twoColumnsContainer}>
+    <div>
+      <Image src="/img/parqueVideo.gif" alt="Imagen" className={styles.image}  width={800} height={600}/>
+    </div>
+    
+     <div className={styles.textColumn}>
+        <h2 className={styles.title}>¡Contáctanos!</h2>
+       
+        <div className={styles.contactSection}>
+            <i className="fa fa-home"></i>
+            <span className={styles.iconBoxTitle}>Ruta nacional 60 y Av. 24 de Mayo, Aimogasta, La Rioja, Argentina (CP 5310)</span>
+            <h6 className={styles.iconBoxTitle2}>Horario de atención: Lunes a viernes de 8:00hs a 12:00hs y de 14:00hs a 18:00hs</h6>
+        </div>           
+    
+        <div className={styles.contactSection} >
+            <i className="fa fa-phone"></i>
+            <span className={styles.iconBoxTitle}>(+54) 380 4617560</span>
+            <h6 className={styles.iconBoxTitle2}> (+54) 3827 453714</h6>
+        </div>                
+        
+        <div className={styles.contactSection}>
+            <i className="fa fa-envelope"></i>
+            <span className={styles.iconBoxTitle}>nortwinds1223@gmail.com</span>
+        </div>  
 
-                <section className={styles.especialidadSection}>
-                    <div className={styles.iconBox}>
-                        <i className="fa fa-map-marker"></i>
-                    </div>
-                    <h6 className={styles.iconBoxTitle}>Buenos Aires - Argentina</h6>
-                </section>
+        <div className={styles.btnSection}>
+            <h4> ¿Necesitas información adicional o una cotización? Estamos para ayudarte. 
+           Envíanos un correo electrónico y nos pondremos en contacto contigo en breve para proporcionarte toda la información que necesitas.</h4> 
+        </div>
 
-                <section className={styles.especialidadSection}>
-                    <div className={styles.iconBox}>
-                        <i className="fa fa-phone"></i>
-                    </div>
-                    <h6 className={styles.iconBoxTitle}>(011) 37144855</h6>
-                </section>
-
-                <section className={styles.especialidadSection}>
-                    <div className={styles.iconBox}>
-                        <i className="fa fa-envelope"></i>
-                    </div>
-                    <h6 className={styles.iconBoxTitle}>nortwinds1223@gmail.com</h6>
-                </section>
-                <br></br>
-            </div>
-
-            <h4 className={styles.especialidadSection}>Háganos saber si tiene alguna pregunta, desea dejar un comentario o desea obtener más información.</h4>
-            <br>
-            </br>
-            <div className={styles.btnDark}>
-                <div class="elementor-button-wrapper">
-                    <a class="elementor-button elementor-button-link elementor-size-xl" href="mailto:nortwinds1223@gmail.com">
-                        <span class="elementor-button-content-wrapper">
-                            <span class="elementor-button-text btn-dark">Enviar</span>
-                        </span>
-                    </a>
-                </div>
-            </div>
-
-        </div><Map></Map></>
+        <div className={styles.btn}>
+            <a className={styles.bn39} href="mailto:nortwinds1223@gmail.com"><span className={styles.bn39span} >Enviar</span></a>
+        </div>
+      
+    </div>
+    
+    
+  </div><Map></Map></>
     )
 }
 

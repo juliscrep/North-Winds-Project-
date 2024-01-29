@@ -1,74 +1,100 @@
 
-
-.contactText {
-  max-width: 600px;
-  margin: 0 auto; 
-  padding: 30px;
-  background-color:rgb(247, 247, 247);
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  margin-top: 190px;
-  margin-bottom: 90px;
- 
-}
-
-.contactText h2 {
-  color: #333;
-  text-align: center;
-}
-
-.stm_contacts_widget {
+.twoColumnsContainer {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  padding: 20px;
+  margin-top: 180px;
+  margin-bottom: 40px;
 }
 
-.especialidadSection {
+.image {
+  border-radius: 5px; 
+}
+
+.bn39 {
+  background-color:transparent;
+  box-sizing: border-box;
+  color: rgb(13, 37, 54);
+  display:flex;
+  height: 55px;
+  font-size: 1.4em;
+  font-weight: 600;
+  padding: 4px;
+  position: relative;
+  text-decoration: none;
+  width: 14em;
+  border: 2px solid rgb(13, 37, 54);
+  align-items: center;
+}
+
+.bn39:hover {
+  color:#990000;
+  border: 2px solid #990000;
+}
+
+.title{
+  text-align: center;
+  margin-bottom: 70px;
+  font-size:70px;
+  font-weight: bold;
+}
+
+.title:hover{
+  color:#990000;
+}
+
+.iconBox{
+  font-size: large;
+}
+
+.textColumn {
+  padding-left: 40px;
+  padding-right: 40px; 
+}
+
+.contactSection {
+  flex-direction: column; 
+  align-items: flex-start;  
+  margin-left: 20px;
+
+}
+
+.iconBoxTitle2{
+  margin-left: 45px;
+  font-size: medium;
+  font-weight: lighter;
+}
+
+.bn39 .bn39span {
+  align-items: center;
+  background: transparent;
+  border-radius: 6px;
   display: flex;
-  align-items: center;
-  color: #333;
-  text-align: center;
-  padding: 10px;
-  font-size: x-large;
+  justify-content: center;
+  height: 100%;
+  transition: background 0.5s ease;
+  width: 100%;
 }
 
-.iconBox {
-  font-size: 24px;
-  margin-right: 10px;
+.bn39:hover .bn39span {
+  background: transparent;
 }
 
-.iconBoxTitle {
-  margin: 0;
-}
-
-
-.elementor-button-wrapper {
-  text-align: center;
-  background-color: #333 !important;
-}
-
-.elementor-button {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: #fff;
+.iconBoxTitle{
+  margin-left: 30px;
+  font-size: medium;
+  font-weight: lighter;
   text-decoration: none;
-  border-radius: 5px;
-  transition: background-color 0.3s;
 }
 
-.elementor-button:hover {
-  background-color: #333 !important;
+.btnSection{
+  margin-top: 50px;
+  text-align: justify;  
+  margin-bottom: 20px;
+  line-height: 1.5;
 }
 
-.btnDark {
-  background-color: #000;
-  color: #fff;
-  border-radius: 5px;
-  padding: 10px 20px;
-  width: 40%;
+.btn{
+  display: flex;
+  justify-content: center;
   align-items: center;
-  text-decoration: none;
-  display: inline-block;
 }

@@ -14,8 +14,7 @@
 }
 
 .image {
-  
-  border-radius: 5px; 
+  border-radius:2px; 
 }
 
 .image:hover{
@@ -32,7 +31,8 @@
   font-size:25px;
   text-align: justify;
   margin-right: 30px;
-  margin-bottom: 65px;
+  margin-bottom: 40px;
+  line-height: 1.5;
 }
 
 .title{
@@ -51,8 +51,9 @@
 
 }
 .btn{
+  display: flex;
+  justify-content: center;
   align-items: center;
-  text-align: center;
 }
 
 
