@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../styles/objectives.module.css';
+import styles from '../Styles/objectives.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 
