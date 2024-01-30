@@ -1,9 +1,9 @@
 
 .twoColumnsContainer {
   display: flex;
-  padding: 20px;
-  margin-top: 135px;
-  margin-bottom: 40px;
+  padding: 0px;
+  margin-top: 110px;
+  background-color: rgb(247, 247, 247);
 }
 
 .image {
@@ -33,18 +33,13 @@
 
 .title{
   text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 70px;
+  margin-top: 70px;
   font-size:55px;
   font-weight: bold;
-}
-
-.title:hover{
   color:#990000;
 }
 
-.iconBox{
-  font-size: large;
-}
 
 .textColumn {
   padding-left: 40px;
@@ -56,6 +51,7 @@
   align-items: flex-start;  
   margin-left: 20px;
   color: black;
+  margin-bottom:40px;
 }
 
 .iconBoxTitle2{
@@ -63,6 +59,7 @@
   font-size: medium;
   color: black;
   font-weight: 500;
+  
 }
 
 .bn39 .bn39span {

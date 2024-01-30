@@ -1,0 +1,98 @@
+
+.container {
+    display: flex;
+    flex-wrap: wrap; 
+    background-color: #f0ecec;;
+    color: rgb(7, 5, 38);
+    padding: 60px;
+    width: 45%;
+    border-radius: 3px;
+  }
+  
+  .column {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .title {
+    width: 100%;
+    margin-bottom: 40px;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .input {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 8px;
+    border-width: 0.5;
+    border-radius: solid;
+    border: 2px solid #cecbcb;
+  }
+  
+  .textarea {
+    resize: vertical;
+    height: 150px;
+  }
+  
+  .button {
+    background-color:transparent;
+    box-sizing: border-box;
+    color: rgb(13, 37, 54);
+    display:flex;
+    height: 35px;
+    font-size: 1.2em;
+    font-weight: 600;
+    padding: 4px;
+    position: relative;
+    text-decoration: none;
+    border: 2px solid rgb(13, 37, 54);
+    align-items: center;
+    border-radius: 2px;
+    justify-content: center;
+    height: 100%;
+    transition: background 0.5s ease;
+    width: 40%;
+  }
+
+  .button:hover {
+    color:#990000;
+    border: 2px solid #990000;
+  }
+  
+  .btn{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  @media only screen and (max-width: 992px) {
+    .container {
+      display: flex;
+      flex-wrap: wrap; 
+      background-color: #f0ecec;;
+      color: rgb(7, 5, 38);
+      padding: 40px;
+      width: 50%;
+      border-radius: 3px;
+    }
+
+    .title {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .btn{
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }

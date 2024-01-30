@@ -6,8 +6,8 @@ import Link from 'next/link';
 const ServicesList = () => {
   return (
     <div>
-      <section className={styles.title}>
-        <h2>
+      <section>
+        <h2 className={styles.title}>
           Nuestros servicios
         </h2>
       </section>

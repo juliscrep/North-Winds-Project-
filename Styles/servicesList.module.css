@@ -6,7 +6,8 @@
 }
 
 .column {
-  padding:50px;
+  padding: 30px;
+
 }
 
 .image {
@@ -39,7 +40,7 @@
 .title{
   margin-top: 170px;
   text-align: center;
-  font-size: 30px;
+  font-size: 35px;
 }
 
 
@@ -52,3 +53,25 @@
    color: #990000; 
 }
 
+
+@media only screen and (max-width: 992px) {
+  .title2{
+    text-align: center;
+    margin-top: 35px;
+    margin-bottom: 30px;
+    margin-right: 40px;
+    font-size: 25px;
+    margin-left: 50px;
+     color: #990000; 
+  }
+
+  .text {
+    font-size:18px;
+    text-align: justify;
+    margin-right: 30px;
+    margin-bottom: 65px;
+    line-height: 1.5;
+    margin-left: 20px;
+  }
+
+}
