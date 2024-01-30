@@ -1,7 +1,7 @@
 import styles from "../../Styles/contact.module.css";
 import Map from "../../components/map";
 import Image from 'next/image';
-import Form from "@/components/form";
+import Form from "../../components/form";
 
 function ContactPage(){
 

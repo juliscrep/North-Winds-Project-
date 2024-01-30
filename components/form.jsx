@@ -1,11 +1,34 @@
+'use client'
+
+import { useState } from 'react';
 import styles from '../Styles/form.module.css';
 
 const Form = () => {
+ const [message,setMessage] = useState('')
+ const handleSubmit = async(event) => {
+  event.preventDefault()
+  const data = new FormData(event.target)
+  const response = await fetch(event.target.action,{
+    method: 'POST',
+    body: data,
+    headers:{Accept:'application/json'}
+  })
+
+  const result = await response.json()
+  if(!response.ok){
+    setMessage(result.errors.map(error => error.message).join(','))
+    return false
+  }
+
+  setMessage("Se ha enviado tu correo satisfactoriamente!")
+  event.target.reset();
+
+}
 
     return(
         <div className={styles.container}> 
         <div>
-          <form action="https://formsubmit.co/45771992cd24f30aecb1ab8b34003eb6" method="POST">
+          <form id='form' action="https://formspree.io/f/xeqyeblr" method="POST" onSubmit={handleSubmit}>
             <h4 className={styles.title}>
                 ¿Necesitas información adicional o una cotización? Estamos para ayudarte.
                 Envíanos un correo electrónico y nos pondremos en contacto contigo en breve para proporcionarte toda la información que necesitas.
@@ -18,11 +41,13 @@ const Form = () => {
             <div className={styles.btn}>
                 <button className={styles.button}>Enviar</button>
             </div>
-
-            <input type='hidden' name="_next" value='http://localhost:3000/contact'></input>
-            <input type='hidden' name='_captcha' value='false'></input>
-            <input type="hidden" name="_subject" value="Nuevo correo de pagina web northWinds!"></input>
+            
+            <div className={styles.textAlert}>
+              <p>{message && <span className={styles.alert}>{message}</span>}</p>
+            </div>
+             
           </form>
+         
         </div>
       </div>
     )
