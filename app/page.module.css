@@ -91,6 +91,14 @@
     font-weight: bold;
     text-align: center;
   }
-  
 
+
+}
+
+@media (min-width: 300px) and (max-width: 600px){
+
+
+  .cardContainer {
+    font-size: 19px;
+  }
 }
