@@ -1,22 +1,20 @@
 'use client'
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styles from '../Styles/header.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 
 function Header() {
- 
   const [isMenuActive, setMenuActive] = useState(false);
 
- 
+  const closeMenu = () => {
+    setMenuActive(false);
+  };
+
   const toggleMenu = () => {
     setMenuActive(!isMenuActive);
   };
-
-  useEffect(() => {
-    setMenuActive(false);
-  }, []);
 
   return (
     <div className={`contenedor ${styles.barra}`}>
@@ -31,18 +29,17 @@ function Header() {
           ☰
         </button>
 
-        
         <div className={`${styles.rightItems} ${isMenuActive ? styles.active : ''}`}>
-          <Link href="/" className={styles.itemsColor}>
+          <Link href="/" className={styles.itemsColor} onClick={closeMenu}>
             Inicio
           </Link>
-          <Link href="/about" className={styles.itemsColor}>
+          <Link href="/about" className={styles.itemsColor} onClick={closeMenu}>
             Acerca de
           </Link>
-          <Link href="/services" className={styles.itemsColor}>
+          <Link href="/services" className={styles.itemsColor} onClick={closeMenu}>
             Servicios
           </Link>
-          <Link href="/contact" className={styles.itemsColor}>
+          <Link href="/contact" className={styles.itemsColor} onClick={closeMenu}>
             Contacto
           </Link>
         </div>

@@ -33,7 +33,7 @@
 
 .title{
   text-align: center;
-  margin-bottom: 70px;
+  margin-bottom: 60px;
   margin-top: 70px;
   font-size:55px;
   font-weight: bold;
@@ -54,17 +54,32 @@
   margin-bottom:40px;
 }
 
-.contactSection2{
-  flex-direction: row; 
-  margin-top: 20px;
-}
 
 .iconBoxTitle2{
+  font-size: medium;
+  color: black;
+  font-weight: 500; 
+  display: inline-flex; 
+  margin-left: 30px;
+  align-items: center;
+  text-align: justify;
+}
+
+.iconBoxTitle4{
+  margin-left: 50px;
+  font-size: medium;
+  color: black;
+  font-weight: 500; 
+  text-align: justify;
+  width: 75%;
+  margin-top: 0px;
+}
+
+.iconBoxTitle3{
   margin-left: 45px;
   font-size: medium;
   color: black;
-  font-weight: 500;
-  
+  font-weight: 500; 
 }
 
 .bn39 .bn39span {
@@ -89,6 +104,7 @@
   color: black;
 }
 
+
 .btnSection{
   margin-top: 30px;
   text-align: justify;  
@@ -112,7 +128,44 @@
   .iconBoxTitle{
     text-align: justify;
   }
+   
+  .iconBoxTitle2{
+    font-size: medium;
+    color: black;
+    font-weight: 500; 
+    display: inline-flex; 
+    margin-left: 30px;
+    align-items: center;
+    text-align: justify;
+    width: 75%;
+  }
   
+  .iconBoxTitle4{
+    margin-left: 50px;
+    font-size: medium;
+    color: black;
+    font-weight: 500; 
+    text-align: justify;
+    width: 75%;
+    margin-top: 0px;
+  }
+  
+  .iconBoxTitle3{
+    margin-left: 45px;
+    font-size: medium;
+    color: black;
+    font-weight: 500; 
+  }
+
+  .title{
+    text-align: center;
+    margin-bottom: 60px;
+    margin-top: 70px;
+    font-size:45px;
+    font-weight: bold;
+    color:#990000;
+  }
+ 
 
 }
 
@@ -140,11 +193,13 @@
 
   .iconBoxTitle {
     font-size: 14px;
+    text-align: justify;
   }
    
 
   .iconBoxTitle2{
     font-size: 14px;
+    text-align: justify;
   }
 
 
