@@ -37,7 +37,7 @@ const AboutPage = () => {
     </div>
     <div>
 
-        <h1 className={styles.title2}>Certificación</h1>
+        <h1 className={styles.title2}>Certificaciones</h1>
         <p className={styles.aboutText}> Hemos obtenido la certificación del Wind Training Center (WTC). 
           Esta distinción representa nuestro compromiso inquebrantable con los estándares 
           más rigurosos de calidad, sostenibilidad y ética en la industria de la energía eólica.
@@ -70,6 +70,25 @@ const AboutPage = () => {
             <a href="/img/certificado5.pdf" target="_blank">
               <Image src="/img/fotoCertificado5.png" alt="Icono de PDF" className={styles.pdf} width={240} height={190} />
             </a>
+            
+        </div>
+
+        <p className={styles.aboutText}> Tambien, hemos obtenido la certificación de la cesta de elevación para el 
+           mantenimiento de aerogeneradores. Esta evaluación fue realizada por WORKLIFT S.A., quienes llevaron a cabo una 
+           inspección exhaustiva de nuestro equipo. Su certificación valida que cumplimos con los requisitos
+            establecidos por la Ley 19.587 de Seguridad e Higiene en el Trabajo y sus Decretos Reglamentarios.
+        </p>
+
+        <div className={styles.pdfContainer2}>
+           <a href="/img/informeInspeccion.pdf" target="_blank">
+              <Image src="/img/informe.png" alt="Icono de PDF" className={styles.pdf2} width={350} height={450} />
+           </a>
+          
+           <a href="/img/certificadoInspeccion.pdf" target="_blank">
+              <Image src="/img/fotoInspeccion.png" alt="Icono de PDF" className={styles.pdf2} width={350} height={450} />
+           </a>
+
+
         </div>
 
       </div>   
