@@ -49,3 +49,48 @@
 .itemsColor:hover {
   color: #990000; 
 }
+
+
+.menuButton {
+  display: none; 
+}
+
+@media (min-width: 300px) and (max-width: 600px) {
+  .navegacion {
+    display: flex;
+  }
+
+  .rightItems {
+    display: none; 
+  }
+
+  .rightItems.active {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 60px; 
+    left: 0;
+    width: 100%;
+    background-color: white; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    z-index: 1000;
+  }
+
+  .itemsColor {
+    color: black; 
+  }
+
+  .itemsColor:hover {
+    color: #990000;
+  }
+
+  
+  .menuButton {
+    display: block;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+}

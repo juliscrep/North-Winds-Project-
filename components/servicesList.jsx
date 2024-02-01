@@ -29,7 +29,7 @@ const ServicesList = () => {
      </div>
 
 
-     <div className={styles.twoColumnsContainer}>
+     <div className={styles.twoColumnsContainer2}>
         <div className={styles.textColumn}>
          <h2 className={styles.title2}>Grandes correctivos</h2>
          <br></br>
@@ -46,7 +46,7 @@ const ServicesList = () => {
 
      <div className={styles.twoColumnsContainer}>
        <div className={styles.column}>
-         <Image src="/img/maquina1.jpeg" alt="Imagen" className={styles.image}  width={350} height={550}/>
+         <Image src="/img/maquina1.jpeg" alt="Imagen" className={styles.image2}  width={350} height={550}/>
        </div>
        
         <div className={styles.textColumn}>
@@ -64,7 +64,7 @@ const ServicesList = () => {
        </div>    
      </div>
 
-     <div className={styles.twoColumnsContainer}>
+     <div className={styles.twoColumnsContainer2}>
         <div className={styles.textColumn}>
          <h2 className={styles.title2}>Revisión y reparación de palas</h2>
          <br></br>
@@ -82,7 +82,7 @@ const ServicesList = () => {
           </p>
         </div>  
        <div className={styles.column}>
-         <Image src="/img/maquina2.jpeg" alt="Imagen" className={styles.image}  width={350} height={550}/>
+         <Image src="/img/maquina2.jpeg" alt="Imagen" className={styles.image2}  width={350} height={550}/>
        </div>         
      </div>
      

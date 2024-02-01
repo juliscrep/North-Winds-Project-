@@ -10,9 +10,9 @@ function ContactPage(){
      
         <div className={styles.textColumn}>
             <h2 className={styles.title}>¡Contáctanos!</h2>
-       
+
             <div className={styles.contactSection}>
-                <i className="fa fa-home"></i>
+                <i className={`fa fa-home ${styles.icon}`}></i>
                 <span className={styles.iconBoxTitle}>RN60 y Av. 24 de Mayo, Aimogasta, La Rioja, Argentina (CP 5310)</span>
                 <h6 className={styles.iconBoxTitle2}>Horario de atención: Lunes a viernes de 8:00hs a 12:00hs y de 14:00hs a 18:00hs</h6>
             </div>           

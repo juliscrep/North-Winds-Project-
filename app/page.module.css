@@ -52,7 +52,7 @@
 }
 
 
-@media only screen and (max-width: 768px) {
+@media(max-width: 768px) {
   .imageContainer {
     width: 100%;
     height: auto;
@@ -73,8 +73,24 @@
 }
 
 
-/* 
+@media (min-width: 300px) and (max-width: 600px){
 
-768px
-576px
-360px */
+  .title{
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+
+}
+
+@media (min-width: 601px) and (max-width: 992px){
+
+  .title{
+    font-size: 35px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+
+}

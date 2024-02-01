@@ -11,6 +11,11 @@
         display: flex;
         justify-content: space-between;
     }
+
+    .navegacion{
+        flex-direction: row;
+    }
+
 }
 
 .navegacion {
@@ -19,11 +24,8 @@
     align-items: center;
     gap: 2rem;
 }
-@media(min-width: 768px){
-    .navegacion{
-        flex-direction: row;
-    }
-}
+
+
 .navegacion a,
 .copyrigth {
     color: var(--white);
@@ -31,6 +33,7 @@
     font-weight: 700;
     text-decoration: none;
 }
+
 .copyrigth {
     text-align: center;
 }

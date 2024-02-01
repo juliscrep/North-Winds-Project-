@@ -54,6 +54,11 @@
   margin-bottom:40px;
 }
 
+.contactSection2{
+  flex-direction: row; 
+  margin-top: 20px;
+}
+
 .iconBoxTitle2{
   margin-left: 45px;
   font-size: medium;
@@ -95,4 +100,53 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+
+@media (max-width: 992px){
+ 
+  .contactSection i {
+    margin-bottom: 20px;
+   
+  }
+  .iconBoxTitle{
+    text-align: justify;
+  }
+  
+
+}
+
+
+@media (min-width: 300px) and (max-width: 700px){
+
+  .twoColumnsContainer {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+  }
+
+  .title{
+    text-align: center;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    font-size:35px;
+    font-weight: bold;
+    color:#990000;
+  }
+
+  .contactSection{
+    font-size: 15px;
+  }
+
+  .iconBoxTitle {
+    font-size: 14px;
+  }
+   
+
+  .iconBoxTitle2{
+    font-size: 14px;
+  }
+
+
+
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -13,46 +13,84 @@ const images = [
     id: 1,
     src: '/img/parque4.webp',
     title: 'maquina 1',
-    description:'NORTH WINDS S.A',
+    description: 'NORTH WINDS S.A',
   },
   {
     id: 2,
     src: '/img/parque3.jpg',
     title: 'maquina 11',
-    description:'Energía para el FUTURO',
+    description: 'Energía para el FUTURO',
   },
   {
     id: 3,
     src: '/img/parque6.webp',
     title: 'maquina 12',
-    description:'Soluciones innovadoras',
+    description: 'Soluciones innovadoras',
   },
 ];
 
 const CustomNextArrow = (props) => {
+  const [iconSize, setIconSize] = useState(60);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const windowWidth = window.innerWidth;
+
+      if (windowWidth >= 300 && windowWidth <= 600) {
+        setIconSize(35);
+      } else {
+        setIconSize(60);
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const { onClick } = props;
   return (
-    <div className={styles.customNextArrow} onClick={onClick}>  
-
-          <button className={styles.customNextArrow}>
-            <SlArrowRight size={60}/>
-          </button>
-        
-
+    <div className={styles.customNextArrow} onClick={onClick}>
+      <button className={styles.customNextArrow}>
+        <SlArrowRight size={iconSize} />
+      </button>
     </div>
   );
 };
 
 const CustomPrevArrow = (props) => {
+  const [iconSize, setIconSize] = useState(60);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const windowWidth = window.innerWidth;
+
+      if (windowWidth >= 300 && windowWidth <= 600) {
+        setIconSize(35);
+      } else {
+        setIconSize(60);
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const { onClick } = props;
   return (
     <div className={styles.customPrevArrow} onClick={onClick}>
-
-          <button className={styles.customPrevArrow}>
-            <SlArrowLeft size={60}/>
-          </button>
-        
-        
+      <button className={styles.customPrevArrow}>
+        <SlArrowLeft className={styles.prevArrow} size={iconSize} />
+      </button>
     </div>
   );
 };
@@ -61,11 +99,11 @@ const Carousel = () => {
   const settings = {
     dots: false,
     infinite: true,
-    speed: 1000, // Velocidad de transición en milisegundos
+    speed: 1000,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: true, // se activa la reproducción automática
-    autoplaySpeed: 3000, // Velocidad de cambio de imagen en milisegundos
+    autoplay: true,
+    autoplaySpeed: 3000,
     nextArrow: <CustomNextArrow />,
     prevArrow: <CustomPrevArrow />,
   };
@@ -76,7 +114,7 @@ const Carousel = () => {
         {images.map((image) => (
           <div key={image.id} className={styles.imageContainer}>
             <div className={styles.imageOverlay}>
-              <Image src={image.src} alt={image.title} width={1600} height={650} />
+              <Image src={image.src} alt={image.title} className={styles.images} width={1600} height={650} />
               <div className={styles.descriptionOverlay}>{image.description}</div>
             </div>
           </div>
@@ -85,6 +123,5 @@ const Carousel = () => {
     </div>
   );
 };
-
 
 export default Carousel;

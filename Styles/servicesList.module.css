@@ -4,6 +4,10 @@
   display: flex;
   margin-top: 10px;
 }
+.twoColumnsContainer2{
+  display: flex;
+  margin-top: 10px;
+}
 
 .column {
   padding: 30px;
@@ -11,6 +15,10 @@
 }
 
 .image {
+  border-radius: 2px; 
+}
+
+.image2{
   border-radius: 2px; 
 }
 
@@ -54,7 +62,7 @@
 }
 
 
-@media only screen and (max-width: 992px) {
+@media (max-width: 992px) {
   .title2{
     text-align: center;
     margin-top: 35px;
@@ -74,4 +82,101 @@
     margin-left: 20px;
   }
 
+}
+
+@media (max-width: 768px) {
+
+
+  .twoColumnsContainer{
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+  }
+
+  .twoColumnsContainer2{
+    flex-direction:column-reverse;
+    display: flex;
+    align-items: center;
+  }
+
+  .column {
+    padding:5px;
+  
+  }
+
+  .textColumn{
+    padding:0px;
+  }
+
+  .title{
+    margin-bottom: 20px;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 992px) {
+ 
+  .twoColumnsContainer{
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+  }
+
+  .twoColumnsContainer2{
+    flex-direction:column-reverse;
+    display: flex;
+    align-items: center;
+  }
+
+
+}
+
+@media (min-width: 300px) and (max-width: 600px){
+
+  .image {
+    width: 300px;
+    height: 250px;
+  }
+
+  .image2{
+    width: 250px;
+    height: 350px;
+  }
+
+
+  .twoColumnsContainer{
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
+
+  .twoColumnsContainer2{
+    flex-direction:column-reverse;
+    display: flex;
+    align-items: center;
+  }
+
+
+  .title{
+    font-size: 25px;
+  }
+
+  .title2{
+    text-align: center;
+    margin-top: 35px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: #990000; 
+  }
+
+  .text {
+    font-size:15px;
+    text-align: justify;
+    margin-bottom: 35px;
+    line-height: 1.5;
+  }
+
+  
+
+  
 }
