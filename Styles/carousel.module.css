@@ -10,7 +10,12 @@
 }
 
 .imageOverlay {
-  position: relative;
+  position:relative;
+}
+
+.images{
+  width: 2000px;
+  height: 700px;
 }
 
 .descriptionOverlay {

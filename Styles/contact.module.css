@@ -63,23 +63,19 @@
   margin-left: 30px;
   align-items: center;
   text-align: justify;
+  margin-bottom: 25px;
 }
 
 .iconBoxTitle4{
-  margin-left: 50px;
+  margin-left: 30px;
   font-size: medium;
   color: black;
   font-weight: 500; 
   text-align: justify;
+  display: inline-flex; 
+  align-items: center;
   width: 75%;
-  margin-top: 0px;
-}
-
-.iconBoxTitle3{
-  margin-left: 45px;
-  font-size: medium;
-  color: black;
-  font-weight: 500; 
+  margin-bottom: 25px;
 }
 
 .bn39 .bn39span {
@@ -102,6 +98,7 @@
   font-size: medium;
   font-weight: 500;
   color: black;
+  margin-bottom: 25px;
 }
 
 
