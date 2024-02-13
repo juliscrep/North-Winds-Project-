@@ -116,7 +116,7 @@
 }
 
 
-@media (max-width: 992px){
+@media (max-width: 1200px){
  
   .contactSection i {
     margin-bottom: 20px;
@@ -138,7 +138,7 @@
   }
   
   .iconBoxTitle4{
-    margin-left: 50px;
+    margin-left: 30px;
     font-size: medium;
     color: black;
     font-weight: 500; 

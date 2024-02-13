@@ -6,8 +6,26 @@
   
   .gmap_canvas {
     overflow: hidden;
-    height: 500px; 
+    height: 100%; 
     width: 100%;
     position: absolute;
     }
   
+
+    @media (max-width: 1200px) {
+
+      .mapouter {
+        position: relative;
+        height: 700px; 
+        width: 100%;
+      }
+      .gmap_canvas {
+        overflow: hidden;
+        height: 100%; 
+        width: 100%;
+        position: absolute;
+        }
+      
+      
+
+    }

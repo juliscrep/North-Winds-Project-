@@ -14,7 +14,7 @@ const ServicesList = () => {
 
       <div className={styles.twoColumnsContainer}>
        <div className={styles.column}>
-         <Image src="/img/maquina11.jpeg" alt="Imagen" className={styles.image}  width={550} height={450}/>
+         <Image src="/img/maquina11.jpeg" alt="Imagen" className={styles.image}  width={750} height={550}/>
        </div>
        
         <div className={styles.textColumn}>
@@ -40,7 +40,7 @@ const ServicesList = () => {
          </p>         
         </div>  
        <div className={styles.column}>
-         <Image src="/img/background2.jpg" alt="Imagen" className={styles.image}  width={650} height={450}/>
+         <Image src="/img/background2.jpg" alt="Imagen" className={styles.image}  width={750} height={550}/>
        </div>         
      </div>
 

@@ -73,7 +73,11 @@
   .descriptionOverlay {
     font-size:110px;  ;
   }
-
+ 
+  .images{
+    width: 100%;
+    height:600px;
+  }
 }
 
 
@@ -83,7 +87,7 @@
   }
 
   .images{
-    width: 810px;
+    width: 100%;
     height:600px;
   }
 
@@ -96,8 +100,8 @@
   }
 
   .images{
-    width: 450px;
-    height:250px;
+    width: 100%;
+    height:260px;
   }
   
   .customNextArrow,
