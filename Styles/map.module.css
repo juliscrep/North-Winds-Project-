@@ -5,25 +5,8 @@
   }
   
   .gmap_canvas {
-    overflow: hidden;
     height: 100%; 
     width: 100%;
     position: relative;
     }
   
-
-    @media (max-width: 1200px) {
-
-      .mapouter {
-        position: relative;
-        height: 700px; 
-        width: 100%;
-      }
-      .gmap_canvas {
-        overflow: hidden;
-        height: 100%; 
-        width: 100%;
-        position: relative;
-        }
-      
-    }
