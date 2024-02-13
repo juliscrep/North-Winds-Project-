@@ -1,7 +1,6 @@
 
 .twoColumnsContainer {
   display: flex;
-  padding: 0px;
   margin-top: 110px;
   background-color: rgb(247, 247, 247);
 }
