@@ -36,6 +36,7 @@ function Header() {
           <Link href="/about" className={styles.itemsColor} onClick={closeMenu}>
             Acerca de
           </Link>
+          <Link href="/work" className={styles.itemsColor} onClick={closeMenu}>Trabajos</Link>
           <Link href="/services" className={styles.itemsColor} onClick={closeMenu}>
             Servicios
           </Link>
