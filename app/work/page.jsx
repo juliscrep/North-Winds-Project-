@@ -12,7 +12,7 @@ export default function workPage() {
         </h2>
       </section>
       <p className={styles.text}>
-        Este trabajo se llevo a cabo en el parque eólico "Vientos Neuquinos N° 1" ubicado en la provincia de Neuquén, el cual consistió en la
+        Este trabajo se llevo a cabo en el parque eólico &quot;Vientos Neuquinos N° 1&quot; ubicado en la provincia de Neuquén, el cual consistió en la
         reparación de la pala del aerogenerador.  
       </p>
       </div>
