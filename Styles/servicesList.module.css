@@ -60,12 +60,15 @@
   line-height: 1.6;
 }
 
+.lista{
+  padding-right: 7%;
+  padding-left: 7%;
+}
+
 .text3{
   font-size:22px;
   text-align: justify;
   margin-bottom: 45px;
-  padding-right: 6%;
-  padding-left: 6%;
   line-height: 1.6;
 }
 

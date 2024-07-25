@@ -126,50 +126,50 @@ const ServicesList = () => {
         </p>
       </div>
 
-      <div>
+      <ul className={styles.lista}>
         <li className={styles.text3}>
-          Mantenimientos preventivos: realizamos inspecciones y ajustes periódicos para
+          <strong>Mantenimientos preventivos:</strong> realizamos inspecciones y ajustes periódicos para
           asegurar el funcionamiento óptimo de los sistemas solares.
         </li>
         <li className={styles.text3}>
-          Limpieza de paneles solares: utilizamos robots especialmente diseñados para
+          <strong>Limpieza de paneles solares:</strong> utilizamos robots especialmente diseñados para
           la limpieza eficiente de los paneles, garantizando su máxima eficiencia.
         </li>
         <li className={styles.text3}>
-          Revisión de cableado: verificamos las conexiones eléctricas de los paneles
+        <strong>Revisión de cableado:</strong> verificamos las conexiones eléctricas de los paneles
           solares para prevenir fallos y mejorar el rendimiento.
         </li>
         <li className={styles.text3}>
-          Control de estructuras y fundaciones: evaluamos y mantenemos las
+          <strong>Control de estructuras y fundaciones:</strong> evaluamos y mantenemos las
           estructuras y fundaciones para asegurar su integridad y estabilidad.
         </li>
         <li className={styles.text3}>
-          Control termográfico de conexiones eléctricas: utilizamos tecnología
+          <strong>Control termográfico de conexiones eléctricas:</strong> utilizamos tecnología
           termográfica para detectar y corregir problemas en las conexiones eléctricas.
         </li>
         <li className={styles.text3}>
-          Mantenimientos en redes eléctricas de media, baja tensión y
-          Subestaciones transformadoras: ofrecemos servicios preventivos para
+          <strong>Mantenimientos en redes eléctricas de media, baja tensión y
+          subestaciones transformadoras:</strong> ofrecemos servicios preventivos para
           mantener en óptimas condiciones las redes eléctricas y subestaciones
           transformadoras.
         </li>
         <li className={styles.text3}>
-          Inspecciones visuales: realizamos inspecciones detalladas para identificar y
+          <strong>Inspecciones visuales:</strong> realizamos inspecciones detalladas para identificar y
           solucionar posibles problemas en los parques solares.
         </li>
         <li className={styles.text3}>
-          Control de puntos calientes: detectamos y corregimos puntos calientes que
+          <strong>Control de puntos calientes:</strong> detectamos y corregimos puntos calientes que
           podrían comprometer la eficiencia del sistema.
         </li>
         <li className={styles.text3}>
-          Reemplazo de estructuras y componentes: sustituimos estructuras y
+          <strong>Reemplazo de estructuras y componentes:</strong> sustituimos estructuras y
           componentes dañados para mantener la operatividad del parque solar.
         </li>
         <li className={styles.text3}>
-          Muestras de aceites en transformadores: tomamos y analizamos muestras de
+          <strong>Muestras de aceites en transformadores:</strong> tomamos y analizamos muestras de
           aceite en transformadores para asegurar su correcto funcionamiento.
         </li>
-      </div>
+      </ul>
 
     </div></>
   );
