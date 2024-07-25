@@ -45,6 +45,25 @@
   line-height: 1.6;
 }
 
+.text2{
+  font-size:22px;
+  text-align: justify;
+  margin-bottom: 45px;
+  padding-right: 6%;
+  padding-left: 6%;
+  padding-top: 3%;
+  line-height: 1.6;
+}
+
+.text3{
+  font-size:22px;
+  text-align: justify;
+  margin-bottom: 45px;
+  padding-right: 6%;
+  padding-left: 6%;
+  line-height: 1.6;
+}
+
 
 .title{
   margin-top: 170px;

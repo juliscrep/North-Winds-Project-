@@ -8,7 +8,7 @@ const ServicesList = () => {
     <div>
       <section>
         <h2 className={styles.title}>
-          Nuestros servicios
+          Servicios en parques eólicos 
         </h2>
       </section>
 
@@ -107,6 +107,65 @@ const ServicesList = () => {
        </div>         
      </div>
      
+     <section>
+        <h2 className={styles.title}>
+          Servicios en parques solares  
+        </h2>
+      </section>
+
+      <div>
+        <p className={styles.text2}>
+          Ofrecemos una amplia gama de servicios para la optimización y el mantenimiento de
+          parques solares. Nuestro objetivo es garantizar la máxima eficiencia y longevidad de sus
+          instalaciones solares a través de nuestros servicios integrales, que incluyen:
+        </p>
+      </div>
+
+      <div>
+        <li className={styles.text3}>
+          Mantenimientos preventivos: realizamos inspecciones y ajustes periódicos para
+          asegurar el funcionamiento óptimo de los sistemas solares.
+        </li>
+        <li className={styles.text3}>
+          Limpieza de paneles solares: utilizamos robots especialmente diseñados para
+          la limpieza eficiente de los paneles, garantizando su máxima eficiencia.
+        </li>
+        <li className={styles.text3}>
+          Revisión de cableado: verificamos las conexiones eléctricas de los paneles
+          solares para prevenir fallos y mejorar el rendimiento.
+        </li>
+        <li className={styles.text3}>
+          Control de estructuras y fundaciones: evaluamos y mantenemos las
+          estructuras y fundaciones para asegurar su integridad y estabilidad.
+        </li>
+        <li className={styles.text3}>
+          Control termográfico de conexiones eléctricas: utilizamos tecnología
+          termográfica para detectar y corregir problemas en las conexiones eléctricas.
+        </li>
+        <li className={styles.text3}>
+          Mantenimientos en redes eléctricas de media, baja tensión y
+          Subestaciones transformadoras: ofrecemos servicios preventivos para
+          mantener en óptimas condiciones las redes eléctricas y subestaciones
+          transformadoras.
+        </li>
+        <li className={styles.text3}>
+          Inspecciones visuales: realizamos inspecciones detalladas para identificar y
+          solucionar posibles problemas en los parques solares.
+        </li>
+        <li className={styles.text3}>
+          Control de puntos calientes: detectamos y corregimos puntos calientes que
+          podrían comprometer la eficiencia del sistema.
+        </li>
+        <li className={styles.text3}>
+          Reemplazo de estructuras y componentes: sustituimos estructuras y
+          componentes dañados para mantener la operatividad del parque solar.
+        </li>
+        <li className={styles.text3}>
+          Muestras de aceites en transformadores: tomamos y analizamos muestras de
+          aceite en transformadores para asegurar su correcto funcionamiento.
+        </li>
+      </div>
+
     </div>
   );
 };

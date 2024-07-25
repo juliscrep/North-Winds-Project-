@@ -1,4 +1,4 @@
-import eact from "react";
+import React from "react";
 import styles from "../../Styles/work.module.css";
 import Image from 'next/image';
 
