@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const ServicesList = () => {
   return (
-    <div>
+    <><div>
       <section>
         <h2 className={styles.title}>
           Servicios en parques eólicos 
@@ -107,8 +107,13 @@ const ServicesList = () => {
        </div>         
      </div>
      
-     <section>
-        <h2 className={styles.title}>
+     
+
+    </div>
+    <div className={styles.section}>
+
+      <section>
+        <h2 className={styles.title3}>
           Servicios en parques solares  
         </h2>
       </section>
@@ -166,7 +171,7 @@ const ServicesList = () => {
         </li>
       </div>
 
-    </div>
+    </div></>
   );
 };
 

@@ -1,4 +1,9 @@
 
+.section{
+  background-color: rgb(247, 247, 247);
+  padding-bottom: 5%;
+}
+
 
 .twoColumnsContainer {
   display: flex;
@@ -71,6 +76,11 @@
   font-size: 35px;
 }
 
+.title3{
+  padding-top: 5%;
+  text-align: center;
+  font-size: 35px;
+}
 .icon{
   fill:#a80a0a;
   margin-top: 20px;
@@ -106,6 +116,25 @@
     margin-bottom: 65px;
     line-height: 1.5;
     margin-left: 20px;
+  }
+
+  .text2{
+    font-size:18px;
+    text-align: justify;
+    margin-bottom: 30px;
+    padding-right: 6%;
+    padding-left: 6%;
+    padding-top: 3%;
+    line-height: 1.6;
+  }
+  
+  .text3{
+    font-size:18px;
+    text-align: justify;
+    margin-bottom: 30px;
+    padding-right: 6%;
+    padding-left: 6%;
+    line-height: 1.6;
   }
 
   .svgContainer {
@@ -236,6 +265,12 @@
     font-size: 25px;
   }
 
+  .title3{
+    font-size: 25px;
+    margin-bottom: 20px;
+    padding-top: 12%;
+  }
+
   .title2{
     text-align: center;
     margin-top: 35px;
@@ -249,6 +284,25 @@
     text-align: justify;
     margin-bottom: 35px;
     line-height: 1.5;
+  }
+
+  .text2{
+    font-size:15px;
+    text-align: justify;
+    margin-bottom: 35px;
+    padding-right: 6%;
+    padding-left: 6%;
+    padding-top: 3%;
+    line-height: 1.6;
+  }
+  
+  .text3{
+    font-size:15px;
+    text-align: justify;
+    margin-bottom: 35px;
+    padding-right: 6%;
+    padding-left: 6%;
+    line-height: 1.6;
   }
   
 }
