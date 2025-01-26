@@ -11,7 +11,7 @@ const Card = ({ image, title, slug }) => {
         <Link href={`/${slug}`} passHref>
           <Image src={image} alt={title} width={800} height={800} />
           <div className={styles.overlay}>
-            <h3>{title}</h3>
+            <h3 className={styles.cardText}>{title}</h3>
           </div> 
         </Link>     
       </div>

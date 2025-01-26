@@ -109,7 +109,8 @@
     gap: 5px;
     justify-items: stretch; 
     align-items: stretch; 
-    font-size: 12px;
+    font-size: 10px;
+    
   }
 
 }
