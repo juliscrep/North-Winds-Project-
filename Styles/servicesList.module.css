@@ -27,6 +27,11 @@
   border-radius: 2px; 
 }
 
+.image3{
+  border-radius: 2px;
+  height: 95%;
+}
+
 .icon {
   font-size: 3em; 
   margin: 0;  
@@ -50,6 +55,15 @@
   line-height: 1.6;
 }
 
+.text1 {
+  font-size:22px;
+  text-align: justify;
+  margin-right: 30px;
+  margin-left: 30px;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
 .text2{
   font-size:22px;
   text-align: justify;
@@ -69,6 +83,13 @@
   font-size:22px;
   text-align: justify;
   margin-bottom: 45px;
+  line-height: 1.6;
+}
+
+.text4{
+  font-size:22px;
+  text-align: justify;
+  margin-bottom: 25px;
   line-height: 1.6;
 }
 
@@ -121,6 +142,16 @@
     margin-left: 20px;
   }
 
+  .text1 {
+    font-size:18px;
+    text-align: justify;
+    margin-right: 30px;
+    margin-left: 30px;
+    margin-bottom: 25px;
+    line-height: 1.6;
+    margin-left: 20px;
+  }
+
   .text2{
     font-size:18px;
     text-align: justify;
@@ -135,6 +166,13 @@
     font-size:18px;
     text-align: justify;
     margin-bottom: 30px;
+    line-height: 1.6;
+  }
+
+  .text4{
+    font-size:18px;
+    text-align: justify;
+    margin-bottom: 20px;
     line-height: 1.6;
   }
 
@@ -272,6 +310,7 @@
     padding-top: 12%;
   }
 
+  
   .title2{
     text-align: center;
     margin-top: 35px;
@@ -287,6 +326,13 @@
     line-height: 1.5;
   }
 
+  .text1 {
+    font-size:15px;
+    text-align: justify;
+    margin-bottom: 25px;
+    line-height: 1.5;
+  }  
+
   .text2{
     font-size:15px;
     text-align: justify;
@@ -301,6 +347,13 @@
     font-size:15px;
     text-align: justify;
     margin-bottom: 35px;
+    line-height: 1.6;
+  }
+
+  .text4{
+    font-size:15px;
+    text-align: justify;
+    margin-bottom: 25px;
     line-height: 1.6;
   }
   

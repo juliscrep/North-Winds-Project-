@@ -1,12 +1,12 @@
-import Link from 'next/link'
 import styles from '../Styles/footer.module.css';
 
 
 function Footer(){
+    const currentYear = new Date().getFullYear();
 
     return(
         <div className={styles.footer}>
-            <p> Copyright &copy; Todos los derechos reservados 2024. North Winds S.A</p>
+            <p> Copyright &copy; Todos los derechos reservados {currentYear}. North Winds S.A</p>
         </div>
    )
 }

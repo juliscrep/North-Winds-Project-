@@ -29,6 +29,8 @@
     "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
+    "@babel/plugin-syntax-jsx": "^7.25.9",
+    "@babel/preset-react": "^7.26.3",
     "eslint": "^8",
     "eslint-config-next": "14.0.4"
   }

@@ -8,9 +8,10 @@
   }
   
   .card img {
-    width: 100%;
-    height: 100%;
-    display: block;
+    width: 100%; 
+    height: 400px; 
+    object-fit: cover; 
+    border-radius: 8px; 
   }
   
   .overlay {
@@ -45,6 +46,47 @@
       opacity: 0.8;
       text-align: center;
     }
+
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      width: 110px;
+      margin: 30px;
+      border-radius: 5px;
+    }
+    
+    .card img {
+      width: 250%; 
+      height: 190px; 
+      object-fit: cover; 
+      border-radius: 8px; 
+    }
+
   }
+
+  @media (min-width: 601px) and (max-width: 1200px) {
+
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      width: 160px;
+      margin: 30px;
+      border-radius: 5px;
+    }
+    
+    .card img {
+      width: 255%; 
+      height: 300px; 
+      object-fit: cover; 
+      border-radius: 8px; 
+    }
+
+  
+  }
+
+
+
    
 

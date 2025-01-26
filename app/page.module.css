@@ -46,9 +46,11 @@
 }
 
 .cardContainer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 16px;
+  justify-items: stretch; 
+  align-items: stretch; 
 }
 
 
@@ -68,7 +70,11 @@
   }
 
   .cardContainer {
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 8px;
+    justify-items: stretch; 
+    align-items: stretch; 
   }
 }
 
@@ -97,8 +103,13 @@
 
 @media (min-width: 300px) and (max-width: 600px){
 
-
   .cardContainer {
-    font-size: 19px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 5px;
+    justify-items: stretch; 
+    align-items: stretch; 
+    font-size: 12px;
   }
+
 }
