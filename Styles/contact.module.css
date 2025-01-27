@@ -55,9 +55,9 @@
 
 .contactSection2 {
   display: flex;
-  flex-direction: column; /* Alinea los hijos en columna */
-  align-items: flex-start; /* Opcional: Alinea los elementos al inicio */
-  gap: 0.5rem; /* Espaciado entre los elementos */
+  flex-direction: column; 
+  align-items: flex-start; 
+  gap: 0.5rem; 
 }
 
 
@@ -70,6 +70,7 @@
   align-items: center;
   text-align: justify;
   margin-bottom: 25px;
+  width: 75%;
 }
 
 .iconBoxTitle5{
@@ -81,6 +82,7 @@
   align-items: center;
   text-align: justify;
   margin-bottom: 25px;
+  width: 75%;
 }
 
 .iconBoxTitle4{
