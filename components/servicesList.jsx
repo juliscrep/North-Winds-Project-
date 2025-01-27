@@ -180,20 +180,12 @@ const ServicesList = () => {
             <li className={styles.text4}>
               Inspeccionar las cuchillas para detectar grietas o daños
             </li>
-            <li className={styles.text4}>
-             Revisar la caja de cambios para comprobar el desgaste
-            </li>
+            
             <li className={styles.text4}>
              Verificar que el generador funcione correctamente
             </li>
             <li className={styles.text4}>
              Revisar los rodamientos para detectar signos de desgaste
-            </li>
-            <li className={styles.text4}>
-             Limpiar la góndola para eliminar el polvo y los residuos
-            </li>
-            <li className={styles.text4}>
-             Mantener el rotor libre de vegetación
             </li>
             <li className={styles.text4}>
              Revisar que el cableado no esté dañado
@@ -202,13 +194,13 @@ const ServicesList = () => {
           
         </div>  
        <div className={styles.column}>
-         <Image src="/img/control.jpeg" alt="Imagen" className={styles.image}  width={750} height={800}/>
+         <Image src="/img/control.jpeg" alt="Imagen" className={styles.image}  width={650} height={670}/>
        </div>         
      </div>
 
      <div className={styles.twoColumnsContainer}>
        <div className={styles.column}>
-         <Image src="/img/obra.jpeg" alt="Imagen" className={styles.image2}  width={750} height={550}/>
+         <Image src="/img/turbina.jpg" alt="Imagen" className={styles.image2}  width={700} height={500}/>
        </div>
        
         <div className={styles.textColumn}>
