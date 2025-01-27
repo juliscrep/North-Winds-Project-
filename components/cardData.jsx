@@ -21,12 +21,12 @@ const cardData = [
       slug: "services",
     },
     {
-      image: "/img/inpec.jpeg",
+      image: "/img/inspec.jpg",
       title: "Inspección de grandes componentes",
       slug: "services",
     },
     {
-      image: "/img/control.jpg",
+      image: "/img/control.jpeg",
       title: "Control de calidad",
       slug: "services",
     },

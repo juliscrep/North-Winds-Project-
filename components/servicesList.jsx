@@ -110,7 +110,7 @@ const ServicesList = () => {
 
      <div className={styles.twoColumnsContainer}>
        <div className={styles.column}>
-         <Image src="/img/inpec.jpeg" alt="Imagen" className={styles.image}  width={750} height={550}/>
+         <Image src="/img/inspec.jpg" alt="Imagen" className={styles.image}  width={600} height={550}/>
        </div>
        
         <div className={styles.textColumn}>
@@ -198,14 +198,11 @@ const ServicesList = () => {
             <li className={styles.text4}>
              Revisar que el cableado no esté dañado
             </li>
-            <li className={styles.text4}>
-             Cambiar el aceite de forma regular
-            </li>
           </ul>
           
         </div>  
        <div className={styles.column}>
-         <Image src="/img/control.jpg" alt="Imagen" className={styles.image}  width={550} height={900}/>
+         <Image src="/img/control.jpeg" alt="Imagen" className={styles.image}  width={750} height={800}/>
        </div>         
      </div>
 
