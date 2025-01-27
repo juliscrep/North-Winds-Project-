@@ -27,7 +27,13 @@ function ContactPage(){
 
             <div className={styles.contactSection} >
                 <i className="fa fa-phone"></i>
-                <span className={styles.iconBoxTitle2}>(+54) 380 4617560 / (+54) 3827 453714</span>
+                <span className={styles.iconBoxTitle2}>(+54) 380 4617560</span>
+                <div className={styles.contactSection2}>
+                    <span className={styles.iconBoxTitle5}>(+54) 3827 453714</span>
+                    <span className={styles.iconBoxTitle5}>(+54) 3827 431473</span>
+                </div>
+                
+               
             </div>                
         
             <div className={styles.contactSection}>
