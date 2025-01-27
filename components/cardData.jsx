@@ -31,12 +31,12 @@ const cardData = [
       slug: "services",
     },
     {
-      image: "/img/obra.jpeg",
+      image: "/img/turbina.jpg", 
       title: "Inspección en obra",
       slug: "services",
     },
     {
-      image: "/img/turbina.jpg",
+      image: "/img//obra.jpeg",
       title: "Mantenimiento preventivo",
       slug: "services",
     },
