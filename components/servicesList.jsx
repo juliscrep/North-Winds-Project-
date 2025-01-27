@@ -200,7 +200,7 @@ const ServicesList = () => {
 
      <div className={styles.twoColumnsContainer}>
        <div className={styles.column}>
-         <Image src="/img/turbina.jpg" alt="Imagen" className={styles.image2}  width={700} height={500}/>
+         <Image src="/img/turbina.jpg" alt="Imagen" className={styles.image2}  width={750} height={550}/>
        </div>
        
         <div className={styles.textColumn}>
