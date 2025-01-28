@@ -273,6 +273,11 @@ const ServicesList = () => {
             Verificamos en el montaje el torqueo y tensionado de todo el ensamblaje de la turbina eolica. 
             Realizamos inspecciones, pruebas y mediciones para garantizar el buen funcionamiento de la turbina.        
          </p>
+
+         <p className={styles.text1}>
+            Posteriormente, realizamos un informe para que el cliente tenga en su conocimiento la 
+            trazabilidad de las tareas que se ejecutaron.     
+         </p>
               
         </div>  
        <div className={styles.column}>
