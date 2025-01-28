@@ -276,7 +276,7 @@ const ServicesList = () => {
               
         </div>  
        <div className={styles.column}>
-         <Image src="/img/montajeTurbina.jpeg" alt="Imagen" className={styles.image}  width={400} height={600}/>
+         <Image src="/img/montajeTurbina.jpeg" alt="Imagen" className={styles.image2}  width={400} height={600}/>
        </div>         
      </div>
 

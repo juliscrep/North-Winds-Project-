@@ -37,7 +37,7 @@ const cardData = [
     },
     {
       image: "/img/montajeTurbina.jpeg",
-      title: "Control de calidad en turbinas eólicas",
+      title: "Control de calidad en montaje de turbinas eólicas",
       slug: "services",
     },
 ];
