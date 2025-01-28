@@ -36,8 +36,8 @@ const cardData = [
       slug: "services",
     },
     {
-      image: "/img//obra.jpeg",
-      title: "Mantenimiento preventivo",
+      image: "/img/montajeTurbina.jpeg",
+      title: "Control de calidad en turbinas eólicas",
       slug: "services",
     },
 ];
