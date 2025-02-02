@@ -12,12 +12,13 @@ const ServicesList = () => {
         </h2>
       </section>
 
+      <section id="mantenimiento" className={styles.expanded}>  
       <div className={styles.twoColumnsContainer}>
        <div className={styles.column}>
          <Image src="/img/maquina11.jpeg" alt="Imagen" className={styles.image}  width={750} height={550}/>
        </div>
        
-        <div id="mantenimiento" className={styles.textColumn}>
+        <div className={styles.textColumn}>
         <div className={styles.svgContainer}>
          <svg className={styles.icon} id="mantto_svg__Capa_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 167.73 167.51" width="49" height="49">
           <defs><style>.mantto_svg__cls-1</style></defs><g id="mantto_svg__Capa_1-2"><path class="mantto_svg__cls-1" 
@@ -36,9 +37,10 @@ const ServicesList = () => {
          </p>         
        </div>       
      </div>
+     </section>
 
-
-     <div id="correctivos" className={styles.twoColumnsContainer2}>
+     <section id="correctivos" className={styles.expanded}>  
+     <div className={styles.twoColumnsContainer2}>
         <div className={styles.textColumn}>
           <div className={styles.svgContainer}>
             <svg className={styles.icon} id="aerogenerador_svg__Capa_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 162.44 172.48" width="49" height="49"><defs><style>.aerogenerador_svg__cls-1</style></defs><g id="aerogenerador_svg__Capa_1-2">
@@ -56,8 +58,10 @@ const ServicesList = () => {
          <Image src="/img/background2.jpg" alt="Imagen" className={styles.image}  width={750} height={550}/>
        </div>         
      </div>
+     </section>
 
-     <div id="torqueo" className={styles.twoColumnsContainer}>
+     <section id="torqueo" className={styles.expanded}>  
+     <div className={styles.twoColumnsContainer}>
        <div className={styles.column}>
          <Image src="/img/maquina1.jpeg" alt="Imagen" className={styles.image2}  width={400} height={600}/>
        </div>
@@ -80,8 +84,10 @@ const ServicesList = () => {
          </p>         
        </div>    
      </div>
+     </section>
 
-     <div id="palas" className={styles.twoColumnsContainer2}>
+     <section id="palas" className={styles.expanded}>  
+     <div className={styles.twoColumnsContainer2}>
         <div className={styles.textColumn}>
         <div className={styles.svgContainer}>
           <svg className={styles.icon} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160.01 159.98" width="49" height="49">
@@ -106,9 +112,10 @@ const ServicesList = () => {
          <Image src="/img/maquina2.jpeg" alt="Imagen" className={styles.image2}  width={400} height={600}/>
        </div>         
      </div>
-     
+     </section>
 
-     <div id="inspeccion" className={styles.twoColumnsContainer}>
+     <section id="inspeccion" className={styles.expanded}>
+     <div className={styles.twoColumnsContainer}>
        <div className={styles.column}>
          <Image src="/img/inspec.jpg" alt="Imagen" className={styles.image}  width={600} height={550}/>
        </div>
@@ -136,8 +143,10 @@ const ServicesList = () => {
               
        </div>    
      </div>
-     
-     <div id="calidad" className={styles.twoColumnsContainer2}>
+     </section>
+
+     <section id="calidad" className={styles.expanded}>  
+     <div className={styles.twoColumnsContainer2}>
         <div className={styles.textColumn}>
         <div className={styles.svgContainer}>
           <svg className={styles.icon} viewBox="-16 0 512 512" width="60" height="60" xmlns="http://www.w3.org/2000/svg">
@@ -166,8 +175,6 @@ const ServicesList = () => {
             <path d="m368 352h-23.246094c-4.425781 0-8-3.574219-8-8s3.574219-8 8-8h23.246094c4.425781 0 8 3.574219 8 8s-3.574219 8-8 8zm0 0"/>
             <path d="m288 424c-2.046875 0-4.097656-.785156-5.65625-2.34375l-8-8c-3.128906-3.128906-3.128906-8.183594 0-11.3125s8.183594-3.128906 11.3125 0l8 8c3.128906 3.128906 3.128906 8.183594 0 11.3125-1.558594 1.558594-3.609375 2.34375-5.65625 2.34375zm0 0"/><path d="m288 424c-2.046875 0-4.097656-.785156-5.65625-2.34375-3.128906-3.128906-3.128906-8.183594 0-11.3125l24-24c3.128906-3.128906 8.183594-3.128906 11.3125 0s3.128906 8.183594 0 11.3125l-24 24c-1.558594 1.558594-3.609375 2.34375-5.65625 2.34375zm0 0"/><path d="m408 400h-64c-4.425781 0-8-3.574219-8-8s3.574219-8 8-8h64c4.425781 0 8 3.574219 8 8s-3.574219 8-8 8zm0 0"/><path d="m368 424h-23.246094c-4.425781 0-8-3.574219-8-8s3.574219-8 8-8h23.246094c4.425781 0 8 3.574219 8 8s-3.574219 8-8 8zm0 0"/>
           </svg>
-
-         
         
         </div>
          <h2 className={styles.title2}>Control de calidad</h2>
@@ -197,8 +204,10 @@ const ServicesList = () => {
          <Image src="/img/control.jpeg" alt="Imagen" className={styles.image}  width={650} height={670}/>
        </div>         
      </div>
+     </section>   
 
-     <div id="obra" className={styles.twoColumnsContainer}>
+     <section id="obra" className={styles.expanded}>  
+     <div className={styles.twoColumnsContainer}>
        <div className={styles.column}>
          <Image src="/img/turbina.jpg" alt="Imagen" className={styles.image2}  width={750} height={550}/>
        </div>
@@ -233,8 +242,10 @@ const ServicesList = () => {
               
        </div>    
      </div>
+     </section>
 
-     <div id="turbina" className={styles.twoColumnsContainer2}>
+     <section id="turbina" className={styles.expanded}>  
+     <div className={styles.twoColumnsContainer2}>
         <div className={styles.textColumn}>
         <div className={styles.svgContainer}>
           <svg className={styles.icon} viewBox="-16 0 512 512" width="60" height="60" xmlns="http://www.w3.org/2000/svg">
@@ -264,8 +275,6 @@ const ServicesList = () => {
             <path d="m288 424c-2.046875 0-4.097656-.785156-5.65625-2.34375l-8-8c-3.128906-3.128906-3.128906-8.183594 0-11.3125s8.183594-3.128906 11.3125 0l8 8c3.128906 3.128906 3.128906 8.183594 0 11.3125-1.558594 1.558594-3.609375 2.34375-5.65625 2.34375zm0 0"/><path d="m288 424c-2.046875 0-4.097656-.785156-5.65625-2.34375-3.128906-3.128906-3.128906-8.183594 0-11.3125l24-24c3.128906-3.128906 8.183594-3.128906 11.3125 0s3.128906 8.183594 0 11.3125l-24 24c-1.558594 1.558594-3.609375 2.34375-5.65625 2.34375zm0 0"/><path d="m408 400h-64c-4.425781 0-8-3.574219-8-8s3.574219-8 8-8h64c4.425781 0 8 3.574219 8 8s-3.574219 8-8 8zm0 0"/><path d="m368 424h-23.246094c-4.425781 0-8-3.574219-8-8s3.574219-8 8-8h23.246094c4.425781 0 8 3.574219 8 8s-3.574219 8-8 8zm0 0"/>
           </svg>
 
-         
-        
         </div>
          <h2 className={styles.title2}>Control de calidad en montaje de turbinas eólicas</h2>
          <br></br>
@@ -284,6 +293,7 @@ const ServicesList = () => {
          <Image src="/img/montajeTurbina.jpeg" alt="Imagen" className={styles.image2}  width={400} height={600}/>
        </div>         
      </div>
+     </section>
 
     </div>
     <div className={styles.section}>
