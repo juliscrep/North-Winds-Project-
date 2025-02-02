@@ -8,7 +8,7 @@ const Card = ({ image, title, slug }) => {
 
   return (
       <div className={styles.card}>
-        <Link href={`/${slug}`} passHref>
+        <Link href={`/services#${slug}`} passHref>
           <Image src={image} alt={title} width={800} height={800} />
           <div className={styles.overlay}>
             <h3 className={styles.cardText}>{title}</h3>

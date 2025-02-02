@@ -3,42 +3,42 @@ const cardData = [
     {
       image: "/img/maquina6.jpeg",
       title: "Operación y mantenimiento en general",
-      slug: "services",
+      slug: "mantenimiento",
     },
     {
       image: "/img/parque1.jpg",
       title: "Grandes correctivos",
-      slug: "services",
+      slug: "correctivos",
     },
     {
       image: "/img/maquina1.jpeg",
       title: "Torqueo y tensionado",
-      slug: "services",
+      slug: "torqueo",
     },
     {
       image: "/img/maquina2.jpeg",
       title: "Revisión y reparación de palas",
-      slug: "services",
+      slug: "palas",
     },
     {
       image: "/img/inspec.jpg",
       title: "Inspección de grandes componentes",
-      slug: "services",
+      slug: "inspeccion",
     },
     {
       image: "/img/control.jpeg",
       title: "Control de calidad",
-      slug: "services",
+      slug: "calidad",
     },
     {
       image: "/img/turbina.jpg", 
       title: "Inspección en obra",
-      slug: "services",
+      slug: "obra",
     },
     {
       image: "/img/montajeTurbina.jpeg",
       title: "Control de calidad en montaje de turbinas eólicas",
-      slug: "services",
+      slug: "turbina",
     },
 ];
 

@@ -7,15 +7,15 @@
 
 .twoColumnsContainer {
   display: flex;
-  margin-top: 10px;
+  margin-top: 30px;
 }
 .twoColumnsContainer2{
   display: flex;
-  margin-top: 10px;
+  margin-top: 30px;
 }
 
 .column {
-  padding: 30px;
+  padding: 40px;
 
 }
 

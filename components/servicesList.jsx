@@ -17,7 +17,7 @@ const ServicesList = () => {
          <Image src="/img/maquina11.jpeg" alt="Imagen" className={styles.image}  width={750} height={550}/>
        </div>
        
-        <div className={styles.textColumn}>
+        <div id="mantenimiento" className={styles.textColumn}>
         <div className={styles.svgContainer}>
          <svg className={styles.icon} id="mantto_svg__Capa_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 167.73 167.51" width="49" height="49">
           <defs><style>.mantto_svg__cls-1</style></defs><g id="mantto_svg__Capa_1-2"><path class="mantto_svg__cls-1" 
@@ -38,7 +38,7 @@ const ServicesList = () => {
      </div>
 
 
-     <div className={styles.twoColumnsContainer2}>
+     <div id="correctivos" className={styles.twoColumnsContainer2}>
         <div className={styles.textColumn}>
           <div className={styles.svgContainer}>
             <svg className={styles.icon} id="aerogenerador_svg__Capa_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 162.44 172.48" width="49" height="49"><defs><style>.aerogenerador_svg__cls-1</style></defs><g id="aerogenerador_svg__Capa_1-2">
@@ -57,7 +57,7 @@ const ServicesList = () => {
        </div>         
      </div>
 
-     <div className={styles.twoColumnsContainer}>
+     <div id="torqueo" className={styles.twoColumnsContainer}>
        <div className={styles.column}>
          <Image src="/img/maquina1.jpeg" alt="Imagen" className={styles.image2}  width={400} height={600}/>
        </div>
@@ -81,7 +81,7 @@ const ServicesList = () => {
        </div>    
      </div>
 
-     <div className={styles.twoColumnsContainer2}>
+     <div id="palas" className={styles.twoColumnsContainer2}>
         <div className={styles.textColumn}>
         <div className={styles.svgContainer}>
           <svg className={styles.icon} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160.01 159.98" width="49" height="49">
@@ -108,7 +108,7 @@ const ServicesList = () => {
      </div>
      
 
-     <div className={styles.twoColumnsContainer}>
+     <div id="inspeccion" className={styles.twoColumnsContainer}>
        <div className={styles.column}>
          <Image src="/img/inspec.jpg" alt="Imagen" className={styles.image}  width={600} height={550}/>
        </div>
@@ -137,7 +137,7 @@ const ServicesList = () => {
        </div>    
      </div>
      
-     <div className={styles.twoColumnsContainer2}>
+     <div id="calidad" className={styles.twoColumnsContainer2}>
         <div className={styles.textColumn}>
         <div className={styles.svgContainer}>
           <svg className={styles.icon} viewBox="-16 0 512 512" width="60" height="60" xmlns="http://www.w3.org/2000/svg">
@@ -198,7 +198,7 @@ const ServicesList = () => {
        </div>         
      </div>
 
-     <div className={styles.twoColumnsContainer}>
+     <div id="obra" className={styles.twoColumnsContainer}>
        <div className={styles.column}>
          <Image src="/img/turbina.jpg" alt="Imagen" className={styles.image2}  width={750} height={550}/>
        </div>
@@ -234,7 +234,7 @@ const ServicesList = () => {
        </div>    
      </div>
 
-     <div className={styles.twoColumnsContainer2}>
+     <div id="turbina" className={styles.twoColumnsContainer2}>
         <div className={styles.textColumn}>
         <div className={styles.svgContainer}>
           <svg className={styles.icon} viewBox="-16 0 512 512" width="60" height="60" xmlns="http://www.w3.org/2000/svg">
