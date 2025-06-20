@@ -87,7 +87,17 @@ const AboutPage = () => {
            <a href="/img/certificadoInspeccion.pdf" target="_blank">
               <Image src="/img/fotoInspeccion.png" alt="Icono de PDF" className={styles.pdf2} width={350} height={450} />
            </a>
+           
+        </div>
 
+        <div className={styles.pdfContainer2}>
+            <a href="/img/INFORME2025.pdf" target="_blank">
+              <Image src="/img/informe2025.png" alt="Icono de PDF" className={styles.pdf2} width={350} height={450} />
+           </a>
+          
+           <a href="/img/inspeccion2025.pdf" target="_blank">
+              <Image src="/img/inspeccion2025.png" alt="Icono de PDF" className={styles.pdf2} width={350} height={450} />
+           </a>
 
         </div>
 
