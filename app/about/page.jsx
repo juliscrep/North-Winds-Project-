@@ -80,11 +80,11 @@ const AboutPage = () => {
         </p>
 
         <div className={styles.pdfContainer2}>
-           <a href="/img/informeInspeccion.pdf" target="_blank">
+           <a href="/img/InformeInspeccion.pdf" target="_blank">
               <Image src="/img/informe.png" alt="Icono de PDF" className={styles.pdf2} width={350} height={450} />
            </a>
           
-           <a href="/img/certificadoInspeccion.pdf" target="_blank">
+           <a href="/img/CertificadoInspeccion.pdf" target="_blank">
               <Image src="/img/fotoInspeccion.png" alt="Icono de PDF" className={styles.pdf2} width={350} height={450} />
            </a>
            
