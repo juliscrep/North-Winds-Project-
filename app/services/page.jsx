@@ -3,7 +3,7 @@ import ServicesList from "../../components/servicesList";
 function ServicesPage(){
 
     return(
-       <ServicesList></ServicesList>
+       <ServicesList />
     )
 
 }
