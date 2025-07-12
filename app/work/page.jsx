@@ -1,40 +1,44 @@
+'use client';
+
 import React from "react";
 import styles from "../../Styles/work.module.css";
-import Image from 'next/image';
+import Image from "next/image";
+import { workInfo, workImages } from "./work.content";
 
-export default function workPage() {
+export default function WorkPage() {
   return (
-
-    <><div>
-        <section>
-        <h2 className={styles.title}>
-          Trabajos realizados en el año 2024
-        </h2>
+    <>
+      <section>
+        <h2 className={styles.title}>{workInfo.title}</h2>
       </section>
-      <p className={styles.text}>
-        Este trabajo se llevo a cabo en el parque eólico &quot;Vientos Neuquinos N° 1&quot; ubicado en la provincia de Neuquén, el cual consistió en la
-        reparación de la pala del aerogenerador.  
-      </p>
+
+      <p className={styles.text}>{workInfo.description}</p>
+
+      <div className={styles.column}>
+        {workImages.slice(0, 3).map((src, index) => (
+          <Image
+            key={`image-top-${index}`}
+            src={src}
+            alt={`Trabajo realizado ${index + 1}`}
+            className={styles.image}
+            width={350}
+            height={550}
+          />
+        ))}
       </div>
-      
-      
-        <div className={styles.column}>
-            <Image src="/img/trabajosRealizados/trabajo1.jpeg" alt="img" className={styles.image}  width={350} height={550} />
-          
-            <Image src="/img/trabajosRealizados/trabajo2.jpeg" alt="img" className={styles.image}  width={350} height={550} />
 
-            <Image src="/img/trabajosRealizados/trabajo3.jpeg" alt="img" className={styles.image}  width={350} height={550} />
-        
-        </div> 
-       
-        <div className={styles.column}>
-            <Image src="/img/trabajosRealizados/trabajo4.jpeg" alt="img" className={styles.image}  width={350} height={550} />
-
-            <Image src="/img/trabajosRealizados/trabajo5.jpeg" alt="img" className={styles.image}  width={350} height={550} />
-
-            <Image src="/img/trabajosRealizados/trabajo6.jpeg" alt="img" className={styles.image}  width={350} height={550} />
-            
-        </div> 
-        </>
-  )
+      <div className={styles.column}>
+        {workImages.slice(3).map((src, index) => (
+          <Image
+            key={`image-bottom-${index}`}
+            src={src}
+            alt={`Trabajo realizado ${index + 4}`}
+            className={styles.image}
+            width={350}
+            height={550}
+          />
+        ))}
+      </div>
+    </>
+  );
 }

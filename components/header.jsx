@@ -1,51 +1,49 @@
-'use client'
+'use client';
 
 import { useState } from 'react';
 import styles from '../Styles/header.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
+import { navLinks, navLabels } from '/components/constants/header.content';
 
 function Header() {
-  const [isMenuActive, setMenuActive] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const currentLang = 'es';
 
-  const closeMenu = () => {
-    setMenuActive(false);
-  };
-
-  const toggleMenu = () => {
-    setMenuActive(!isMenuActive);
-  };
+  const handleToggleMenu = () => setMenuOpen(!menuOpen);
+  const handleCloseMenu = () => setMenuOpen(false);
 
   return (
-    <div className={`contenedor ${styles.barra}`}>
+    <header className={`contenedor ${styles.barra}`}>
       <nav className={styles.navegacion}>
         <div className={styles.logo}>
           <Link href="/">
-            <Image alt="logo" src="/img/logo.jpeg" width={160} height={105} />
+            <Image alt="Logo North Winds" src="/img/logo.jpeg" width={160} height={105} />
           </Link>
         </div>
 
-        <button onClick={toggleMenu} className={styles.menuButton}>
+        <button
+          onClick={handleToggleMenu}
+          className={styles.menuButton}
+          aria-label={navLabels[currentLang].openMenu}
+        >
           ☰
         </button>
 
-        <div className={`${styles.rightItems} ${isMenuActive ? styles.active : ''}`}>
-          <Link href="/" className={styles.itemsColor} onClick={closeMenu}>
-            Inicio
-          </Link>
-          <Link href="/about" className={styles.itemsColor} onClick={closeMenu}>
-            Acerca de
-          </Link>
-          <Link href="/work" className={styles.itemsColor} onClick={closeMenu}>Trabajos</Link>
-          <Link href="/services" className={styles.itemsColor} onClick={closeMenu}>
-            Servicios
-          </Link>
-          <Link href="/contact" className={styles.itemsColor} onClick={closeMenu}>
-            Contacto
-          </Link>
+        <div className={`${styles.rightItems} ${menuOpen ? styles.active : ''}`}>
+          {navLinks.map(({ href, key }) => (
+            <Link
+              key={href}
+              href={href}
+              className={styles.itemsColor}
+              onClick={handleCloseMenu}
+            >
+              {navLabels[currentLang][key]}
+            </Link>
+          ))}
         </div>
       </nav>
-    </div>
+    </header>
   );
 }
 
