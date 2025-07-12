@@ -1,111 +1,90 @@
-import React from "react";
-import Layout from "../layout";
-import styles from "../../Styles/about.module.css";
-import Image from 'next/image'
+import Image from "next/image";
+import styles from "/Styles/about.module.css";
+
+
+import {
+  aboutText,
+  certificationText,
+  certificationDocs,
+  certificationPDFs,
+  inspectionDocs,
+  inspection2025Docs,
+} from "./about.content";
 
 const AboutPage = () => {
   return (
-    
-      <><div className={styles.aboutTitle}>
+    <>
+      <section className={styles.aboutTitle}>
+        <div>
+          <Image
+            className={styles.image}
+            alt="Video institucional"
+            src="/img/video.gif"
+            width={600}
+            height={500}
+            priority
+          />
+        </div>
 
-          <div>
-            <Image
-              className={styles.image}
-              alt="video"
-              src={"/img/video.gif"}
-              width= {600} 
-              height= {500}
-            />
-          </div>
+        <div>
+          <h1 className={styles.colorTitle}>{aboutText.title}</h1>
+          <p className={styles.aboutText}>{aboutText.paragraph1}</p>
+          <p className={styles.aboutText}>{aboutText.paragraph2}</p>
+        </div>
+      </section>
 
-          <div>
-            <h1 className={styles.colorTitle}>Acerca de la empresa</h1>
-              <p className={styles.aboutText}>
-              La fundación de nuestra empresa tuvo lugar en el año 2023, impulsada por un equipo de profesionales 
-              comprometidos con el sector de la energía renovable desde 2010. A lo largo de los años, hemos participado 
-              activamente en diversos proyectos a nivel nacional e internacional, abarcando áreas como Venezuela, 
-              La Guajira, Brasil (Acarau e Itarema), Uruguay (Cierra los Caracoles) y Argentina (Arauco, La Rioja, 
-              Bahía Blanca, Río Negro Pomona, Córdoba, Achiras, Chubut, Puerto Madrid). Durante este tiempo, hemos 
-              desempeñado roles clave en la ejecución de tareas relacionadas con aerogeneradores.
-              </p>
+      <section>
+        <h2 className={styles.title2}>{certificationText.title}</h2>
 
-              <p className={styles.aboutText}>En la actualidad, desde North Winds, continuamos ofreciendo servicios y 
-              soluciones a nuestros clientes con el más alto nivel de responsabilidad y compromiso. Estamos comprometidos
-               a mantener la excelencia en la prestación de nuestros servicios en el sector de energía renovable.</p>
-        </div>    
-
-    </div>
-    <div>
-
-        <h1 className={styles.title2}>Certificaciones</h1>
-        <p className={styles.aboutText}> Hemos obtenido la certificación del Wind Training Center (WTC). 
-          Esta distinción representa nuestro compromiso inquebrantable con los estándares 
-          más rigurosos de calidad, sostenibilidad y ética en la industria de la energía eólica.
-          Al obtener la certificación del WTC, reafirmamos nuestro compromiso con la excelencia en la formación y 
-          capacitación en el sector de energía renovable. Esta certificación no solo valida nuestra dedicación a la 
-          seguridad y la calidad, sino que también demuestra nuestro esfuerzo continuo por mejorar y destacarnos en un 
-          mercado cada vez más exigente.
-        </p>
-
-        <p className={styles.aboutText}>
-          En North Winds, consideramos que esta certificación es un testimonio de nuestra misión de proporcionar 
-          servicios de alta calidad y sostenibles en el campo de la energía eólica. Estamos emocionados de seguir
-          contribuyendo al avance de la industria y de brindar a nuestros clientes la garantía de trabajar con un
-          equipo certificado y comprometido con la excelencia.
-        </p>
+        <p className={styles.aboutText}>{certificationText.paragraph1}</p>
+        <p className={styles.aboutText}>{certificationText.paragraph2}</p>
 
         <div className={styles.pdfContainer}>
-            <a href="/img/certificado1.pdf" target="_blank">
-              <Image src="/img/fotoCertificado1.png" alt="Icono de PDF" className={styles.pdf} width={240} height={190} />
+          {certificationPDFs.map((pdf, index) => (
+            <a key={index} href={pdf} target="_blank" rel="noopener noreferrer">
+              <Image
+                src={certificationDocs[index]}
+                alt={`Certificado ${index + 1}`}
+                className={styles.pdf}
+                width={240}
+                height={190}
+              />
             </a>
-            <a href="/img/certificado2.pdf" target="_blank">
-              <Image src="/img/fotoCertificado2.png" alt="Icono de PDF" className={styles.pdf} width={240} height={190} />
-            </a>
-            <a href="/img/certificado3.pdf" target="_blank">
-              <Image src="/img/fotoCertificado3.png" alt="Icono de PDF" className={styles.pdf} width={240} height={190} />
-            </a>
-            <a href="/img/certificado4.pdf" target="_blank">
-              <Image src="/img/fotoCertificado4.png" alt="Icono de PDF" className={styles.pdf} width={240} height={190} />
-            </a>
-            <a href="/img/certificado5.pdf" target="_blank">
-              <Image src="/img/fotoCertificado5.png" alt="Icono de PDF" className={styles.pdf} width={240} height={190} />
-            </a>
-            
+          ))}
         </div>
 
-        <p className={styles.aboutText}> Tambien, hemos obtenido la certificación de la cesta de elevación para el 
-           mantenimiento de aerogeneradores. Esta evaluación fue realizada por WORKLIFT S.A., quienes llevaron a cabo una 
-           inspección exhaustiva de nuestro equipo. Su certificación valida que cumplimos con los requisitos
-            establecidos por la Ley 19.587 de Seguridad e Higiene en el Trabajo y sus Decretos Reglamentarios.
-        </p>
+        <p className={styles.aboutText}>{certificationText.paragraph3}</p>
 
         <div className={styles.pdfContainer2}>
-           <a href="/img/InformeInspeccion.pdf" target="_blank">
-              <Image src="/img/informe.png" alt="Icono de PDF" className={styles.pdf2} width={350} height={450} />
-           </a>
-          
-           <a href="/img/CertificadoInspeccion.pdf" target="_blank">
-              <Image src="/img/fotoInspeccion.png" alt="Icono de PDF" className={styles.pdf2} width={350} height={450} />
-           </a>
-           
+          {inspectionDocs.map(({ pdf, image }, index) => (
+            <a key={index} href={pdf} target="_blank" rel="noopener noreferrer">
+              <Image
+                src={image}
+                alt={`Inspección ${index + 1}`}
+                className={styles.pdf2}
+                width={350}
+                height={450}
+              />
+            </a>
+          ))}
         </div>
 
         <div className={styles.pdfContainer2}>
-            <a href="/img/INFORME2025.pdf" target="_blank">
-              <Image src="/img/informe2025.png" alt="Icono de PDF" className={styles.pdf2} width={350} height={450} />
-           </a>
-          
-           <a href="/img/inspeccion2025.pdf" target="_blank">
-              <Image src="/img/inspeccion2025.png" alt="Icono de PDF" className={styles.pdf2} width={350} height={450} />
-           </a>
-
+          {inspection2025Docs.map(({ pdf, image }, index) => (
+            <a key={index} href={pdf} target="_blank" rel="noopener noreferrer">
+              <Image
+                src={image}
+                alt={`Inspección 2025 - ${index + 1}`}
+                className={styles.pdf2}
+                width={350}
+                height={450}
+              />
+            </a>
+          ))}
         </div>
-
-      </div>   
-    
+      </section>
     </>
-
   );
 };
 
-export default AboutPage;
+export default AboutPage
