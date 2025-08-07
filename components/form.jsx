@@ -1,57 +1,97 @@
-'use client'
+'use client';
 
 import { useState } from 'react';
 import styles from '../Styles/form.module.css';
+import { formText } from '@/components/constants/form.content';
+
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xeqyeblr';
 
 const Form = () => {
- const [message,setMessage] = useState('')
- const handleSubmit = async(event) => {
-  event.preventDefault()
-  const data = new FormData(event.target)
-  const response = await fetch(event.target.action,{
-    method: 'POST',
-    body: data,
-    headers:{Accept:'application/json'}
-  })
+  const [message, setMessage] = useState('');
 
-  const result = await response.json()
-  if(!response.ok){
-    setMessage(result.errors.map(error => error.message).join(','))
-    return false
-  }
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const data = new FormData(event.target);
 
-  setMessage("Se ha enviado tu correo satisfactoriamente!")
-  event.target.reset();
+    try {
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        body: data,
+        headers: {
+          Accept: 'application/json',
+        },
+      });
 
-}
+      const result = await response.json();
 
-    return(
-        <div className={styles.container}> 
-        <div>
-          <form id='form' action="https://formspree.io/f/xeqyeblr" method="POST" onSubmit={handleSubmit}>
-            <h4 className={styles.title}>
-                ¿Necesitas información adicional o una cotización? Estamos para ayudarte.
-                Envíanos un correo electrónico y nos pondremos en contacto contigo en breve para proporcionarte toda la información que necesitas.
-            </h4>
-            <input placeholder="Nombre completo" type='text' id="name" name="name" className={styles.input}></input>
-            <input placeholder="Correo electrónico" type='email' id="email" name="email" className={styles.input}></input>
-            <input placeholder="Asunto" type='subject' id="subject" name="subject" className={styles.input}></input>
-            <textarea placeholder="Escribe tu mensaje aquí..." name='message' id="message" className={`${styles.input} ${styles.textarea}`}>
-            </textarea>
-            <div className={styles.btn}>
-                <button className={styles.button}>Enviar</button>
-            </div>
-            
-            <div className={styles.textAlert}>
-              <p>{message && <span className={styles.alert}>{message}</span>}</p>
-            </div>
-             
-          </form>
-         
+      if (!response.ok) {
+        const errorMessage = result.errors?.map((e) => e.message).join(', ') || 'Error al enviar';
+        setMessage(errorMessage);
+        return;
+      }
+
+      setMessage(formText.success);
+      event.target.reset();
+    } catch (error) {
+      setMessage('Ocurrió un error inesperado.');
+    }
+  };
+
+  return (
+    <div className={styles.container}>
+      <form id="form" action={FORMSPREE_ENDPOINT} method="POST" onSubmit={handleSubmit}>
+        <h4 className={styles.title}>{formText.title}</h4>
+
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder={formText.placeholders.name}
+          className={styles.input}
+          required
+        />
+
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder={formText.placeholders.email}
+          className={styles.input}
+          required
+        />
+
+        <input
+          type="text"
+          id="subject"
+          name="subject"
+          placeholder={formText.placeholders.subject}
+          className={styles.input}
+          required
+        />
+
+        <textarea
+          id="message"
+          name="message"
+          placeholder={formText.placeholders.message}
+          className={`${styles.input} ${styles.textarea}`}
+          rows={5}
+          required
+        />
+
+        <div className={styles.btn}>
+          <button type="submit" className={styles.button}>
+            {formText.button}
+          </button>
         </div>
-      </div>
-    )
 
-}
+        {message && (
+          <div className={styles.textAlert}>
+            <span className={styles.alert}>{message}</span>
+          </div>
+        )}
+      </form>
+    </div>
+  );
+};
 
 export default Form;
