@@ -27,6 +27,11 @@ function ContactPage() {
     text: contactInfo.email.text,
     textClass: styles[contactInfo.email.textClass],
   },
+  {
+    icon: contactInfo.instagram.icon,
+    text: contactInfo.instagram.text,
+    textClass: styles[contactInfo.instagram.textClass],
+  },
 ];
 
   return (
@@ -37,7 +42,7 @@ function ContactPage() {
 
           {iconTextItems.map((item, index) => (
             <div key={index} className={styles.contactSection}>
-              <i className={`fa ${item.icon} ${styles.icon}`}></i>
+              <i className={`${item.icon.includes('instagram') ? 'fab' : 'fa'} ${item.icon} ${styles.icon}`}></i>
               <span className={item.textClass}>{item.text}</span>
 
               {item.extra && (
