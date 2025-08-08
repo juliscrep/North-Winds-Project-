@@ -1,82 +1,158 @@
 export const faqs = [
+  // ——— General / Navegación ———
   {
-    keywords: ['horario', 'atención', 'open', 'abren', 'cierran', 'horarios', 'cuando', 'atender', 'disponible', 'jornada'],
+    keywords: [
+      'servicios', 'qué ofrecen', 'que ofrecen', 'que servis',
+      'qué brindan', 'ofrecen servicios', 'lista de servicios',
+      'que tienen', 'opciones de servicio'
+    ],
     answer:
-      'Nuestro horario de atención es de lunes a viernes de 8 a 17 hs (ART). ¡Estamos aquí para ayudarte dentro de ese horario!',
+      'Trabajamos en parques eólicos y parques solares, ofreciendo soluciones integrales. ' +
+      'Podés consultarnos por: Mantenimiento, Grandes correctivos, Torqueo y tensionado, ' +
+      'Revisión y reparación de palas, Inspecciones, Control de calidad, Obra y Montaje. ' +
+      'Si querés dejarnos tu número para coordinar una llamada, abrí Contacto (botón superior).'
   },
   {
-    keywords: ['presupuesto', 'cotización', 'precio', 'cotizar', 'presupuestos', 'estimación', 'costos', 'tarifas', 'valor'],
+    keywords: [
+      'horario', 'horarios', 'atención', 'cuando atienden', 'a que hora',
+      'abren', 'cierran', 'disponible', 'jornada', 'turnos'
+    ],
     answer:
-      'Para ofrecerte un presupuesto exacto, por favor indícanos el tipo de servicio que necesitas y el tamaño aproximado del proyecto. ¡Así podremos darte cifras concretas!',
+      'Atendemos lunes a viernes de 08:00–12:00 y 14:00–18:00 (ART). ' +
+      'Si necesitás coordinar fuera de ese horario, dejá tu consulta via email y te respondemos a la brevedad.'
   },
   {
-    keywords: ['contacto', 'email', 'teléfono', 'comunicarme', 'info', 'datos', 'atención al cliente', 'whatsapp', 'chat'],
+    keywords: [
+      'presupuesto', 'cotización', 'cotizar', 'precio', 'costos', 'tarifas',
+      'valor', 'estimación', 'cuánto sale', 'cuanto cuesta'
+    ],
     answer:
-      'Puedes escribirnos directamente por este chat o enviar un email a contacto@northwinds.com.ar. ¡Te responderemos a la brevedad!',
+      'Realizamos presupuestos a medida. Contanos el tipo de servicio y la escala del proyecto ' +
+      'para estimar con precisión. Si preferís, dejá tu número en Contacto (botón superior) y ' +
+      'te llamamos para relevar lo necesario.'
   },
   {
-    keywords: ['mantenimiento', 'operación', 'preventivo', 'correctivo', 'mantenimiento general', 'servicio', 'soporte', 'revisiones', 'revisión', 'check'],
+    keywords: [
+      'contacto', 'contactarme', 'comunicarme', 'email', 'correo',
+      'whatsapp', 'wsp', 'wasap', 'watsap', 'chat'
+    ],
     answer:
-      'En NorthWinds realizamos operación y mantenimiento integral: inspecciones regulares, ajustes preventivos y reparaciones rápidas para asegurar el óptimo desempeño de tus aerogeneradores.',
+      'Podés escribirnos por este chat o al correo northwinds1223@gmail.com. ' +
+      'Para dejarnos tu teléfono y coordinar un llamado, usá la sección Contacto (botón superior).'
   },
   {
-    keywords: ['correctivos', 'grandes correctivos', 'mayores', 'reparación', 'restauración', 'fallos', 'averías', 'recuperación'],
+    keywords: [
+      'ubicación', 'ubicacion', 'dirección', 'direccion', 'donde estan', 'dónde están',
+      'mapa', 'aimogasta', 'la rioja', 'localización', 'gps'
+    ],
     answer:
-      'Nuestros grandes correctivos incluyen desmontaje y análisis de componentes críticos, reparación o reemplazo de piezas dañadas, y pruebas finales para garantizar seguridad y eficiencia.',
+      'Estamos en RN60 y Av. 24 de Mayo, Aimogasta, La Rioja, Argentina (CP 5310). ' +
+      'En la web podés ver el mapa desde la sección Contacto.'
+  },
+
+  // ——— EÓLICOS ———
+  {
+    keywords: [
+      'mantenimiento', 'mantenimiento general', 'operación', 'soporte',
+      'revisiones', 'revision', 'check', 'service aerogeneradores', 'o&m'
+    ],
+    answer:
+      'Realizamos operación y mantenimiento (O&M) en parques eólicos: inspecciones periódicas, ' +
+      'ajustes preventivos y correctivos ágiles para sostener el rendimiento y la disponibilidad de los equipos.'
   },
   {
-    keywords: ['torqueo', 'tensionado', 'apriete', 'pernos', 'ajuste', 'pares', 'tensiones'],
+    keywords: [
+      'grandes correctivos', 'correctivos', 'correctivo mayor', 'averías',
+      'fallos', 'reparación mayor', 'restauración', 'cambio de componentes', 'multiplicadora'
+    ],
     answer:
-      'Usamos equipos de torqueo calibrados para aplicar el par exacto en los pernos esenciales, garantizando la fiabilidad estructural y previniendo aflojamientos en condiciones extremas.',
+      'Ejecutamos grandes correctivos sobre componentes críticos (multiplicadora, generador, palas, etc.), ' +
+      'incluyendo diagnóstico, reparación o reemplazo y pruebas finales para asegurar seguridad y performance.'
   },
   {
-    keywords: ['palas', 'revisión', 'reparación de palas', 'hélices', 'aspas', 'cuchillas', 'grieta', 'daños'],
+    keywords: [
+      'torqueo', 'tensionado', 'apriete', 'pernos', 'ajuste',
+      'pares de apriete', 'tensiones', 'calibrado'
+    ],
     answer:
-      'Realizamos inspecciones detalladas de palas con herramientas avanzadas y ofrecemos reparaciones especializadas para restaurar su aerodinámica y resistencia.',
+      'Realizamos torqueo y tensionado con herramientas calibradas para garantizar el par y la tensión adecuados, ' +
+      'evitando aflojamientos y preservando la integridad estructural.'
   },
   {
-    keywords: ['inspección', 'grandes componentes', 'obra', 'examinar', 'verificar', 'auditoría', 'controlar', 'evaluación'],
+    keywords: [
+      'palas', 'reparación de palas', 'revision de palas', 'hélices', 'aspas',
+      'cuchillas', 'grietas', 'daños en palas'
+    ],
     answer:
-      'Ofrecemos inspección en obra y en taller de componentes clave: torre, generador y tren de potencia, usando métodos no destructivos para detectar desgaste o fisuras.',
+      'Inspeccionamos y reparamos palas utilizando drones y cámaras de alta resolución para detectar daños, ' +
+      'y aplicamos técnicas de reparación que recuperan su aerodinámica y resistencia.'
   },
   {
-    keywords: ['control de calidad', 'calidad', 'montaje', 'normas', 'estándares', 'certificación', 'verificación', 'auditoría'],
+    keywords: [
+      'inspección', 'inspeccion', 'grandes componentes', 'componentes principales',
+      'torre', 'generador', 'tren de potencia', 'nacelle'
+    ],
     answer:
-      'Nuestro control de calidad abarca todas las etapas: desde la instalación de turbinas hasta certificaciones finales, asegurando que cada parámetro cumpla con estándares internacionales.',
+      'Realizamos inspecciones de grandes componentes (torre, góndola, tren de potencia, etc.) con métodos no destructivos, ' +
+      'identificando desgaste y fisuras para intervenir a tiempo.'
   },
   {
-    keywords: ['supervisión', 'inspección en obra', 'servicio en obra', 'monitoreo', 'vigilancia', 'supervisar', 'inspector', 'seguimiento'],
+    keywords: [
+      'control de calidad', 'calidad', 'auditoría', 'normas', 'estándares',
+      'certificación', 'verificación', 'qa qc', 'montaje calidad'
+    ],
     answer:
-      'Brindamos servicios en obra con personal especializado que supervisa montaje, pruebas y puesta en marcha, garantizando que tu proyecto evolucione sin contratiempos.',
+      'Implementamos control de calidad en cada etapa: instalación, pruebas y verificación de parámetros ' +
+      'bajo normas y procedimientos, con informes de trazabilidad.'
   },
   {
-    keywords: ['turbina', 'montaje', 'montaje de turbina', 'rotor', 'generador', 'molinete', 'nacelle', 'equipo'],
+    keywords: [
+      'obra', 'inspección en obra', 'servicio en obra', 'supervisión',
+      'monitoreo', 'vigilancia', 'seguimiento', 'inspector de obra'
+    ],
     answer:
-      'Nuestro servicio de montaje cubre la instalación completa: elevación de torres, montaje de generadores y palas, con equipos especializados para asegurar precisión y seguridad.',
+      'Acompañamos en obra con inspección y supervisión técnica: montaje, pruebas y puesta en marcha, ' +
+      'para asegurar una ejecución segura y conforme a especificaciones.'
   },
   {
-    keywords: ['objetivo', 'misión', 'propósito', 'expectativas', 'meta', 'finalidad', 'visión', 'compromiso'],
+    keywords: [
+      'montaje', 'montaje de turbinas', 'levantar torre', 'instalación',
+      'rotor', 'generador', 'palas', 'ensamble'
+    ],
     answer:
-      'Nuestro principal objetivo es ofrecer a cada cliente un servicio de calidad que no solo satisfaga sus necesidades, sino que supere sus expectativas, garantizando la satisfacción de nuestros clientes.',
+      'Ejecutamos montaje de turbinas eólicas: elevación de torres, ensamblado de generador y palas, ' +
+      'con equipos y procedimientos específicos para garantizar precisión y seguridad.'
+  },
+
+  // ——— SOLARES ———
+  {
+    keywords: [
+      'parques solares', 'solar', 'paneles solares', 'fotovoltaico', 'energia solar',
+      'módulos', 'limpieza de paneles', 'termografico', 'puntos calientes', 'redes'
+    ],
+    answer:
+      'Ofrecemos servicios en parques solares: mantenimientos preventivos, limpieza con robots, revisión de cableado, ' +
+      'control de estructuras y fundaciones, termografía de conexiones, mantenimiento de redes (MT/BT y subestaciones), ' +
+      'inspecciones visuales, detección de hotspots, reemplazo de estructuras y análisis de aceite en transformadores.'
+  },
+
+  // ——— EMPRESA / CONTACTO ———
+  {
+    keywords: [
+      'objetivo', 'misión', 'mision', 'propósito', 'proposito',
+      'meta', 'finalidad', 'visión', 'vision', 'compromiso'
+    ],
+    answer:
+      'Nos enfocamos en brindar un servicio de alta calidad, eficiente y confiable, ' +
+      'para superar las expectativas de cada cliente en el sector energético.'
   },
   {
-    keywords: ['ubicación', 'dirección', 'mapa', 'donde', 'aimogasta', 'la rioja', 'localización', 'sitio', 'gps', 'ubicación exacta', 'ubicacion', 'dónde', 'direccion'],
+    keywords: [
+      'teléfono', 'telefono', 'llamar', 'número', 'numero',
+      'celular', 'movil', 'whatsapp', 'wsp'
+    ],
     answer:
-      'Nos encontramos en RN60 y Av. 24 de Mayo, Aimogasta, La Rioja, Argentina (CP 5310). Puedes consultar nuestra ubicación exacta en el mapa de la sección Contacto de la web.',
+      'Si querés dejarnos tu número para coordinar un llamado, abrí la sección Contacto (botón superior). ' +
+      'También podés escribirnos a northwinds1223@gmail.com.'
   },
-  {
-    keywords: ['correo', 'email', 'mail', 'e-mail', 'mensajes', 'buzón'],
-    answer:
-      'Puedes escribirnos a northwinds1223@gmail.com y te responderemos a la brevedad.',
-  },
-  {
-    keywords: ['teléfono', 'telefono', 'llamar', 'contactar', 'celular', 'movil', 'llamada', 'números', 'comunicarse'],
-    answer:
-      'Puedes llamarnos al (+54) 380 4617560 (Guerrero Claudio) o a los siguientes números: (+54) 3827 453714 (Screpnik Julio) y (+54) 3827 431473 (Lucía Guerrero, Administración).',
-  },
-  {
-    keywords: ['parques solares', 'solar', 'paneles solares', 'mantenimiento preventivo', 'limpieza', 'termográfico', 'inspecciones', 'puntos calientes', 'aceites', 'fotovoltaico', 'energía solar', 'módulos', 'campo solar', 'estación solar'],
-    answer:
-      'En nuestros servicios de parques solares ofrecemos: mantenimientos preventivos, limpieza de paneles con robots, inspecciones termográficas, revisión de cableado, control de estructuras y fundaciones, inspecciones visuales, control de puntos calientes, reemplazo de estructuras y análisis de muestras de aceite en transformadores.',
-  },
-];
+]

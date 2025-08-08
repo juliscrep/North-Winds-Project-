@@ -21,6 +21,7 @@ export async function POST(request) {
   const { text } = await request.json()
   const input = normalize(text)
 
+  // 1) Operaciones (+ - * /)
   const mathMatch = input.match(/(-?\d+(?:\.\d+)?)\s*([+\-*/])\s*(-?\d+(?:\.\d+)?)/)
   if (mathMatch) {
     const [, n1Str, op, n2Str] = mathMatch
@@ -36,10 +37,12 @@ export async function POST(request) {
     const operation = `${n1} ${op} ${n2}`
     const servicePrompt = 'Hablando de otros temas, ¿te gustaría conocer nuestros servicios en parques eólicos y solares?'
     return NextResponse.json({
-      answer: `Por favor evita incluir números en tus consultas de servicios. Detecté la operación "${operation}" cuyo resultado es ${result}. ${servicePrompt}`
+      answer: `Por favor evitá incluir números en tus consultas de servicios. Detecté la operación "${operation}" y su resultado es ${result}. ${servicePrompt}`,
+      isFallback: false,
     })
   }
 
+  // 2) Coincidencia directa
   const matches = []
   for (const faq of faqs) {
     for (const kw of faq.keywords) {
@@ -51,9 +54,10 @@ export async function POST(request) {
   }
   if (matches.length) {
     const unique = Array.from(new Set(matches))
-    return NextResponse.json({ answer: unique.join(' \n\n ') })
+    return NextResponse.json({ answer: unique.join('\n\n'), isFallback: false })
   }
 
+  // 3) Fuzzy (Levenshtein)
   let best = { score: Infinity, answer: '' }
   for (const faq of faqs) {
     for (const kw of faq.keywords) {
@@ -64,7 +68,12 @@ export async function POST(request) {
 
   const threshold = Math.max(2, Math.floor(input.length * 0.2))
   if (best.score <= threshold) {
-    return NextResponse.json({ answer: best.answer })
+    return NextResponse.json({ answer: best.answer, isFallback: false })
   }
-  return NextResponse.json({ answer: 'Disculpa, no entendí bien. ¿Podrías reformular con más contexto?' })
+
+  // 4) Fallback (reactiva menú en el cliente)
+  return NextResponse.json({
+    answer: 'No estoy seguro de haber entendido 🤔. ¿Querés ver opciones rápidas de *Servicios*, *Ubicación*, *Contacto* u *Horario*?',
+    isFallback: true,
+  })
 }
