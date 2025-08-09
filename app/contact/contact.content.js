@@ -24,4 +24,9 @@ export const contactInfo = {
     text: "northwinds1223@gmail.com",
     textClass: "iconBoxTitle2",
   },
+   instagram: {
+    icon: "fa-instagram",
+    text: "north.winds.sa",
+    textClass: "iconBoxTitle4",
+  },
 };
