@@ -9,6 +9,7 @@
   border-radius: 5px; 
 }
 
+
 .bn39 {
   background-color:transparent;
   box-sizing: border-box;
@@ -25,10 +26,10 @@
   align-items: center;
 }
 
-.bn39:hover {
+.contactSection:hover {
   color:#990000;
-  border: 2px solid #990000;
 }
+
 
 .title{
   text-align: center;
