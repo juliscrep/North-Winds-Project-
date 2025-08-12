@@ -1,6 +1,6 @@
 // Textos
 export const aboutText = {
-  title: "Acerca de la empresa",
+  title: "Nuestra historia",
   paragraph1: `La fundación de nuestra empresa tuvo lugar en el año 2023, impulsada por un equipo de profesionales 
 comprometidos con el sector de la energía renovable desde 2010. A lo largo de los años, hemos participado 
 activamente en diversos proyectos a nivel nacional e internacional, abarcando áreas como Venezuela, 
