@@ -59,7 +59,7 @@
     justify-content: center;
     height: 100%;
     transition: background 0.5s ease;
-    width: 30%;
+    width: 40%;
   }
 
   .button:hover {
@@ -68,7 +68,7 @@
   }
   
   .btn{
-    margin-top: 20px;
+    margin-top: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
