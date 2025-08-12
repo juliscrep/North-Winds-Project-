@@ -11,17 +11,14 @@ import { whatsappMessage } from './const'
 import { motion, AnimatePresence } from 'framer-motion'
 
 export default function FloatingButtons() {
-  // LINKS
   const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER
   const instagramUrl = process.env.NEXT_PUBLIC_INSTAGRAM_URL || 'https://www.instagram.com/north.winds.sa/'
   const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`
 
-  // Chatbot
   const [chatOpen, setChatOpen] = useState(false)
   const chatButtonRef = useRef(null)
   const toggleChat = () => setChatOpen(v => !v)
 
-  // Split FAB
   const [menuOpen, setMenuOpen] = useState(false)
   const toggleMenu = () => setMenuOpen(v => !v)
   const closeMenu = () => setMenuOpen(false)
@@ -31,10 +28,8 @@ export default function FloatingButtons() {
 
   return (
     <>
-      {/* CONTENEDOR FIJO DEL FAB COMBINADO */}
       <ClickAwayListener onClickAway={closeMenu}>
         <Box sx={{ position: 'fixed', ...basePos, zIndex: 1300 }}>
-          {/* BOTONES DESPLEGADOS (a la IZQUIERDA, para no chocar con el chat) */}
           <AnimatePresence>
             {menuOpen && (
               <>
@@ -82,16 +77,17 @@ export default function FloatingButtons() {
                       rel="noopener noreferrer"
                       aria-label="Instagram"
                       sx={{
-                        width: 48, height: 48, color: '#fff',
-                        background:
-                          'radial-gradient(30% 30% at 30% 30%, #ffd776, transparent), ' +
-                          'linear-gradient(135deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d)',
+                        width: 48,
+                        height: 48,
+                        color: '#fff',
+                        // Fondo con degradado rosa original Instagram
+                        background: 'radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%)',
                         boxShadow: '0 10px 24px rgba(0,0,0,.22)',
                         '&:hover': { filter: 'brightness(1.05)', transform: 'translateY(-1px)' },
-                        transition: 'transform .16s ease, filter .16s ease'
+                        transition: 'transform .16s ease, filter .16s ease',
                       }}
                     >
-                      <FaInstagram size={20} />
+                      <FaInstagram size={20} color="#fff" />
                     </IconButton>
                   </Tooltip>
                 </motion.div>
@@ -99,7 +95,7 @@ export default function FloatingButtons() {
             )}
           </AnimatePresence>
 
-          {/* FAB COMBINADO: mitad WhatsApp / mitad Instagram */}
+          {/* FAB combinado */}
           <motion.div
             animate={{ rotate: menuOpen ? -90 : 0, scale: menuOpen ? 1.04 : 1 }}
             transition={{ type: 'spring', stiffness: 300, damping: 18 }}
@@ -119,39 +115,58 @@ export default function FloatingButtons() {
                 background: 'transparent'
               }}
             >
-              {/* Círculo dividido en dos mitades con iconos */}
               <Box sx={{ position: 'relative', width: 56, height: 56 }}>
-                {/* Mitad izquierda: WhatsApp */}
+                {/* WhatsApp */}
                 <Box sx={{
-                  position: 'absolute', inset: 0,
+                  position: 'absolute',
+                  inset: 0,
                   clipPath: 'polygon(0 0, 50% 0, 50% 100%, 0 100%)',
                   bgcolor: '#25d366'
                 }} />
-                {/* Mitad derecha: Instagram */}
+                {/* Instagram con degradado rosa original */}
                 <Box sx={{
-                  position: 'absolute', inset: 0,
+                  position: 'absolute',
+                  inset: 0,
                   clipPath: 'polygon(50% 0, 100% 0, 100% 100%, 50% 100%)',
-                  background:
-                    'radial-gradient(30% 30% at 30% 30%, #ffd776, transparent),' +
-                    'linear-gradient(135deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d)'
+                  background: 'radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%)',
                 }} />
-                {/* Divisor sutil */}
+                {/* Divisor suave */}
                 <Box sx={{
-                  position: 'absolute', top: 4, bottom: 4, left: '50%',
-                  width: 1, bgcolor: 'rgba(255,255,255,.6)', transform: 'translateX(-.5px)'
+                  position: 'absolute',
+                  top: 4,
+                  bottom: 4,
+                  left: '50%',
+                  width: 2,
+                  borderRadius: 2,
+                  bgcolor: 'rgba(255,255,255,.6)',
+                  transform: 'translateX(-1px)'
                 }} />
-                {/* Iconos centrados en cada mitad */}
+                {/* Iconos */}
                 <Box sx={{
-                  position: 'absolute', left: 0, top: 0, width: '50%', height: '100%',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff'
+                  position: 'absolute',
+                  left: 0,
+                  top: 0,
+                  width: '50%',
+                  height: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#fff'
                 }}>
                   <FaWhatsapp size={20} />
                 </Box>
                 <Box sx={{
-                  position: 'absolute', left: '50%', top: 0, width: '50%', height: '100%',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff'
+                  position: 'absolute',
+                  left: '50%',
+                  top: 0,
+                  width: '50%',
+                  height: '100%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#fff'
                 }}>
-                  <FaInstagram size={18} />
+                  <FaInstagram size={19} />
                 </Box>
               </Box>
             </IconButton>
@@ -159,7 +174,7 @@ export default function FloatingButtons() {
         </Box>
       </ClickAwayListener>
 
-      {/* BOTÓN FLOTANTE DEL CHATBOT (queda igual, con tooltip) */}
+      {/* Chatbot */}
       <Tooltip title="Asistente digital" placement="left">
         <IconButton
           ref={chatButtonRef}
@@ -169,7 +184,10 @@ export default function FloatingButtons() {
             position: 'fixed',
             ...chatPos,
             zIndex: 1300,
-            width: 56, height: 56, color: '#fff', borderRadius: '50%',
+            width: 56,
+            height: 56,
+            color: '#fff',
+            borderRadius: '50%',
             background: 'linear-gradient(135deg, rgba(25,118,210,1), rgba(76,175,80,0.95))',
             boxShadow: '0 12px 28px rgba(0,0,0,.22)',
             transition: 'transform .18s ease, box-shadow .18s ease, filter .18s ease',
@@ -181,7 +199,6 @@ export default function FloatingButtons() {
         </IconButton>
       </Tooltip>
 
-      {/* CHAT WIDGET */}
       <ChatbotWidget
         anchorEl={chatButtonRef.current}
         open={chatOpen}
