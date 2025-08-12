@@ -14,10 +14,10 @@ import Avatar from '@mui/material/Avatar'
 import SendIcon from '@mui/icons-material/SendRounded'
 import CloseIcon from '@mui/icons-material/CloseRounded'
 import RestartIcon from '@mui/icons-material/RestartAltRounded'
-import RobotIcon from '@mui/icons-material/SmartToyRounded'
 import PersonIcon from '@mui/icons-material/PersonRounded'
 import TopicIcon from '@mui/icons-material/TopicRounded'
 import { ClickAwayListener, useMediaQuery, useTheme } from '@mui/material'
+import AnimatedNorthWindsProIcon from '../NorthWindsIcon/AnimatedNorthWindsProIcon'
 
 const getGreeting = () => {
   const h = new Date().getHours()
@@ -294,9 +294,17 @@ export default function ChatbotWidget({ anchorEl, open, onClose }) {
             }}
           >
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <Avatar sx={{ width: 28, height: 28, bgcolor: 'primary.main' }}>
-                <RobotIcon fontSize="small" />
-              </Avatar>
+            <Avatar sx={{ width: 32, height: 32, bgcolor: 'transparent' }}>
+              <AnimatedNorthWindsProIcon
+                size={56}
+                spinSeconds={8}
+                primary="#111827"
+                blade="#0F172A"
+                accent="#22C55E"
+                bgStart="#E9F4FF"
+                bgEnd="#F4FFF7"
+              />
+            </Avatar>
               <Box sx={{ fontWeight: 700 }}>NorthWinds Chat</Box>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
@@ -340,7 +348,7 @@ export default function ChatbotWidget({ anchorEl, open, onClose }) {
                   }}
                 >
                   <Avatar sx={{ width: 28, height: 28, bgcolor: isBot ? 'primary.main' : 'secondary.main' }}>
-                    {isBot ? <RobotIcon fontSize="small" /> : <PersonIcon fontSize="small" />}
+                    {isBot ? <AnimatedNorthWindsProIcon size={22} title="NorthWinds"  /> : <PersonIcon fontSize="small" />}
                   </Avatar>
                   <Box
                     sx={{
@@ -363,7 +371,7 @@ export default function ChatbotWidget({ anchorEl, open, onClose }) {
             {isTyping && (
               <Box sx={{ display: 'flex', gap: 1, mb: 1.2, alignItems: 'flex-end' }}>
                 <Avatar sx={{ width: 28, height: 28, bgcolor: 'primary.main' }}>
-                  <RobotIcon fontSize="small" />
+                  <AnimatedNorthWindsProIcon size={22} title="NorthWinds" />
                 </Avatar>
                 <Box
                   sx={{

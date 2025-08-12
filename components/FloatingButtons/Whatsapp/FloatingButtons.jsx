@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef } from 'react'
-import { FaWhatsapp, FaInstagram, FaRobot } from 'react-icons/fa'
+import { FaWhatsapp, FaInstagram } from 'react-icons/fa'
 import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import Box from '@mui/material/Box'
@@ -9,6 +9,7 @@ import { ClickAwayListener } from '@mui/material'
 import ChatbotWidget from '../ChatBot/ChatbotWidget'
 import { whatsappMessage } from './const'
 import { motion, AnimatePresence } from 'framer-motion'
+import AnimatedNorthWindsProIcon from '../NorthWindsIcon/AnimatedNorthWindsProIcon'
 
 export default function FloatingButtons() {
   const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER
@@ -195,7 +196,15 @@ export default function FloatingButtons() {
             '&:active': { transform: 'scale(.98)' }
           }}
         >
-          <FaRobot size={22} />
+          <AnimatedNorthWindsProIcon
+            size={56}
+            spinSeconds={8}
+            primary="#111827"
+            blade="#0F172A"
+            accent="#22C55E"
+            bgStart="#E9F4FF"
+            bgEnd="#F4FFF7"
+          />
         </IconButton>
       </Tooltip>
 
