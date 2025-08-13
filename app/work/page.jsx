@@ -18,10 +18,10 @@ export default function WorkPage() {
 
   return (
     <section className={styles.section}>
-      {/* Título */}
+     
       <h2 className={styles.title}>{workInfo.title}</h2>
 
-      {/* Descripción */}
+   
       <p className={styles.text}>
         Hemos participado activamente en una amplia variedad de proyectos de
         gran envergadura tanto a nivel nacional como internacional. Nuestra
@@ -37,7 +37,7 @@ export default function WorkPage() {
         renovables.
       </p>
 
-      {/* Galería de imágenes */}
+      
       {imageRows.map((row, rowIndex) => (
         <div key={`row-${rowIndex}`} className={styles.row}>
           {row.map((src, index) => (
