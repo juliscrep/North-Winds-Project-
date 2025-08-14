@@ -176,37 +176,38 @@ export default function FloatingButtons() {
       </ClickAwayListener>
 
       {/* Chatbot */}
-      <Tooltip title="Asistente digital" placement="left">
-        <IconButton
-          ref={chatButtonRef}
-          onClick={toggleChat}
-          aria-label="Abrir Chatbot"
-          sx={{
-            position: 'fixed',
-            ...chatPos,
-            zIndex: 1300,
-            width: 56,
-            height: 56,
-            color: '#fff',
-            borderRadius: '50%',
-            background: 'linear-gradient(135deg, rgba(25,118,210,1), rgba(76,175,80,0.95))',
-            boxShadow: '0 12px 28px rgba(0,0,0,.22)',
-            transition: 'transform .18s ease, box-shadow .18s ease, filter .18s ease',
-            '&:hover': { transform: 'translateY(-2px) scale(1.03)', boxShadow: '0 16px 32px rgba(0,0,0,.28)', filter: 'brightness(1.03)' },
-            '&:active': { transform: 'scale(.98)' }
-          }}
-        >
-          <AnimatedNorthWindsProIcon
-            size={56}
-            spinSeconds={8}
-            primary="#111827"
-            blade="#0F172A"
-            accent="#22C55E"
-            bgStart="#E9F4FF"
-            bgEnd="#F4FFF7"
-          />
-        </IconButton>
-      </Tooltip>
+<Tooltip title="Asistente digital" placement="left">
+  <IconButton
+    ref={chatButtonRef}
+    onClick={toggleChat}
+    aria-label="Abrir Chatbot"
+    sx={{
+      position: 'fixed',
+      ...chatPos,
+      zIndex: 1300,
+      width: 56,
+      height: 56,
+      color: '#fff',
+      borderRadius: '50%',
+      background: 'linear-gradient(135deg, rgba(25,118,210,1), rgba(76,175,80,0.95))',
+      boxShadow: '0 12px 28px rgba(0,0,0,.22)',
+      transition: 'transform .18s ease, box-shadow .18s ease, filter .18s ease',
+      '&:hover': { transform: 'translateY(-2px) scale(1.03)', boxShadow: '0 16px 32px rgba(0,0,0,.28)', filter: 'brightness(1.03)' },
+      '&:active': { transform: 'scale(.98)' },
+    }}
+  >
+    {/* Por defecto as="span", aria-hidden activado → no hay botón anidado */}
+    <AnimatedNorthWindsProIcon
+      size={56}
+      spinSeconds={8}
+      primary="#111827"
+      blade="#0F172A"
+      accent="#22C55E"
+      bgStart="#E9F4FF"
+      bgEnd="#F4FFF7"
+    />
+  </IconButton>
+</Tooltip>
 
       <ChatbotWidget
         anchorEl={chatButtonRef.current}

@@ -2,118 +2,6 @@ import { faqsAll } from '../../../components/FloatingButtons/ChatBot/config/chat
 import { NextResponse } from 'next/server'
 import { SYNONYMS, WEIGHTS, SERVICE_HINT_STEMS, CONVERSATIONAL_TOPICS } from './const.js'
 
-// —————————— Utilidades ——————————
-const normalize = (str) =>
-  String(str || '')
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/\p{Diacritic}/gu, '')
-    .replace(/[^\p{L}\p{N}\s]/gu, ' ')
-    .replace(/\s+/g, ' ')
-    .trim()
-
-const lightStem = (w) =>
-  w
-    .replace(/(ciones|ciones?)$/, 'cion')
-    .replace(/(mente)$/, '')
-    .replace(/(ando|iendo)$/, '')
-    .replace(/(es|s)$/, '')
-    .replace(/(icas|icos|ica|ico)$/, 'ic')
-    .replace(/(adas|ados|ada|ado)$/, 'ad')
-
-const tokenize = (str) => normalize(str).split(' ').filter(Boolean).map(lightStem)
-
-// Levenshtein (early-exit)
-const levenshtein = (a, b, max = Infinity) => {
-  a = String(a); b = String(b)
-  const m = a.length, n = b.length
-  if (Math.abs(m - n) > max) return max + 1
-  const dp = new Array(n + 1)
-  for (let j = 0; j <= n; j++) dp[j] = j
-  for (let i = 1; i <= m; i++) {
-    let prev = dp[0]
-    dp[0] = i
-    let bestRow = dp[0]
-    for (let j = 1; j <= n; j++) {
-      const temp = dp[j]
-      const cost = a[i - 1] === b[j - 1] ? 0 : 1
-      dp[j] = Math.min(dp[j] + 1, dp[j - 1] + 1, prev + cost)
-      prev = temp
-      if (dp[j] < bestRow) bestRow = dp[j]
-    }
-    if (bestRow > max) return max + 1
-  }
-  return dp[n]
-}
-
-// ——— Preprocesa FAQs ———
-const preprocessFaqs = (faqs) => {
-  return faqs.map((f) => {
-    const expanded = new Set()
-    for (const kw of f.keywords) {
-      const nk = normalize(kw)
-      expanded.add(nk)
-      tokenize(nk).forEach(t => expanded.add(t))
-      nk.split(' ').forEach(w => {
-        const stem = lightStem(w)
-        if (stem) expanded.add(stem)
-        ;(SYNONYMS[stem] || []).forEach(s => {
-          const ns = normalize(s)
-          expanded.add(ns)
-          tokenize(ns).forEach(t => expanded.add(t))
-        })
-      })
-    }
-    return { ...f, _expanded: Array.from(expanded) }
-  })
-}
-
-// ——— Scoring por FAQ ———
-const scoreFaq = (inputRaw, faq) => {
-  const inputNorm = normalize(inputRaw)
-  const inputTokens = tokenize(inputNorm)
-  let score = 0
-
-  for (const kw of faq.keywords) {
-    const nkw = normalize(kw)
-    if (nkw && inputNorm.includes(nkw)) score += WEIGHTS.exactPhrase
-  }
-
-  for (const t of inputTokens) {
-    if (!t) continue
-    if (faq._expanded.includes(t)) { score += WEIGHTS.tokenExact; continue }
-    const syns = SYNONYMS[t] || []
-    if (syns.length) score += WEIGHTS.tokenSynonym
-
-    const maxDist = t.length <= 4 ? 1 : 2
-    let matchedFuzzy = false
-    for (const e of faq._expanded) {
-      const d = levenshtein(t, e, maxDist)
-      if (d <= maxDist) { matchedFuzzy = true; break }
-    }
-    if (matchedFuzzy) score += WEIGHTS.tokenFuzzy
-  }
-
-  let hits = 0
-  for (const kw of faq.keywords) {
-    const nkw = normalize(kw)
-    const d = levenshtein(inputNorm, nkw, Math.ceil(nkw.length * 0.2))
-    if (inputNorm.includes(nkw) || d <= Math.max(2, Math.floor(nkw.length * 0.2))) hits++
-  }
-  score += hits * WEIGHTS.keywordHit
-
-  return score
-}
-
-// ——— Cacheo ———
-let _faqsPre = null
-const getPreprocessedFaqs = () => {
-  if (!_faqsPre) _faqsPre = preprocessFaqs(faqsAll)
-  return _faqsPre
-}
-
-
-
 
 // Mapa de intenciones “duras” (stems → topic) para overrides confiables
 const HARD_INTENTS = new Map([
@@ -154,7 +42,195 @@ const TOPIC_ALIASES = new Map([
   ['redes_web','contacto'],
   ['humano','contacto']
 ])
+
+// —————————— Utilidades ——————————
+/**
+ * @function normalize
+ * @description Normaliza texto (minúsculas, sin tildes/ signos, espacios colapsados).
+ * @param {string | any} str - Texto de entrada.
+ * @returns {string} Texto normalizado.
+ * @example normalize('¡Ubicación & Horarios!') // 'ubicacion horarios'
+ * @remarks Idempotente; tolera null/undefined.
+ */
+
+const normalize = (str) =>
+  String(str || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu, '')
+    .replace(/[^\p{L}\p{N}\s]/gu, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+
+/**
+ * @function lightStem
+ * @description Stemmer liviano en español: recorta sufijos frecuentes.
+ * @param {string} w - Token ya normalizado.
+ * @returns {string} Stem aproximado.
+ * @example lightStem('inspecciones') // 'inspeccion'
+ * @remarks Heurístico y barato; prioriza recall sobre precisión.
+ */
+const lightStem = (w) =>
+  w
+    .replace(/(ciones|ciones?)$/, 'cion')
+    .replace(/(mente)$/, '')
+    .replace(/(ando|iendo)$/, '')
+    .replace(/(es|s)$/, '')
+    .replace(/(icas|icos|ica|ico)$/, 'ic')
+    .replace(/(adas|ados|ada|ado)$/, 'ad')
+
+    /**
+ * @function tokenize
+ * @description Normaliza, divide por espacios y aplica lightStem a cada token.
+ * @param {string} str - Texto bruto.
+ * @returns {string[]} Lista de tokens stem.
+ * @example tokenize('Revisión y reparación de palas') // ['revision','y','reparacion','de','pal']
+ * @remarks Sin tokens vacíos; base para matching/scoring.
+ */
+const tokenize = (str) => normalize(str).split(' ').filter(Boolean).map(lightStem)
+
+/**
+ * @function levenshtein
+ * @description Distancia Levenshtein con corte temprano por umbral.
+ * @param {string} a - Cadena A.
+ * @param {string} b - Cadena B.
+ * @param {number} [max=Infinity] - Umbral de poda; si se supera, retorna max+1.
+ * @returns {number} Distancia mínima de edición.
+ * @example levenshtein('palas','palos',1) // 1
+ * @remarks O(m·n) peor caso; se poda por fila si no puede mejorar.
+ */
+const levenshtein = (a, b, max = Infinity) => {
+  a = String(a); b = String(b)
+  const m = a.length, n = b.length
+  if (Math.abs(m - n) > max) return max + 1
+  const dp = new Array(n + 1)
+  for (let j = 0; j <= n; j++) dp[j] = j
+  for (let i = 1; i <= m; i++) {
+    let prev = dp[0]
+    dp[0] = i
+    let bestRow = dp[0]
+    for (let j = 1; j <= n; j++) {
+      const temp = dp[j]
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1
+      dp[j] = Math.min(dp[j] + 1, dp[j - 1] + 1, prev + cost)
+      prev = temp
+      if (dp[j] < bestRow) bestRow = dp[j]
+    }
+    if (bestRow > max) return max + 1
+  }
+  return dp[n]
+}
+
+/**
+ * @function preprocessFaqs
+ * @description Expande keywords por FAQ a variantes normalizadas, tokens, stems y sinónimos.
+ * @param {{keywords: string[], topic?: string, answer?: string}[]} faqs - Lista de FAQs crudas.
+ * @returns {({keywords: string[], topic?: string, answer?: string, _expanded: string[]})[]} FAQs con campo `_expanded`.
+ * @example preprocessFaqs([{ keywords: ['torqueo y tensionado'] }])
+ * @remarks No muta el input; usa normalize, tokenize, lightStem y SYNONYMS.
+ */
+
+const preprocessFaqs = (faqs) => {
+  return faqs.map((f) => {
+    const expanded = new Set()
+    for (const kw of f.keywords) {
+      const nk = normalize(kw)
+      expanded.add(nk)
+      tokenize(nk).forEach(t => expanded.add(t))
+      nk.split(' ').forEach(w => {
+        const stem = lightStem(w)
+        if (stem) expanded.add(stem)
+        ;(SYNONYMS[stem] || []).forEach(s => {
+          const ns = normalize(s)
+          expanded.add(ns)
+          tokenize(ns).forEach(t => expanded.add(t))
+        })
+      })
+    }
+    return { ...f, _expanded: Array.from(expanded) }
+  })
+}
+
+/**
+ * @function scoreFaq
+ * @description Puntúa similitud entre la consulta y una FAQ.
+ * @param {string} inputRaw - Texto de usuario (bruto).
+ * @param {{keywords: string[], _expanded: string[]}} faq - FAQ preprocesada.
+ * @returns {number} Puntuación total.
+ * @example scoreFaq('hacen torqueo?', faq) // número > 0
+ * @remarks Suma: frase exacta, token exacto/sinónimo/difuso y hits por keyword; usa WEIGHTS y levenshtein.
+ */
+const scoreFaq = (inputRaw, faq) => {
+  const inputNorm = normalize(inputRaw)
+  const inputTokens = tokenize(inputNorm)
+  let score = 0
+
+  for (const kw of faq.keywords) {
+    const nkw = normalize(kw)
+    if (nkw && inputNorm.includes(nkw)) score += WEIGHTS.exactPhrase
+  }
+
+  for (const t of inputTokens) {
+    if (!t) continue
+    if (faq._expanded.includes(t)) { score += WEIGHTS.tokenExact; continue }
+    const syns = SYNONYMS[t] || []
+    if (syns.length) score += WEIGHTS.tokenSynonym
+
+    const maxDist = t.length <= 4 ? 1 : 2
+    let matchedFuzzy = false
+    for (const e of faq._expanded) {
+      const d = levenshtein(t, e, maxDist)
+      if (d <= maxDist) { matchedFuzzy = true; break }
+    }
+    if (matchedFuzzy) score += WEIGHTS.tokenFuzzy
+  }
+
+  let hits = 0
+  for (const kw of faq.keywords) {
+    const nkw = normalize(kw)
+    const d = levenshtein(inputNorm, nkw, Math.ceil(nkw.length * 0.2))
+    if (inputNorm.includes(nkw) || d <= Math.max(2, Math.floor(nkw.length * 0.2))) hits++
+  }
+  score += hits * WEIGHTS.keywordHit
+
+  return score
+}
+
+/**
+ * @function getPreprocessedFaqs
+ * @description Devuelve FAQs preprocesadas con memoización a nivel de módulo.
+ * @returns {({keywords: string[], topic?: string, answer?: string, _expanded: string[]})[]} Arreglo memoizado.
+ * @example const faqs = getPreprocessedFaqs()
+ * @remarks Inicializa desde `faqsAll` la primera vez; luego reutiliza `_faqsPre`.
+ */
+
+let _faqsPre = null
+const getPreprocessedFaqs = () => {
+  if (!_faqsPre) _faqsPre = preprocessFaqs(faqsAll)
+  return _faqsPre
+}
+
+
+/**
+ * @function collapseTopic
+ * @description Colapsa alias de tópico a su forma canónica.
+ * @param {string} t - Tópico detectado.
+ * @returns {string} Tópico canónico.
+ * @example collapseTopic('humano') // 'contacto'
+ * @remarks Usa `TOPIC_ALIASES`; retorna `t` si no hay alias.
+ */
 const collapseTopic = (t) => TOPIC_ALIASES.get(t) || t
+
+/**
+ * @function detectExplicitTopics
+ * @description Detecta tópicos explícitos por stems “duros” y frases exactas presentes en FAQs.
+ * @param {string} inputNorm - Texto normalizado del usuario.
+ * @param {string[]} inputTokens - Tokens (stems) del usuario.
+ * @param {{keywords:string[], topic?:string}[]} faqs - FAQs (sin o con _expanded).
+ * @returns {string[]} Lista de tópicos (deduplicados).
+ * @example detectExplicitTopics('horario y ubicación', ['horari','y','ubicacion'], faqs)
+ * @remarks Prioriza HARD_INTENTS; también incluye coincidencias por keyword normalizada.
+ */
 
 const detectExplicitTopics = (inputNorm, inputTokens, faqs) => {
   const topics = new Set()
@@ -172,7 +248,20 @@ const detectExplicitTopics = (inputNorm, inputTokens, faqs) => {
   return Array.from(topics)
 }
 
-// ——— Compositor con orden “humano” ———
+/**
+ * @function composeAnswer
+ * @description Ensambla la respuesta final con orden “humano” y deduplicación.
+ * @param {{
+ *   items: Array<{ f: { topic?: string, answer?: string }, score: number }>,
+ *   explicitTopics?: string[],
+ *   hasServiceHint?: boolean,
+ *   seen: Set<string>
+ * }} args - Parámetros de composición.
+ * @returns {string} Texto final a mostrar.
+ * @example composeAnswer({ items, explicitTopics: ['horario'], hasServiceHint: true, seen: new Set() })
+ * @remarks Orden: saludo (si aplica) → directos → servicios → específicos (máx 2) → CTA; colapsa alias; quita duplicados.
+ */
+
 const composeAnswer = ({ items, explicitTopics = [], hasServiceHint, seen }) => {
   const normItems = items.map(x => ({ ...x, topic: collapseTopic(x.f.topic || 'no_topic') }))
   const byTopic = (t) => normItems.find(x => x.topic === t)?.f?.answer
@@ -222,7 +311,17 @@ const composeAnswer = ({ items, explicitTopics = [], hasServiceHint, seen }) => 
   return Array.from(new Set(parts.filter(Boolean))).join('\n\n')
 }
 
-// —————————— Handler ——————————
+/**
+ * @function POST
+ * @description Handler de Next.js (route) para /api/nlp.
+ * @param {Request} request - Request con body JSON: { text: string, seenTopics?: string[] }.
+ * @returns {Promise<import('next/server').NextResponse<{
+ *   answer: string, isFallback: boolean, topics: string[]
+ * }>>} Respuesta JSON.
+ * @example // fetch('/api/nlp', { method:'POST', body: JSON.stringify({ text:'horario' }) })
+ * @remarks Pipeline: política anti-números → cacheo de FAQs → scoring → overrides explícitos → heurística (longitud, pistas de servicio, vistos) → umbral → fallback.
+ */
+
 export async function POST(request) {
   const { text, seenTopics = [] } = await request.json()
   const input = typeof text === 'string' ? text : ''
