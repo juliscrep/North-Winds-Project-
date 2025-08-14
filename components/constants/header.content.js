@@ -3,6 +3,7 @@ export const navLinks = [
   { href: '/about', key: 'about' },
   { href: '/work', key: 'work' },
   { href: '/services', key: 'services' },
+  { href: '/rrhh', key: 'rrhh' },
   { href: '/contact', key: 'contact' },
 ];
 
@@ -13,6 +14,7 @@ export const navLabels = {
     work: 'Proyectos',
     services: 'Servicios',
     contact: 'Contacto',
+    rrhh: 'Trabaja con Nosotros',
     openMenu: 'Abrir menú de navegación',
   },
 };
