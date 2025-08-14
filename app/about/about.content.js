@@ -1,11 +1,11 @@
-// Textos
+
 export const aboutText = {
   title: "Nuestra historia",
   paragraph1: `La fundación de nuestra empresa tuvo lugar en el año 2023, impulsada por un equipo de profesionales 
 comprometidos con el sector de la energía renovable desde 2010. A lo largo de los años, hemos participado 
-activamente en diversos proyectos a nivel nacional e internacional, abarcando áreas como Venezuela, 
-La Guajira, Brasil (Acarau e Itarema), Uruguay (Cierra los Caracoles) y Argentina (Arauco, La Rioja, 
-Bahía Blanca, Río Negro Pomona, Córdoba, Achiras, Chubut, Puerto Madryn). Durante este tiempo, hemos 
+activamente en diversos proyectos a nivel nacional e internacional, abarcando áreas como Venezuela (La Guajira), 
+Brasil (Acarau e Itarema), Uruguay (Sierra de los Caracoles) y Argentina (La Rioja, 
+Bahía Blanca, Río Negro, Córdoba, Chubut, Puerto Madryn). Durante este tiempo, hemos 
 desempeñado roles clave en la ejecución de tareas relacionadas con aerogeneradores.`,
 
   paragraph2: `En la actualidad, desde North Winds, continuamos ofreciendo servicios y 
@@ -34,7 +34,7 @@ inspección exhaustiva de nuestro equipo. Su certificación valida que cumplimos
 establecidos por la Ley 19.587 de Seguridad e Higiene en el Trabajo y sus Decretos Reglamentarios.`,
 };
 
-// Imágenes y PDFs
+
 export const certificationDocs = [
   "/img/fotoCertificado1.png",
   "/img/fotoCertificado2.png",

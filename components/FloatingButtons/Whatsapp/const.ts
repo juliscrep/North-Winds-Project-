@@ -1,6 +1,6 @@
 export const whatsappMessage = `¡Hola North Winds! 
 
-Estoy interesado en conocer más sobre:
+Estoy interesado en conocer más sobre los servicios que ofrecen en:
 • Parques Eólicos  
 • Parques Solares  
 

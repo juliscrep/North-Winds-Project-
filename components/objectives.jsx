@@ -13,7 +13,7 @@ const Objectives = () => {
           alt={content.image.alt}
           className={styles.image}
           width={400}
-          height={500}
+          height={550}
           priority
         />
       </div>
