@@ -1,140 +1,144 @@
 // /components/rrhh/manual/sections/PersonalContactSection.jsx
 'use client';
-import React from 'react';
-import { jobAreas, formPlaceholders } from '../../../../app/rrhh/rrhh.content';
+import React, { useState } from 'react';
+import { jobAreas } from '../../../../app/rrhh/rrhh.content';
+import InputField from '../../ui/InputField';
+import SelectField from '../../ui/SelectField';
+import DateField from '../../ui/DateField';
+import {TX} from '@/app/api/rrhh/rrhh.texts';
 
-export default function PersonalContactSection({ styles, fields, errors, setField }) {
+function fmtDate(d){
+  if (!d) return '';
+  const dd = new Date(d);
+  if (isNaN(dd)) return d;
+  return dd.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+}
+
+export default function PersonalContactSection({ styles, fields, errors, setField, disabled }) {
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState(fields);
+
+  const enterEdit = () => { setDraft(fields); setEditing(true); };
+  const cancelEdit = () => { setEditing(false); };
+  const saveEdit = () => {
+    const map = {
+      fullName: draft.fullName, email: draft.email, phone: draft.phone,
+      documentId: draft.documentId, birthdate: draft.birthdate,
+      area: draft.area, location: draft.location, linkedin: draft.linkedin,
+      'address.country': draft.address?.country || '',
+      'address.province': draft.address?.province || '',
+      'address.city': draft.address?.city || '',
+      'address.addressLine': draft.address?.addressLine || '',
+      'address.postalCode': draft.address?.postalCode || ''
+    };
+    Object.entries(map).forEach(([k,v])=> setField(k, v));
+    setEditing(false);
+  };
+
+  if (!editing) {
+    return (
+      <div className={styles.card} style={{padding:14}}>
+        <div style={{display:'flex', justifyContent:'space-between', gap:12, alignItems:'baseline'}}>
+          <div style={{fontWeight:700, fontSize:16}}>{fields.fullName || '—'}</div>
+          <button type="button" className={styles.btnGhost} onClick={enterEdit} disabled={disabled}>
+            {TX.buttons.edit}
+          </button>
+        </div>
+
+        <div style={{marginTop:8, display:'grid', gridTemplateColumns:'1fr', gap:6}}>
+          <div style={{fontSize:14}}><strong>{TX.labels.email}:</strong> {fields.email || '—'}</div>
+          <div style={{fontSize:14}}><strong>{TX.labels.phone}:</strong> {fields.phone || '—'}</div>
+          <div style={{fontSize:14}}><strong>{TX.labels.documentId}:</strong> {fields.documentId || '—'}</div>
+          <div style={{fontSize:14}}><strong>{TX.labels.birthdate}:</strong> {fmtDate(fields.birthdate) || '—'}</div>
+          <div style={{fontSize:14}}><strong>{TX.labels.roleApplying}:</strong> {fields.area || '—'}</div>
+          <div style={{fontSize:14}}><strong>{TX.labels.base}:</strong> {fields.location || '—'}</div>
+          {fields.linkedin && (
+            <div style={{fontSize:14}}><strong>{TX.labels.linkedin}:</strong> {fields.linkedin}</div>
+          )}
+        </div>
+
+        <div style={{marginTop:10}}>
+          <div style={{fontWeight:600, marginBottom:4}}>Dirección</div>
+          <div style={{fontSize:14, color:'var(--text-300)'}}>
+            {[fields.address?.addressLine, fields.address?.city, fields.address?.province, fields.address?.country].filter(Boolean).join(', ') || '—'}
+            {fields.address?.postalCode ? ` (CP ${fields.address.postalCode})` : ''}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Edición
   return (
     <div className={styles.grid}>
       <div className={styles.grid2}>
-        <div className={styles.field}>
-          <label htmlFor="fullName">Nombre y apellido</label>
-          <input
-            id="fullName"
-            className={styles.input}
-            placeholder={formPlaceholders.fullName}
-            value={fields.fullName}
-            onChange={(e)=>setField('fullName', e.target.value)}
-            autoComplete="name"
-            aria-invalid={!!errors.fullName}
-          />
-          {errors.fullName && <div className={styles.error}>{errors.fullName}</div>}
-        </div>
-
-        <div className={styles.field}>
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            className={styles.input}
-            placeholder={formPlaceholders.email}
-            value={fields.email}
-            onChange={(e)=>setField('email', e.target.value)}
-            autoComplete="email"
-            aria-invalid={!!errors.email}
-          />
-          {errors.email && <div className={styles.error}>{errors.email}</div>}
-        </div>
-
-        <div className={styles.field}>
-          <label htmlFor="phone">Teléfono</label>
-          <input
-            id="phone"
-            className={styles.input}
-            placeholder={formPlaceholders.phone}
-            value={fields.phone}
-            onChange={(e)=>setField('phone', e.target.value)}
-            autoComplete="tel"
-            aria-invalid={!!errors.phone}
-          />
-          {errors.phone && <div className={styles.error}>{errors.phone}</div>}
-        </div>
-
-        <div className={styles.field}>
-          <label htmlFor="documentId">Documento / ID</label>
-          <input
-            id="documentId"
-            className={styles.input}
-            placeholder="DNI / Pasaporte / ID"
-            value={fields.documentId}
-            onChange={(e)=>setField('documentId', e.target.value)}
-          />
-        </div>
-
-        <div className={styles.field}>
-          <label htmlFor="birthdate">Fecha de nacimiento</label>
-          <input
-            id="birthdate"
-            type="date"
-            className={styles.input}
-            value={fields.birthdate}
-            onChange={(e)=>setField('birthdate', e.target.value)}
-          />
-        </div>
-
-        {/* ÚNICO SELECTOR: Puesto */}
-        <div className={styles.field}>
-          <label htmlFor="area">Puesto al que postulás</label>
-          <select
-            id="area"
-            className={styles.select}
-            value={fields.area}
-            onChange={(e)=>setField('area', e.target.value)}
-          >
-            {jobAreas.map((a)=> <option key={a} value={a}>{a}</option>)}
-          </select>
-        </div>
-
-        <div className={styles.field}>
-          <label htmlFor="base">Base/Residencia</label>
-          <input
-            id="base"
-            className={styles.input}
-            placeholder="Ciudad / Provincia / País"
-            value={fields.location}
-            onChange={(e)=>setField('location', e.target.value)}
-          />
-        </div>
-
-        <div className={styles.field}>
-          <label htmlFor="linkedin">LinkedIn (opcional)</label>
-          <input
-            id="linkedin"
-            className={styles.input}
-            placeholder="https://www.linkedin.com/in/usuario"
-            value={fields.linkedin}
-            onChange={(e)=>setField('linkedin', e.target.value)}
-            autoComplete="url"
-          />
-        </div>
+        <InputField styles={styles} id="fullName" label={TX.labels.fullName}
+          placeholder={TX.placeholders.fullName} value={draft.fullName ?? ''}
+          onChange={(e)=>setDraft({...draft, fullName:e.target.value})}
+          autoComplete="name" error={errors.fullName} disabled={disabled}
+        />
+        <InputField styles={styles} id="email" label={TX.labels.email}
+          placeholder={TX.placeholders.email} value={draft.email ?? ''}
+          onChange={(e)=>setDraft({...draft, email:e.target.value})}
+          autoComplete="email" error={errors.email} disabled={disabled}
+        />
+        <InputField styles={styles} id="phone" label={TX.labels.phone}
+          placeholder={TX.placeholders.phone} value={draft.phone ?? ''}
+          onChange={(e)=>setDraft({...draft, phone:e.target.value})}
+          autoComplete="tel" error={errors.phone} disabled={disabled}
+        />
+        <InputField styles={styles} id="documentId" label={TX.labels.documentId}
+          placeholder={TX.placeholders.documentId} value={draft.documentId ?? ''}
+          onChange={(e)=>setDraft({...draft, documentId:e.target.value})} disabled={disabled}
+        />
+        <DateField styles={styles} id="birthdate" label={TX.labels.birthdate}
+          value={draft.birthdate ?? ''} onChange={(e)=>setDraft({...draft, birthdate:e.target.value})}
+          disabled={disabled} error={errors.birthdate}
+        />
+        <SelectField styles={styles} id="area" label={TX.labels.roleApplying}
+          value={draft.area ?? ''} onChange={(e)=>setDraft({...draft, area:e.target.value})}
+          options={jobAreas} disabled={disabled}
+        />
+        <InputField styles={styles} id="base" label={TX.labels.base}
+          placeholder={TX.placeholders.base} value={draft.location ?? ''}
+          onChange={(e)=>setDraft({...draft, location:e.target.value})} disabled={disabled}
+        />
+        <InputField styles={styles} id="linkedin" label={TX.labels.linkedin}
+          placeholder={TX.placeholders.linkedin} value={draft.linkedin ?? ''}
+          onChange={(e)=>setDraft({...draft, linkedin:e.target.value})} autoComplete="url" disabled={disabled}
+        />
       </div>
 
-      {/* Dirección completa (todo texto) */}
       <div className={styles.grid2}>
-        <div className={styles.field}>
-          <label htmlFor="country">País</label>
-          <input id="country" className={styles.input} value={fields.address.country}
-                 onChange={(e)=>setField('address.country', e.target.value)} />
-        </div>
-        <div className={styles.field}>
-          <label htmlFor="province">Provincia/Estado</label>
-          <input id="province" className={styles.input} value={fields.address.province}
-                 onChange={(e)=>setField('address.province', e.target.value)} />
-        </div>
-        <div className={styles.field}>
-          <label htmlFor="city">Ciudad</label>
-          <input id="city" className={styles.input} value={fields.address.city}
-                 onChange={(e)=>setField('address.city', e.target.value)} />
-        </div>
-        <div className={styles.field}>
-          <label htmlFor="addressLine">Dirección</label>
-          <input id="addressLine" className={styles.input} value={fields.address.addressLine}
-                 onChange={(e)=>setField('address.addressLine', e.target.value)} />
-        </div>
-        <div className={styles.field}>
-          <label htmlFor="postalCode">Código postal</label>
-          <input id="postalCode" className={styles.input} value={fields.address.postalCode}
-                 onChange={(e)=>setField('address.postalCode', e.target.value)} />
-        </div>
+        <InputField styles={styles} id="country" label={TX.labels.country}
+          value={draft.address?.country ?? ''} onChange={(e)=>setDraft({...draft, address:{...(draft.address||{}), country:e.target.value}})}
+          placeholder={TX.placeholders.country} disabled={disabled}
+        />
+        <InputField styles={styles} id="province" label={TX.labels.province}
+          value={draft.address?.province ?? ''} onChange={(e)=>setDraft({...draft, address:{...(draft.address||{}), province:e.target.value}})}
+          placeholder={TX.placeholders.province} disabled={disabled}
+        />
+        <InputField styles={styles} id="city" label={TX.labels.city}
+          value={draft.address?.city ?? ''} onChange={(e)=>setDraft({...draft, address:{...(draft.address||{}), city:e.target.value}})}
+          placeholder={TX.placeholders.city} disabled={disabled}
+        />
+        <InputField styles={styles} id="addressLine" label={TX.labels.addressLine}
+          value={draft.address?.addressLine ?? ''} onChange={(e)=>setDraft({...draft, address:{...(draft.address||{}), addressLine:e.target.value}})}
+          placeholder={TX.placeholders.addressLine} disabled={disabled}
+        />
+        <InputField styles={styles} id="postalCode" label={TX.labels.postalCode}
+          value={draft.address?.postalCode ?? ''} onChange={(e)=>setDraft({...draft, address:{...(draft.address||{}), postalCode:e.target.value}})}
+          placeholder={TX.placeholders.postalCode} disabled={disabled}
+        />
+      </div>
+
+      <div className={styles.row} style={{ marginTop:10, gap:10, justifyContent:'flex-end' }}>
+        <button type="button" className={styles.btnGhost} onClick={cancelEdit} disabled={disabled}>
+          {TX.buttons.cancel}
+        </button>
+        <button type="button" className={styles.btnPrimary} onClick={saveEdit} disabled={disabled}>
+          {TX.buttons.save}
+        </button>
       </div>
     </div>
   );

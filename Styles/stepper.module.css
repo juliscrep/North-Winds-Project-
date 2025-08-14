@@ -1,0 +1,90 @@
+.wrap { margin: 6px 0 12px; position: relative; }
+
+/* sticky SOLO si se pasa la clase .sticky (no por defecto) */
+.sticky {
+  position: sticky;
+  top: calc(var(--header-offset, 96px) + 6px);
+  z-index: 3;
+}
+
+/* ===== Desktop / Tablet ===== */
+.desktop { display: none; }
+@media (min-width: 640px) { .desktop { display: block; } }
+
+.track {
+  position: relative;
+  height: 3px;
+  background: rgba(255,255,255,.10);
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 0 0 8px;
+}
+.progress {
+  height: 100%;
+  background: linear-gradient(90deg, #667084, #3c4452);
+  border-radius: 999px;
+  transition: width .25s ease;
+}
+
+.list {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 2px 2px 0;
+}
+.list::-webkit-scrollbar { display: none; }
+
+.item { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; }
+.dot {
+  width: 28px; height: 28px; display: grid; place-items: center;
+  border-radius: 999px; font-size: 13px; font-weight: 700;
+  background: #202a3d; color: var(--text-100, #eef3f8);
+  border: 1px solid rgba(255,255,255,.12);
+}
+.label { white-space: nowrap; font-size: 14px; color: var(--text-300, #c7cfda); }
+
+.active .dot { background: linear-gradient(135deg, #3a4150, #2a3140); border-color: rgba(255,255,255,.25); }
+.done   .dot { background: linear-gradient(135deg, #566072, #3a4252); border-color: rgba(255,255,255,.25); }
+.todo   .dot { opacity: .95; }
+
+@media (max-width: 900px) {
+  .label { font-size: 13px; }
+  .dot { width: 26px; height: 26px; font-size: 12px; }
+}
+
+/* ===== Mobile compacto ===== */
+.mobile { display: grid; gap: 6px; }
+@media (min-width: 640px) { .mobile { display: none; } }
+
+.mobileTop {
+  display: flex; align-items: baseline; gap: 10px;
+}
+.mobileStep {
+  font-weight: 800; font-size: 16px; line-height: 1;
+  color: var(--text-100, #eef3f8);
+  background: #202a3d;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 999px;
+  padding: 6px 10px;
+}
+.total { opacity: .75; margin-left: 2px; font-weight: 600; }
+
+.mobileLabel {
+  color: var(--text-300, #c7cfda);
+  font-size: 14px; line-height: 1;
+}
+
+.mobileBar {
+  height: 6px;
+  background: rgba(255,255,255,.10);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.mobileProgress {
+  height: 100%;
+  background: linear-gradient(90deg, #6b7280, #3f4756);
+  border-radius: 999px;
+  transition: width .25s ease;
+}
