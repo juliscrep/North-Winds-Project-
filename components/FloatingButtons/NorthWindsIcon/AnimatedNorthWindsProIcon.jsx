@@ -1,6 +1,24 @@
-import React, { useState, useId } from 'react'
+'use client';
 
+import React, { useState, useId } from 'react';
+
+
+/**
+ * Componente de ícono SVG animado.
+ * Uso: como decoración dentro de un botón o como control independiente.
+ * Entradas: props de tamaño, colores, animación y eventos.
+ * Salida: JSX.Element (ícono animado).
+ * Nota: si se usa dentro de otro botón, tratarlo como decorativo (aria-hidden).
+ */
+/**
+ * Props:
+ * - as: 'span' | 'button' | 'div'  (default: 'span')
+ * - onClick: solo se usa si as === 'button'
+ * - title: label accesible (solo si as === 'button'); dentro de otros botones se oculta (aria-hidden)
+ * - className, size, colores, spinSeconds, etc. 
+ */
 export default function AnimatedNorthWindsProIcon({
+  as = 'span',
   size = 48,
   primary = '#0F172A',
   blade = '#0F172A',
@@ -13,35 +31,50 @@ export default function AnimatedNorthWindsProIcon({
   className,
   title = 'Abrir chat de NorthWinds',
 }) {
-  const uid = useId()
-  const [isPressed, setIsPressed] = useState(false)
+  const Tag = as;
+  const uid = useId();
+  const [isPressed, setIsPressed] = useState(false);
+
+  const interactive = Tag === 'button';
 
   return (
-    <button
-      aria-label={title}
-      title={title}
-      onClick={onClick}
-      onMouseDown={() => setIsPressed(true)}
-      onMouseUp={() => setIsPressed(false)}
-      onMouseLeave={() => setIsPressed(false)}
+    <Tag
+      {...(interactive
+        ? {
+            type: 'button',
+            'aria-label': title,
+            title,
+            onClick,
+            onMouseDown: () => setIsPressed(true),
+            onMouseUp: () => setIsPressed(false),
+            onMouseLeave: () => setIsPressed(false),
+            style: {
+              border: 'none',
+              background: 'transparent',
+              padding: 0,
+              cursor: 'pointer',
+              lineHeight: 0,
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            },
+          }
+        : {
+            'aria-hidden': true,
+            title: undefined,
+            onMouseDown: () => setIsPressed(true),
+            onMouseUp: () => setIsPressed(false),
+            onMouseLeave: () => setIsPressed(false),
+            style: { lineHeight: 0, display: 'inline-flex' },
+          })}
       className={className}
-      style={{
-        border: 'none',
-        background: 'transparent',
-        padding: 0,
-        cursor: 'pointer',
-        lineHeight: 0,
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
     >
       <svg
         width={size}
         height={size}
         viewBox="0 0 160 160"
         role="img"
-        aria-hidden="true"
+        aria-hidden={!interactive}
         style={{ overflow: 'visible' }}
       >
         <defs>
@@ -79,9 +112,7 @@ export default function AnimatedNorthWindsProIcon({
 
           {/* Turbina en el pecho */}
           <g transform="translate(80,96)">
-            {/* Hub (centro de giro) */}
             <circle r="9.5" fill={accent} stroke={primary} strokeWidth="2" />
-            {/* Palas (giran sobre 0,0) */}
             <g className="blades">
               <path d="M0,-9 L 6,-58 Q 7,-62 4,-66 Q 1,-70 -2,-66 Q -5,-62 -4,-58 L 0,-9 Z" fill={blade} />
               <path d="M0,-9 L 6,-58 Q 7,-62 4,-66 Q 1,-70 -2,-66 Q -5,-62 -4,-58 L 0,-9 Z" fill={blade} transform="rotate(120)" />
@@ -97,7 +128,6 @@ export default function AnimatedNorthWindsProIcon({
       <style jsx>{`
         @keyframes spin { to { transform: rotate(360deg); } }
         .blades {
-          /* 🔥 Giro perfecto alrededor del hub (0,0) */
           transform-box: view-box;
           transform-origin: 0 0;
           animation: spin ${spinSeconds}s linear infinite;
@@ -106,6 +136,6 @@ export default function AnimatedNorthWindsProIcon({
         svg { transition: transform 120ms ease; }
         ${isPressed ? 'svg { transform: scale(0.98); }' : ''}
       `}</style>
-    </button>
-  )
+    </Tag>
+  );
 }

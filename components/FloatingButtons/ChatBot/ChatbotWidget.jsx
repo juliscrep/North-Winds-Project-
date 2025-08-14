@@ -19,6 +19,14 @@ import TopicIcon from '@mui/icons-material/TopicRounded'
 import { ClickAwayListener, useMediaQuery, useTheme } from '@mui/material'
 import AnimatedNorthWindsProIcon from '../NorthWindsIcon/AnimatedNorthWindsProIcon'
 
+
+/**
+ * getGreeting()
+ * Devuelve un saludo contextual según la hora local.
+ * Entradas: ninguna.
+ * Salida: {string} Mensaje listo para mostrar como primer texto del bot.
+ * Expectativa: usar en el estado inicial del chat.
+ */
 const getGreeting = () => {
   const h = new Date().getHours()
   const tramo = h < 12 ? 'buenos días' : h < 18 ? 'buenas tardes' : 'buenas noches'
@@ -89,6 +97,17 @@ const RELATED_TOPICS = {
   solar_servicios: ['servicios', 'presupuesto', 'contacto'],
 }
 
+/**
+ * ChatbotWidget(props)
+ * Renderiza el widget de chat con UI (MUI) y maneja estado/conversación.
+ * Entradas:
+ *  - {HTMLElement|null} anchorEl: ancla opcional para posicionamiento.
+ *  - {boolean} open: controla visibilidad.
+ *  - {() => void} onClose: callback para cerrar.
+ * Salida: {JSX.Element|null} Panel de chat o null si open=false.
+ * Expectativa: controlar apertura/cierre desde el padre.
+ */
+
 export default function ChatbotWidget({ anchorEl, open, onClose }) {
   const theme = useTheme()
   const isDesktop = useMediaQuery(theme.breakpoints.up('md')) // ✅ solo desktop muestra “Tópicos consultados”
@@ -121,9 +140,32 @@ export default function ChatbotWidget({ anchorEl, open, onClose }) {
     }
   }, [isTyping])
 
+  /**
+ * appendBot(text)
+ * Agrega un mensaje del bot al final del historial.
+ * Entradas: {string} text.
+ * Salida: {void}.
+ * Expectativa: actualiza `messages` de forma inmutable.
+ */
   const appendBot = (text) => setMessages((m) => [...m, { from: 'bot', text }])
+
+  /**
+ * appendUser(text)
+ * Agrega un mensaje de usuario al final del historial.
+ * Entradas: {string} text.
+ * Salida: {void}.
+ * Expectativa: actualiza `messages` de forma inmutable.
+ */
+
   const appendUser = (text) => setMessages((m) => [...m, { from: 'user', text }])
 
+  /**
+ * resetChat()
+ * Restablece el chat a su estado inicial (saludo, menús y trazas).
+ * Entradas: ninguna.
+ * Salida: {void}.
+ * Expectativa: limpia `messages`, `input`, `menu`, `seenTopics`, `lastTopics`, `topicHistory`.
+ */
   const resetChat = () => {
     setMessages([{ from: 'bot', text: getGreeting() }])
     setInput('')
@@ -134,6 +176,14 @@ export default function ChatbotWidget({ anchorEl, open, onClose }) {
     setTopicHistory([])
   }
 
+/**
+ * sendToApi(text)
+ * Envía el texto al endpoint NLP y procesa la respuesta.
+ * Entradas: {string} text.
+ * Salida: {Promise<void>}.
+ * Espera respuesta JSON: { answer?: string, topics?: string[] }.
+ * Expectativa: maneja `isTyping`, agrega respuesta del bot, actualiza `seenTopics`, `lastTopics` y `topicHistory`. En error, muestra mensaje genérico.
+ */
   const sendToApi = async (text) => {
     try {
       setIsTyping(true)
@@ -169,6 +219,13 @@ export default function ChatbotWidget({ anchorEl, open, onClose }) {
     }
   }
 
+/**
+ * handleSend(forcedText?)
+ * Envía el mensaje actual (o `forcedText`) si no está vacío.
+ * Entradas: {string|undefined} forcedText.
+ * Salida: {Promise<void>}.
+ * Expectativa: agrega mensaje de usuario, limpia `input` y delega en `sendToApi`.
+ */
   const handleSend = async (forcedText) => {
     const text = (forcedText ?? input).trim()
     if (!text) return
@@ -177,6 +234,13 @@ export default function ChatbotWidget({ anchorEl, open, onClose }) {
     await sendToApi(text)
   }
 
+/**
+ * handleRootChip(key)
+ * Maneja acciones rápidas del menú raíz (chips principales).
+ * Entradas: {string} key ('servicios' | 'ubicacion' | 'contacto' | 'horario' | 'presupuesto').
+ * Salida: {void}.
+ * Expectativa: cambia `menu` o dispara `handleSend` con la consulta correspondiente.
+ */
   const handleRootChip = (key) => {
     if (key === 'servicios') return setMenu('services')
     if (key === 'ubicacion') return handleSend('ubicación')
@@ -185,6 +249,13 @@ export default function ChatbotWidget({ anchorEl, open, onClose }) {
     if (key === 'presupuesto') return handleSend('presupuesto')
   }
 
+  /**
+ * handleServiceChip(query)
+ * Envía una consulta específica de servicios (chip secundario).
+ * Entradas: {string} query.
+ * Salida: {void|Promise<void>} (delegado en `handleSend`).
+ * Expectativa: dispara búsqueda con el término del servicio.
+ */
   const handleServiceChip = (query) => handleSend(query)
 
   const contextChips = useMemo(() => {
