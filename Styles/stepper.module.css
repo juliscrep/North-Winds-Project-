@@ -1,6 +1,5 @@
 .wrap { margin: 6px 0 12px; position: relative; }
 
-/* sticky SOLO si se pasa la clase .sticky (no por defecto) */
 .sticky {
   position: sticky;
   top: calc(var(--header-offset, 96px) + 6px);
@@ -21,7 +20,7 @@
 }
 .progress {
   height: 100%;
-  background: linear-gradient(90deg, #667084, #3c4452);
+  background: linear-gradient(90deg, var(--brand-accent-light), var(--brand-accent));
   border-radius: 999px;
   transition: width .25s ease;
 }
@@ -37,17 +36,36 @@
 .list::-webkit-scrollbar { display: none; }
 
 .item { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; }
+
+/* Punto (número) por defecto */
 .dot {
   width: 28px; height: 28px; display: grid; place-items: center;
   border-radius: 999px; font-size: 13px; font-weight: 700;
-  background: #202a3d; color: var(--text-100, #eef3f8);
+  background: #202a3d; color: #fff;
   border: 1px solid rgba(255,255,255,.12);
 }
+
+/* Etiqueta */
 .label { white-space: nowrap; font-size: 14px; color: var(--text-300, #c7cfda); }
 
-.active .dot { background: linear-gradient(135deg, #3a4150, #2a3140); border-color: rgba(255,255,255,.25); }
-.done   .dot { background: linear-gradient(135deg, #566072, #3a4252); border-color: rgba(255,255,255,.25); }
-.todo   .dot { opacity: .95; }
+/* ACTIVO – verde claro + aro para visibilidad */
+.active .dot{
+  background: linear-gradient(135deg, var(--brand-accent-light), var(--brand-accent));
+  color: #fff;
+  border-color: rgba(255,255,255,.24);
+  box-shadow:
+    0 0 0 3px rgba(47,158,68,.25),   /* aro suave */
+    0 4px 10px rgba(47,158,68,.30);  /* leve glow */
+}
+
+/* COMPLETADO – verde más discreto */
+.done .dot{
+  background: linear-gradient(135deg, #3c7d50, #2e5f40);
+  color: #fff;
+  border-color: rgba(255,255,255,.20);
+}
+
+.todo .dot { opacity: .95; }
 
 @media (max-width: 900px) {
   .label { font-size: 13px; }
@@ -61,15 +79,18 @@
 .mobileTop {
   display: flex; align-items: baseline; gap: 10px;
 }
-.mobileStep {
+
+/* “N/Total” en verde claro para que destaque */
+.mobileStep{
   font-weight: 800; font-size: 16px; line-height: 1;
-  color: var(--text-100, #eef3f8);
-  background: #202a3d;
-  border: 1px solid rgba(255,255,255,.12);
+  color: #0b0e14; /* texto oscuro para buen contraste */
+  background: linear-gradient(135deg, var(--brand-accent-light), var(--brand-accent));
+  border: 1px solid rgba(255,255,255,.18);
   border-radius: 999px;
   padding: 6px 10px;
+  box-shadow: 0 2px 8px rgba(47,158,68,.28);
 }
-.total { opacity: .75; margin-left: 2px; font-weight: 600; }
+.total{ opacity:.85; margin-left:2px; font-weight:600; }
 
 .mobileLabel {
   color: var(--text-300, #c7cfda);
@@ -84,7 +105,7 @@
 }
 .mobileProgress {
   height: 100%;
-  background: linear-gradient(90deg, #6b7280, #3f4756);
+  background: linear-gradient(90deg, var(--brand-accent-light), var(--brand-accent));
   border-radius: 999px;
   transition: width .25s ease;
 }

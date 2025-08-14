@@ -21,7 +21,7 @@
 
 /* Card */
 .card{
-  background: var(--ink-850);
+  background: linear-gradient(180deg, var(--ink-850), var(--ink-800));
   border: 1px solid var(--border-600);
   border-radius: var(--radius-lg);
   padding: 16px;
@@ -57,10 +57,12 @@
   display:block; font-size:13px; margin-bottom:6px;
   color: var(--text-300); font-weight:600;
 }
+
 .input, .select, .textarea{
   box-sizing: border-box;
   width:100%;
-  background: var(--ink-750);
+  background: rgba(255,255,255,.06);
+  border-color: var(--border-600);
   border:1px solid var(--border-600);
   border-radius: var(--radius-md);
   color: var(--text-100);

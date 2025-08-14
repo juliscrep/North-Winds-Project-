@@ -97,11 +97,11 @@ export default function EducationSection({
                 value={editDraft.degree ?? ''} onChange={(ev)=>setEditDraft({...editDraft, degree:ev.target.value})} disabled={disabled}/>
               <InputField styles={styles} id={`field-${idx}`} label={TX.labels.field}
                 value={editDraft.field ?? ''} onChange={(ev)=>setEditDraft({...editDraft, field:ev.target.value})} disabled={disabled}/>
-              <DateField styles={styles} id={`estart-${idx}`} label={TX.labels.eduStart}
+              <DateField styles={styles} id={`estart-${idx}`} min="1960-01-01" max={isoToday()} label={TX.labels.eduStart}
                 value={editDraft.start ?? ''} onChange={(ev)=>setEditDraft({...editDraft, start:ev.target.value})} disabled={disabled}
                 error={errors[`edu-${idx}-start`]}
               />
-              <DateField styles={styles} id={`eend-${idx}`} label={TX.labels.eduEnd}
+              <DateField styles={styles} id={`eend-${idx}`} label={TX.labels.eduEnd} min={isoToday()} max="2099-12-31"
                 value={editDraft.end ?? ''} onChange={(ev)=>setEditDraft({...editDraft, end:ev.target.value})} disabled={disabled}
                 error={errors[`edu-${idx}-end`] || errors[`edu-${idx}-order`]}
               />
@@ -130,9 +130,9 @@ export default function EducationSection({
             value={dEdu.degree} onChange={(e)=>setDEdu({...dEdu, degree:e.target.value})} disabled={disabled}/>
           <InputField styles={styles} id="field-new" label={TX.labels.field}
             value={dEdu.field} onChange={(e)=>setDEdu({...dEdu, field:e.target.value})} disabled={disabled}/>
-          <DateField styles={styles} id="estart-new" label={TX.labels.eduStart}
+          <DateField styles={styles} id="estart-new" label={TX.labels.eduStart} min="1960-01-01" max={isoToday()}
             value={dEdu.start} onChange={(e)=>setDEdu({...dEdu, start:e.target.value})} disabled={disabled}/>
-          <DateField styles={styles} id="eend-new" label={TX.labels.eduEnd}
+          <DateField styles={styles} id="eend-new" label={TX.labels.eduEnd} min={isoToday()} max="2099-12-31"
             value={dEdu.end} onChange={(e)=>setDEdu({...dEdu, end:e.target.value})} disabled={disabled}/>
           <InputField styles={styles} id="status-new" label={TX.labels.status}
             placeholder={TX.placeholders.status} value={dEdu.status}
@@ -275,9 +275,9 @@ export default function EducationSection({
             value={dCert.name} onChange={(e)=>setDCert({...dCert, name:e.target.value})} disabled={disabled}/>
           <InputField styles={styles} id="issuer-new" label={TX.labels.issuer}
             value={dCert.issuer} onChange={(e)=>setDCert({...dCert, issuer:e.target.value})} disabled={disabled}/>
-          <DateField styles={styles} id="issued-new" label={TX.labels.issued}
+          <DateField styles={styles} id="issued-new" label={TX.labels.issued} min="1960-01-01" max={isoToday()}
             value={dCert.issued} onChange={(e)=>setDCert({...dCert, issued:e.target.value})} disabled={disabled}/>
-          <DateField styles={styles} id="expires-new" label={TX.labels.expires}
+          <DateField styles={styles} id="expires-new" label={TX.labels.expires} 
             value={dCert.expires} onChange={(e)=>setDCert({...dCert, expires:e.target.value})} disabled={disabled}/>
           <InputField styles={styles} id="cred-new" label={TX.labels.credentialId}
             placeholder={TX.placeholders.credentialId} value={dCert.credentialId} onChange={(e)=>setDCert({...dCert, credentialId:e.target.value})} disabled={disabled}/>

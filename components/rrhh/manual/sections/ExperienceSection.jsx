@@ -99,7 +99,7 @@ export default function ExperienceSection({ styles, items, pushItem, updateItem,
                 value={editDraft.start} onChange={(e)=>setEditDraft({...editDraft, start:e.target.value})} disabled={disabled}
                 error={errors[`exp-${idx}-start`]}
               />
-              <DateField styles={styles} id={`end-${idx}`} label={TX.labels.end}
+              <DateField styles={styles} id={`end-${idx}`} label={TX.labels.end} min={isoToday()} max="2099-12-31"
                 value={editDraft.end} onChange={(e)=>setEditDraft({...editDraft, end:e.target.value})}
                 disabled={editDraft.current || disabled}
                 error={errors[`exp-${idx}-end`] || errors[`exp-${idx}-order`]}
@@ -143,7 +143,7 @@ export default function ExperienceSection({ styles, items, pushItem, updateItem,
             value={draft.role} onChange={(e)=>setDraft({...draft, role:e.target.value})} disabled={disabled}/>
           <DateField styles={styles} id="start-new" label={TX.labels.start}
             value={draft.start} onChange={(e)=>setDraft({...draft, start:e.target.value})} disabled={disabled}/>
-          <DateField styles={styles} id="end-new" label={TX.labels.end}
+          <DateField styles={styles} id="end-new" label={TX.labels.end} min={isoToday()} max="2099-12-31"
             value={draft.end} onChange={(e)=>setDraft({...draft, end:e.target.value})} disabled={draft.current || disabled}/>
           <CheckboxInline styles={styles} id="curr-new" label={TX.labels.current}
             checked={draft.current}

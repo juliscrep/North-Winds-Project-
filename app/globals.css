@@ -5,28 +5,29 @@
 
 /* ===== North Winds: variables y header sticky ===== */
 :root{
-  /* Gris corporativo */
-  --ink-950: #0f1114;   /* fondo más profundo */
-  --ink-900: #12151a;   /* hero oscuro */
-  --ink-850: #161a20;   /* panel */
-  --ink-800: #1a1f26;   /* panel-interno */
-  --ink-750: #20262f;   /* campos */
-  --border-600: #2a313b;/* bordes */
-  --text-100: #eef2f6;  /* texto alto contraste */
-  --text-300: #b7c0cc;  /* texto secundario */
+  /* Gris oscuro 'soft' (sin negros puros) */
+  --ink-950:#121720;
+  --ink-900:#171f2b;   /* era muy oscuro, lo aclaramos */
+  --ink-850:#1d2735;
+  --ink-800:#233044;
+  --ink-750:#2a3850;
 
-  /* Acento (verde del sitio); sin AZUL */
-  --brand-accent: #4CAF50;
-  --brand-accent-hover: #3da047;
-  --focus-ring: rgba(76,175,80,.25);
+  --text-100:#f2f6fb;
+  --text-300:#cfd6e2;
 
-  --radius-lg: 16px;
-  --radius-md: 12px;
-  --header-height: 110px;
-  --header-offset: 96px;
+  --border-600:#344153;
+
+  --brand-accent:#2f9e44;
+  --brand-accent-light:#57d68b;
+
+  --radius-md:12px;
+  --radius-lg:16px;
+
+  --header-offset:96px;
 }
-/* El scroll a anclas y el contenido respetan el header fijo */
-html { scroll-padding-top: var(--header-height); }
+@media (max-width:640px){ :root{ --header-offset:120px; } }
+html{ scroll-padding-top: var(--header-offset); }
+
 
 /* Si tu header ya es sticky/fixed, dale fondo y z-index */
 header[role="banner"], .siteHeader {

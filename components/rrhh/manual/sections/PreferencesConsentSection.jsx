@@ -60,7 +60,7 @@ export default function PreferencesConsentSection({
               disabled={sending}
             />
             <DateField styles={styles} id="availability" label={TX.labels.availability}
-              min={isoToday()} max={undefined}
+              min={isoToday()} max="2099-12-31"
               value={draft.availability ?? ''} onChange={(e)=>setDraft({...draft, availability:e.target.value})}
               disabled={sending} error={errors.availability}
             />
