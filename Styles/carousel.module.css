@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans&display=swap');
 
 .carouselContainer {
-  margin-top: 110px;
+  margin-top: 76px;
   overflow-x: hidden;
   width: 100%;
 }
@@ -128,4 +128,10 @@
     padding: 8px;
     font-size: 12px;
   }
+
+  
+.carouselContainer {
+  margin-top: 60px;
+}
+
 }

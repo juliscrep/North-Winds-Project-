@@ -7,7 +7,7 @@
 
 .twoColumnsContainer {
   display: flex;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 .twoColumnsContainer2{
   display: flex;
@@ -98,7 +98,7 @@
 
 
 .title{
-  margin-top: 170px;
+  margin-top: 120px;
   text-align: center;
   font-size: 35px;
 }

@@ -8,11 +8,11 @@ export const navLinks = [
 
 export const navLabels = {
   es: {
-    home: 'Inicio',
-    about: 'Quiénes somos',
-    work: 'Proyectos',
-    services: 'Servicios',
-    contact: 'Contacto',
+    home: 'INICIO',
+    about: 'QUIÉNES SOMOS',
+    work: 'PROYECTOS',
+    services: 'SERVICIOS',
+    contact: 'CONTACTO',
     openMenu: 'Abrir menú de navegación',
   },
 };
