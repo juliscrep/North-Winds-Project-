@@ -5,6 +5,7 @@ import TextareaField from '../../ui/TextareaField';
 import CheckboxInline from '../../ui/CheckboxInline';
 import DateField from '../../ui/DateField';
 import {TX} from '@/app/api/rrhh/rrhh.texts';
+import { isoToday } from '../../../../lib/rrhhValidators';
 
 const blank = () => ({
   company:'', role:'', start:'', end:'', current:false,

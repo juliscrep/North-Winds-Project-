@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import {TX} from '@/app/api/rrhh/rrhh.texts';
 import InputField from '../../ui/InputField';
 import DateField from '../../ui/DateField';
+import { isoToday } from '../../../../lib/rrhhValidators';
 
 const blankEdu = () => ({ institution:'', degree:'', field:'', start:'', end:'', status:'' });
 const blankCert = () => ({ name:'', issuer:'', issued:'', expires:'', credentialId:'', url:'' });
