@@ -1,11 +1,11 @@
 // /components/rrhh/manual/sections/PersonalContactSection.jsx
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { jobAreas } from '../../../../app/rrhh/rrhh.content';
 import InputField from '../../ui/InputField';
 import SelectField from '../../ui/SelectField';
 import DateField from '../../ui/DateField';
-import {TX} from '@/app/api/rrhh/rrhh.texts';
+import { TX } from '@/app/api/rrhh/rrhh.texts';
 
 function fmtDate(d){
   if (!d) return '';
@@ -14,9 +14,98 @@ function fmtDate(d){
   return dd.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
 }
 
-export default function PersonalContactSection({ styles, fields, errors, setField, disabled }) {
+export default function PersonalContactSection({
+  styles, fields, errors, setField, disabled,
+  // ↓ props opcionales para adjunto (si no vienen, usamos fallback local)
+  file, setFile, fileError, allowedFileTypes, maxFileSizeMB, onValidateFile
+}) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(fields);
+
+  // ==== Adjuntar CV (opcional) – botón + texto ====
+  const inputRef = useRef(null);
+  const [localFile, setLocalFile] = useState(null);
+  const [localErr, setLocalErr] = useState('');
+
+  // si no pasaron setFile/file desde el wizard, usamos el local
+  const fileValue = (typeof file !== 'undefined') ? file : localFile;
+  const setFileSafe = (fn) => {
+    if (typeof setFile === 'function') return setFile(fn);
+    return setLocalFile(fn);
+  };
+
+  const accept = [
+    '.pdf','.doc','.docx',
+    ...(Array.isArray(allowedFileTypes) ? allowedFileTypes : [])
+  ].join(',');
+
+  const handleChoose = (fs) => {
+    const f = fs?.[0];
+    if (!f) return;
+    const err = typeof onValidateFile === 'function' ? onValidateFile(f) : null;
+    if (err) {
+      setLocalErr(err);
+      setFileSafe(null);
+    } else {
+      setLocalErr('');
+      setFileSafe(f);             // <<<<<<<<<<<<<< FIJA el error “setFile no definido”
+    }
+  };
+
+  const AttachBar = (
+    <div className={styles.row} style={{ gap: 8, justifyContent:'flex-end', alignItems:'center', flexWrap:'wrap', marginBottom: 6 }}>
+      <input
+        ref={inputRef}
+        type="file"
+        accept={accept}
+        style={{ display:'none' }}
+        onChange={(e)=>handleChoose(e.target.files)}
+        disabled={disabled}
+      />
+      <button
+        type="button"
+        className={styles.btnGhost}
+        onClick={()=>inputRef.current?.click()}
+        disabled={disabled}
+      >
+        {fileValue ? (TX.buttons.changeFile || 'Cambiar archivo') : (TX.buttons.attachCV || 'Adjuntar CV')}
+      </button>
+
+      {/* nombre del archivo, estilo “texto” compacto */}
+      <span
+        title={fileValue?.name || ''}
+        style={{
+          fontSize: 12,
+          color: 'var(--text-300)',
+          maxWidth: 240,
+          whiteSpace: 'nowrap',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis'
+        }}
+      >
+        {fileValue?.name ? fileValue.name : `PDF/DOC/DOCX · máx ${maxFileSizeMB}MB`}
+      </span>
+
+      {fileValue && (
+        <button
+          type="button"
+          className={styles.btnGhost}
+          onClick={()=>setFileSafe(null)}
+          disabled={disabled}
+          aria-label={TX.buttons.remove || 'Quitar'}
+        >
+          {TX.buttons.remove || 'Quitar'}
+        </button>
+      )}
+
+      {(localErr || fileError) && (
+        <div className={styles.error} style={{ width:'100%' }}>
+          {localErr || fileError}
+        </div>
+      )}
+    </div>
+  );
+  // ================================================
 
   const enterEdit = () => { setDraft(fields); setEditing(true); };
   const cancelEdit = () => { setEditing(false); };
@@ -38,6 +127,9 @@ export default function PersonalContactSection({ styles, fields, errors, setFiel
   if (!editing) {
     return (
       <div className={styles.card} style={{padding:14}}>
+        {/* Botón de adjuntar chiquito (arriba) */}
+        {AttachBar}
+
         <div style={{display:'flex', justifyContent:'space-between', gap:12, alignItems:'baseline'}}>
           <div style={{fontWeight:700, fontSize:16}}>{fields.fullName || '—'}</div>
           <button type="button" className={styles.btnGhost} onClick={enterEdit} disabled={disabled}>
@@ -71,6 +163,9 @@ export default function PersonalContactSection({ styles, fields, errors, setFiel
   // Edición
   return (
     <div className={styles.grid}>
+      {/* Botón de adjuntar también en edición */}
+      {AttachBar}
+
       <div className={styles.grid2}>
         <InputField styles={styles} id="fullName" label={TX.labels.fullName}
           placeholder={TX.placeholders.fullName} value={draft.fullName ?? ''}
