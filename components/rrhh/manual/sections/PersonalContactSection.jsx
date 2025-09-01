@@ -1,11 +1,13 @@
 // /components/rrhh/manual/sections/PersonalContactSection.jsx
 'use client';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { jobAreas } from '../../../../app/rrhh/rrhh.content';
 import InputField from '../../ui/InputField';
 import SelectField from '../../ui/SelectField';
 import DateField from '../../ui/DateField';
 import { TX } from '@/app/api/rrhh/rrhh.texts';
+
+const FIRST_EDIT_KEY = 'nw_rrhh:manual:personal:first-save';
 
 function fmtDate(d){
   if (!d) return '';
@@ -16,10 +18,18 @@ function fmtDate(d){
 
 export default function PersonalContactSection({
   styles, fields, errors, setField, disabled,
-  // ↓ props opcionales para adjunto (si no vienen, usamos fallback local)
   file, setFile, fileError, allowedFileTypes, maxFileSizeMB, onValidateFile
 }) {
-  const [editing, setEditing] = useState(false);
+  // --- MOSTRAR EDITABLE SOLO LA PRIMERA VEZ ---
+  const [editing, setEditing] = useState(true); // ← abierto por defecto
+  useEffect(() => {
+    try {
+      const saved = window.localStorage.getItem(FIRST_EDIT_KEY);
+      if (saved === '1') setEditing(false); // ya se guardó alguna vez -> empieza cerrado
+    } catch {}
+  }, []);
+  // --------------------------------------------
+
   const [draft, setDraft] = useState(fields);
 
   // ==== Adjuntar CV (opcional) – botón + texto ====
@@ -29,9 +39,9 @@ export default function PersonalContactSection({
 
   // si no pasaron setFile/file desde el wizard, usamos el local
   const fileValue = (typeof file !== 'undefined') ? file : localFile;
-  const setFileSafe = (fn) => {
-    if (typeof setFile === 'function') return setFile(fn);
-    return setLocalFile(fn);
+  const setFileSafe = (val) => {              // ← recibe un valor directo (no función)
+    if (typeof setFile === 'function') return setFile(val);
+    return setLocalFile(val);
   };
 
   const accept = [
@@ -48,7 +58,7 @@ export default function PersonalContactSection({
       setFileSafe(null);
     } else {
       setLocalErr('');
-      setFileSafe(f);             // <<<<<<<<<<<<<< FIJA el error “setFile no definido”
+      setFileSafe(f);
     }
   };
 
@@ -71,16 +81,11 @@ export default function PersonalContactSection({
         {fileValue ? (TX.buttons.changeFile || 'Cambiar archivo') : (TX.buttons.attachCV || 'Adjuntar CV')}
       </button>
 
-      {/* nombre del archivo, estilo “texto” compacto */}
       <span
         title={fileValue?.name || ''}
         style={{
-          fontSize: 12,
-          color: 'var(--text-300)',
-          maxWidth: 240,
-          whiteSpace: 'nowrap',
-          overflow: 'hidden',
-          textOverflow: 'ellipsis'
+          fontSize: 12, color: 'var(--text-300)', maxWidth: 240,
+          whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'
         }}
       >
         {fileValue?.name ? fileValue.name : `PDF/DOC/DOCX · máx ${maxFileSizeMB}MB`}
@@ -105,10 +110,10 @@ export default function PersonalContactSection({
       )}
     </div>
   );
-  // ================================================
 
   const enterEdit = () => { setDraft(fields); setEditing(true); };
   const cancelEdit = () => { setEditing(false); };
+
   const saveEdit = () => {
     const map = {
       fullName: draft.fullName, email: draft.email, phone: draft.phone,
@@ -121,22 +126,22 @@ export default function PersonalContactSection({
       'address.postalCode': draft.address?.postalCode || ''
     };
     Object.entries(map).forEach(([k,v])=> setField(k, v));
+
+    // Marcamos que ya se guardó al menos una vez
+    try { window.localStorage.setItem(FIRST_EDIT_KEY, '1'); } catch {}
     setEditing(false);
   };
 
   if (!editing) {
     return (
       <div className={styles.card} style={{padding:14}}>
-        {/* Botón de adjuntar chiquito (arriba) */}
         {AttachBar}
-
         <div style={{display:'flex', justifyContent:'space-between', gap:12, alignItems:'baseline'}}>
           <div style={{fontWeight:700, fontSize:16}}>{fields.fullName || '—'}</div>
           <button type="button" className={styles.btnGhost} onClick={enterEdit} disabled={disabled}>
             {TX.buttons.edit}
           </button>
         </div>
-
         <div style={{marginTop:8, display:'grid', gridTemplateColumns:'1fr', gap:6}}>
           <div style={{fontSize:14}}><strong>{TX.labels.email}:</strong> {fields.email || '—'}</div>
           <div style={{fontSize:14}}><strong>{TX.labels.phone}:</strong> {fields.phone || '—'}</div>
@@ -148,7 +153,6 @@ export default function PersonalContactSection({
             <div style={{fontSize:14}}><strong>{TX.labels.linkedin}:</strong> {fields.linkedin}</div>
           )}
         </div>
-
         <div style={{marginTop:10}}>
           <div style={{fontWeight:600, marginBottom:4}}>Dirección</div>
           <div style={{fontSize:14, color:'var(--text-300)'}}>
@@ -163,9 +167,7 @@ export default function PersonalContactSection({
   // Edición
   return (
     <div className={styles.grid}>
-      {/* Botón de adjuntar también en edición */}
       {AttachBar}
-
       <div className={styles.grid2}>
         <InputField styles={styles} id="fullName" label={TX.labels.fullName}
           placeholder={TX.placeholders.fullName} value={draft.fullName ?? ''}

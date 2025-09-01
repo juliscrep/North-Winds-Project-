@@ -11,7 +11,9 @@ import {
   validatePeriodPast,
   validateIssued,
   validateExpires,
-  validateFutureOrToday
+  validateFutureOrToday,
+  validateBirthdate, 
+  normalizePhone, 
 } from '../../../lib/rrhhValidators';
 import ConfirmDialog from '../ui/ConfirmDialog';
 import { useToast } from '../ui/ToastProvider';
@@ -20,6 +22,9 @@ import ExperienceSection from './sections/ExperienceSection';
 import EducationSection from './sections/EducationSection';
 import SkillsLanguagesSection from './sections/SkillsLanguagesSection';
 import PreferencesConsentSection from './sections/PreferencesConsentSection';
+import { useRouter } from 'next/navigation';
+import SuccessDialog from '../ui/SuccessDialog'
+
 
 const makeInitial = () => ({
   fullName: '', email: '', phone: '',
@@ -42,6 +47,8 @@ export default function ManualFormWizard(){
   const [sending, setSending] = useState(false);
   const [success, setSuccess] = useState('');
   const { pushToast } = useToast();
+  const router = useRouter();
+  const [showSuccess, setShowSuccess] = useState(false);
 
   // Confirm dialogs
   const [confirmAllOpen, setConfirmAllOpen] = useState(false);
@@ -143,7 +150,12 @@ export default function ManualFormWizard(){
       if (!fields.fullName.trim()) e.fullName = TX.errors.fullName;
       if (!validateEmail(fields.email)) e.email = TX.errors.email;
       if (!validatePhone(fields.phone)) e.phone = TX.errors.phone;
-      if (fields.birthdate && !validatePastDate(fields.birthdate)) e.birthdate = TX.errors.birthdateInvalid;
+      if (!fields.birthdate) {
+       e.birthdate = TX.errors.birthdateRequired || 'Completá tu fecha de nacimiento.';
+     } else {
+       const b = validateBirthdate(fields.birthdate, 18, 70);
+       if (!b.ok) e.birthdate = b.message || TX.errors.birthdateInvalid;
+     }
     }
     if (s === 2){
       fields.experience.forEach((x, i) => {
@@ -229,11 +241,14 @@ export default function ManualFormWizard(){
     if (!validateStep(5)) return;
     setSending(true); setSuccess('');
     try {
-      const { ok, data } = await submitApplication('manual', fields, null);
+    const norm = normalizePhone(fields.phone);
+    const payload = norm.ok ? { ...fields, phone: norm.e164 } : fields;
+    const { ok, data } = await submitApplication('manual', payload, null);
       if (ok){
         const msg = data?.message || TX.success.sent;
         setSuccess(msg);
         pushToast({ type:'success', message: msg });
+        setShowSuccess(true);
         setFields(makeInitial());
         setStep(1);
       }else{
@@ -380,6 +395,14 @@ export default function ManualFormWizard(){
         onCancel={() => setConfirmAllOpen(false)}
         disabled={sending}
       />
+      <SuccessDialog
+          open={showSuccess}
+          iconSrc="/img/logo.jpeg"
+          title="¡Felicitaciones y muchas gracias!"
+          message="Ya registramos tu postulación en nuestra base de selección. Apenas se abra un puesto acorde, nos comunicaremos."
+          primaryText="Aceptar"
+          onAccept={() => { setShowSuccess(false); router.push('/'); }}
+        />
     </>
   );
 }

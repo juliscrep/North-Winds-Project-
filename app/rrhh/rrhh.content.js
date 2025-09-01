@@ -18,7 +18,6 @@ export const maxFileSizeMB = 5;
 
 export const jobAreas = [
   'Operaciones Eólicas',
-  'Operaciones Solares',
   'Calidad (QA/QC)',
   'Seguridad e Higiene (HSE)',
   'Administración',

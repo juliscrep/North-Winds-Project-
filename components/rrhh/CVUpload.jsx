@@ -2,8 +2,10 @@
 import React, { useRef, useState } from 'react';
 import styles from '../../app/rrhh/rrhh.module.css';
 import { allowedFileTypes, maxFileSizeMB, jobAreas, formPlaceholders } from '../../app/rrhh/rrhh.content';
-import { submitApplication, validateEmail, validatePhone } from '../../lib/rrhhClient';
-
+import { submitApplication } from '../../lib/rrhhClient';
+import { validateEmail, validatePhone, normalizePhone, validateFile } from '../../lib/rrhhValidators';
+import { useRouter } from 'next/navigation';
+import SuccessDialog from './ui/SuccessDialog';
 export default function CVUpload() {
   const inputRef = useRef(null);
   const [drag, setDrag] = useState(false);
@@ -11,6 +13,8 @@ export default function CVUpload() {
   const [errors, setErrors] = useState({});
   const [sending, setSending] = useState(false);
   const [success, setSuccess] = useState('');
+  const router = useRouter();
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const [fields, setFields] = useState({
     fullName: '',
@@ -28,12 +32,8 @@ export default function CVUpload() {
     if (!validateEmail(fields.email)) e.email = 'Email inválido.';
     if (!validatePhone(fields.phone)) e.phone = 'Teléfono inválido.';
     if (!fields.consent) e.consent = 'Debés aceptar la política de privacidad.';
-    if (!file) e.file = 'Adjuntá tu CV (PDF o DOCX).';
-    if (file) {
-      if (!allowedFileTypes.includes(file.type)) e.file = 'Formato no permitido.';
-      const sizeMB = file.size / (1024 * 1024);
-      if (sizeMB > maxFileSizeMB) e.file = `Máximo ${maxFileSizeMB}MB.`;
-    }
+    const fileErr = validateFile(file, { allowedMime: allowedFileTypes, maxMB: maxFileSizeMB });
+    if (fileErr) e.file = fileErr;
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -49,9 +49,12 @@ export default function CVUpload() {
     setSending(true);
     setSuccess('');
     try {
-      const { ok, data } = await submitApplication('upload', fields, file);
+     const norm = normalizePhone(fields.phone);
+     const payload = norm.ok ? { ...fields, phone: norm.e164 } : fields;
+     const { ok, data } = await submitApplication('upload', payload, file);
       if (ok) {
         setSuccess(data?.message || 'Postulación enviada con éxito.');
+        setShowSuccess(true);
         setFile(null);
         setFields({ ...fields, message: '' });
       } else {
@@ -208,6 +211,15 @@ export default function CVUpload() {
       <div className={styles.footer}>
         Formatos permitidos: PDF, DOC, DOCX. Máximo {maxFileSizeMB}MB.
       </div>
+      <SuccessDialog
+        open={showSuccess}
+        iconSrc="/img/logo.jpeg"
+        title="¡Felicitaciones y muchas gracias!"
+        message="Ya registramos tu postulación en nuestra base de selección. Apenas se abra un puesto acorde, nos comunicaremos."
+        primaryText="Aceptar"
+        onAccept={() => { setShowSuccess(false); router.push('/'); }}
+      />
     </form>
+    
   );
 }
