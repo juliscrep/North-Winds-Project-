@@ -1,11 +1,11 @@
-// /components/rrhh/manual/sections/PreferencesConsentSection.jsx
 'use client';
 import React, { useState } from 'react';
 import {TX} from '@/app/api/rrhh/rrhh.texts';
 import InputField from '../../ui/InputField';
-import CheckboxInline from '../../ui/CheckboxInline';
+import Link from '@mui/material/Link';
 import DateField from '../../ui/DateField';
 import { isoToday } from '../../../../lib/rrhhValidators';
+import PrivacyPolicyDialog from '../../ui/PrivacyPolicyDialog';
 
 function fmtDate(d){
   if (!d) return '';
@@ -19,6 +19,7 @@ export default function PreferencesConsentSection({
 }) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(fields.preferences || {});
+  const [openPP, setOpenPP] = useState(false); // 🔹 estado del modal
 
   const enterEdit = () => { setDraft(fields.preferences || {}); setEditing(true); };
   const cancelEdit = () => { setEditing(false); };
@@ -96,37 +97,34 @@ export default function PreferencesConsentSection({
           </div>
         </div>
       )}
-
-      {/* Consentimiento + acciones (Back/Enviar) */}
-      <div className={styles.grid} style={{ marginTop: 12 }}>
-        <CheckboxInline
-          styles={styles}
+      <div className={`${styles.row} ${styles.field}`} style={{ alignItems:'center', gap:8 }}>
+        <input
           id="consent"
-          label={TX.labels.consent}
+          type="checkbox"
           checked={fields.consent}
           onChange={(e)=>setField('consent', e.target.checked)}
           disabled={sending}
         />
-
-        {errors.consent && <div className={styles.error}>{errors.consent}</div>}
-        {errors.api && <div className={styles.error}>{errors.api}</div>}
-        {success && <div className={styles.success}>{success}</div>}
-
-        <div className={styles.row} data-actions style={{ gap: 10, justifyContent:'space-between', flexWrap:'wrap' }}>
-          <div>
-            {step > 1 && (
-              <button type="button" className={styles.btnGhost} onClick={prev} disabled={sending}>
-                {TX.buttons.back}
-              </button>
-            )}
-          </div>
-          <div>
-            <button className={styles.btnPrimary} disabled={sending}>
-              {sending ? TX.buttons.sending : TX.buttons.send}
-            </button>
-          </div>
-        </div>
+        <label htmlFor="consent" className={styles.hint} style={{ margin: 0 }}>
+          {TX.labels.consent || 'Acepto las'}{' '}
+          <Link
+            component="button"
+            type="button"
+            underline="always"
+            sx={{ fontWeight: 600 }}
+            onClick={() => setOpenPP(true)}
+            aria-haspopup="dialog"
+          >
+            Políticas de Privacidad
+          </Link>
+          .
+        </label>
       </div>
+
+      {errors.consent && <div className={styles.error}>{errors.consent}</div>}
+      {errors.api && <div className={styles.error}>{errors.api}</div>}
+      {success && <div className={styles.success}>{success}</div>}
+      <PrivacyPolicyDialog open={openPP} onClose={() => setOpenPP(false)} />
     </>
   );
 }
