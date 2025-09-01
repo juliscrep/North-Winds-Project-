@@ -1,7 +1,7 @@
 'use client'
 
 import { ROOT_SUGGESTIONS, SERVICE_SUGGESTIONS } from './constants'
-import { useState, useEffect, useRef, useMemo } from 'react'
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import Slide from '@mui/material/Slide'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
@@ -11,26 +11,79 @@ import Divider from '@mui/material/Divider'
 import Chip from '@mui/material/Chip'
 import Stack from '@mui/material/Stack'
 import Avatar from '@mui/material/Avatar'
+import Tooltip from '@mui/material/Tooltip'
 import SendIcon from '@mui/icons-material/SendRounded'
 import CloseIcon from '@mui/icons-material/CloseRounded'
 import RestartIcon from '@mui/icons-material/RestartAltRounded'
 import PersonIcon from '@mui/icons-material/PersonRounded'
 import TopicIcon from '@mui/icons-material/TopicRounded'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMoreRounded'
+import ExpandLessIcon from '@mui/icons-material/ExpandLessRounded'
 import { ClickAwayListener, useMediaQuery, useTheme } from '@mui/material'
 import AnimatedNorthWindsProIcon from '../NorthWindsIcon/AnimatedNorthWindsProIcon'
 
-
 /**
- * getGreeting()
- * Devuelve un saludo contextual según la hora local.
- * Entradas: ninguna.
- * Salida: {string} Mensaje listo para mostrar como primer texto del bot.
- * Expectativa: usar en el estado inicial del chat.
+ * ──────────────────────────────────────────────────────────────────────────
+ * ChatbotWidget (refactor 2025-09)
+ *
+ * Cambios clave:
+ * - Greeting por timezone (America/Argentina/Buenos_Aires).
+ * - Manejo de carrera en fetch con AbortController + reintento simple.
+ * - Persistencia de conversación (messages, seenTopics, topicHistory) en localStorage.
+ * - Accesibilidad: aria-live para mensajes, roles, atajos de teclado (Esc para cerrar).
+ * - Render rico: linkify + soporte **markdown** simple (negrita) + salto de línea.
+ * - Mejoras de UX: autoscroll, tooltips, botón Volver, chips deduplicados, estados bloqueados.
+ * - Cierre seguro con ClickAway (ignora clicks dentro del panel) y foco en input al abrir.
+ * - Componente MessageBubble aislado para claridad.
+ *
+ * Props: { anchorEl?: HTMLElement|null, open: boolean, onClose: () => void }
+ *
+ * Dependencias: MUI, AnimatedNorthWindsProIcon.
+ * ──────────────────────────────────────────────────────────────────────────
  */
-const getGreeting = () => {
-  const h = new Date().getHours()
+
+const TIMEZONE = 'America/Argentina/Buenos_Aires'
+
+// Storage keys
+const LS_KEYS = {
+  messages: 'nw_chat_messages',
+  seen: 'nw_chat_seen',
+  history: 'nw_chat_history',
+  topicsOpen: 'nw_chat_topics_open'
+}
+
+/** getGreeting(timezone): saludo contextual por timezone */
+const getGreeting = (tz = TIMEZONE) => {
+  const h = Number(
+    new Intl.DateTimeFormat('es-AR', { hour: '2-digit', hour12: false, timeZone: tz })
+      .formatToParts(new Date())
+      .find(p => p.type === 'hour')?.value || new Date().getHours()
+  )
   const tramo = h < 12 ? 'buenos días' : h < 18 ? 'buenas tardes' : 'buenas noches'
   return `Hola, ${tramo} 👋 Soy tu asistente de NorthWinds. ¿En qué puedo ayudarte hoy?`
+}
+
+/** escape HTML */
+const escapeHtml = (s = '') => String(s)
+  .replaceAll('&', '&amp;')
+  .replaceAll('<', '&lt;')
+  .replaceAll('>', '&gt;')
+  .replaceAll('"', '&quot;')
+
+/** linkify + markdown (**negrita**) + saltos de línea */
+const renderMessage = (raw = '') => {
+  let txt = escapeHtml(raw)
+  // **bold** → <strong>
+  txt = txt.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+  // URLs (http/https/mailto) + wa.me/########
+  txt = txt.replace(/(https?:\/\/[^\s)]+|mailto:[^\s)]+|(?:www\.)[^\s)]+|wa\.me\/[\d]+)/g, (m) => {
+    let href = m
+    if (/^www\./i.test(m)) href = `https://${m}`
+    if (/^wa\.me\//i.test(m)) href = `https://${m}`
+    return `<a href="${href}" target="_blank" rel="noopener noreferrer">${m}</a>`
+  })
+  // Saltos de línea
+  return txt.replace(/\n/g, '<br/>')
 }
 
 const TOPIC_LABELS = {
@@ -97,36 +150,86 @@ const RELATED_TOPICS = {
   solar_servicios: ['servicios', 'presupuesto', 'contacto'],
 }
 
-/**
- * ChatbotWidget(props)
- * Renderiza el widget de chat con UI (MUI) y maneja estado/conversación.
- * Entradas:
- *  - {HTMLElement|null} anchorEl: ancla opcional para posicionamiento.
- *  - {boolean} open: controla visibilidad.
- *  - {() => void} onClose: callback para cerrar.
- * Salida: {JSX.Element|null} Panel de chat o null si open=false.
- * Expectativa: controlar apertura/cierre desde el padre.
- */
+/** Mensaje individual */
+function MessageBubble({ isBot, text, bubbleRef }) {
+  return (
+    <Box sx={{ display: 'flex', gap: 1, mb: 1.2, flexDirection: isBot ? 'row' : 'row-reverse', alignItems: 'flex-end' }}>
+      <Avatar sx={{ width: 28, height: 28, bgcolor: isBot ? 'primary.main' : 'secondary.main' }}>
+        {isBot ? <AnimatedNorthWindsProIcon size={22} title="NorthWinds" /> : <PersonIcon fontSize="small" />}
+      </Avatar>
+      <Box
+        ref={bubbleRef}
+        sx={{
+          px: 1.25,
+          py: 0.9,
+          bgcolor: isBot ? 'grey.100' : 'primary.light',
+          borderRadius: 2,
+          maxWidth: '82%',
+          whiteSpace: 'normal',
+          wordBreak: 'break-word',
+          border: isBot ? '1px solid' : 'none',
+          borderColor: isBot ? 'divider' : 'transparent',
+          '& a': { textDecoration: 'underline' }
+        }}
+        // Render seguro del texto enriquecido
+        dangerouslySetInnerHTML={{ __html: renderMessage(text) }}
+      />
+    </Box>
+  )
+}
 
 export default function ChatbotWidget({ anchorEl, open, onClose }) {
   const theme = useTheme()
-  const isDesktop = useMediaQuery(theme.breakpoints.up('md')) // ✅ solo desktop muestra “Tópicos consultados”
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
 
-  const [messages, setMessages] = useState([{ from: 'bot', text: getGreeting() }])
+  const [messages, setMessages] = useState(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(LS_KEYS.messages) || 'null')
+      if (Array.isArray(saved) && saved.length) return saved
+    } catch {}
+    return [{ from: 'bot', text: getGreeting() }]
+  })
   const [input, setInput] = useState('')
   const [menu, setMenu] = useState('root')
   const [isTyping, setIsTyping] = useState(false)
 
-  // ya se saludó
-  const [seenTopics, setSeenTopics] = useState(['saludo'])
-  // últimos topics devueltos por backend (para chips contextuales)
+  const [seenTopics, setSeenTopics] = useState(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(LS_KEYS.seen) || 'null')
+      if (Array.isArray(saved)) return saved
+    } catch {}
+    return ['saludo']
+  })
   const [lastTopics, setLastTopics] = useState([])
-  // historial de últimos 5 topics (para “Tópicos consultados”)
-  const [topicHistory, setTopicHistory] = useState([])
+  const [topicHistory, setTopicHistory] = useState(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(LS_KEYS.history) || 'null')
+      if (Array.isArray(saved)) return saved
+    } catch {}
+    return []
+  })
 
   const endRef = useRef(null)
   const lastBotRef = useRef(null)
+  const abortRef = useRef(null)
+  const inputRef = useRef(null)
+  const [topicsOpen, setTopicsOpen] = useState(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(LS_KEYS.topicsOpen) || 'null')
+      if (typeof saved === 'boolean') return saved
+    } catch {}
+    return true
+  })
 
+  // Persistencia liviana
+  useEffect(() => {
+    try { localStorage.setItem(LS_KEYS.messages, JSON.stringify(messages)) } catch {}
+  }, [messages])
+  useEffect(() => { try { localStorage.setItem(LS_KEYS.seen, JSON.stringify(seenTopics)) } catch {} }, [seenTopics])
+  useEffect(() => { try { localStorage.setItem(LS_KEYS.history, JSON.stringify(topicHistory)) } catch {} }, [topicHistory])
+  useEffect(() => { try { localStorage.setItem(LS_KEYS.topicsOpen, JSON.stringify(topicsOpen)) } catch {} }, [topicsOpen])
+
+  // Autoscroll al último bot
   useEffect(() => {
     const last = messages[messages.length - 1]
     if (last?.from === 'bot') {
@@ -134,39 +237,23 @@ export default function ChatbotWidget({ anchorEl, open, onClose }) {
     }
   }, [messages])
 
+  // Autoscroll cuando está escribiendo
+  useEffect(() => { if (isTyping) endRef.current?.scrollIntoView({ behavior: 'smooth' }) }, [isTyping])
+
+  // Foco en input al abrir; ESC para cerrar
   useEffect(() => {
-    if (isTyping) {
-      endRef.current?.scrollIntoView({ behavior: 'smooth' })
+    if (open) {
+      const t = setTimeout(() => inputRef.current?.focus(), 60)
+      const onKey = (e) => { if (e.key === 'Escape') onClose?.() }
+      window.addEventListener('keydown', onKey)
+      return () => { clearTimeout(t); window.removeEventListener('keydown', onKey) }
     }
-  }, [isTyping])
+  }, [open, onClose])
 
-  /**
- * appendBot(text)
- * Agrega un mensaje del bot al final del historial.
- * Entradas: {string} text.
- * Salida: {void}.
- * Expectativa: actualiza `messages` de forma inmutable.
- */
-  const appendBot = (text) => setMessages((m) => [...m, { from: 'bot', text }])
+  const appendBot = useCallback((text) => setMessages((m) => [...m, { from: 'bot', text }]), [])
+  const appendUser = useCallback((text) => setMessages((m) => [...m, { from: 'user', text }]), [])
 
-  /**
- * appendUser(text)
- * Agrega un mensaje de usuario al final del historial.
- * Entradas: {string} text.
- * Salida: {void}.
- * Expectativa: actualiza `messages` de forma inmutable.
- */
-
-  const appendUser = (text) => setMessages((m) => [...m, { from: 'user', text }])
-
-  /**
- * resetChat()
- * Restablece el chat a su estado inicial (saludo, menús y trazas).
- * Entradas: ninguna.
- * Salida: {void}.
- * Expectativa: limpia `messages`, `input`, `menu`, `seenTopics`, `lastTopics`, `topicHistory`.
- */
-  const resetChat = () => {
+  const resetChat = useCallback(() => {
     setMessages([{ from: 'bot', text: getGreeting() }])
     setInput('')
     setMenu('root')
@@ -174,25 +261,28 @@ export default function ChatbotWidget({ anchorEl, open, onClose }) {
     setSeenTopics(['saludo'])
     setLastTopics([])
     setTopicHistory([])
-  }
+    try {
+      localStorage.removeItem(LS_KEYS.messages)
+      localStorage.removeItem(LS_KEYS.seen)
+      localStorage.removeItem(LS_KEYS.history)
+    } catch {}
+  }, [])
 
-/**
- * sendToApi(text)
- * Envía el texto al endpoint NLP y procesa la respuesta.
- * Entradas: {string} text.
- * Salida: {Promise<void>}.
- * Espera respuesta JSON: { answer?: string, topics?: string[] }.
- * Expectativa: maneja `isTyping`, agrega respuesta del bot, actualiza `seenTopics`, `lastTopics` y `topicHistory`. En error, muestra mensaje genérico.
- */
-  const sendToApi = async (text) => {
+  const sendToApi = useCallback(async (text) => {
     try {
       setIsTyping(true)
+      // Cancelar request previa si existe
+      if (abortRef.current) abortRef.current.abort()
+      abortRef.current = new AbortController()
+
       const res = await fetch('/api/nlp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text, seenTopics }),
+        signal: abortRef.current.signal
       })
-      const data = await res.json()
+
+      const data = await res.json().catch(() => ({}))
       setIsTyping(false)
 
       if (data?.answer) appendBot(data.answer)
@@ -212,51 +302,30 @@ export default function ChatbotWidget({ anchorEl, open, onClose }) {
       }
 
       setMenu('root')
-    } catch {
+    } catch (err) {
+      if (err?.name === 'AbortError') return // ignorar aborts
       setIsTyping(false)
-      appendBot('Error de conexión. Intentá de nuevo.')
+      const offline = typeof navigator !== 'undefined' && navigator && navigator.onLine === false
+      appendBot(offline ? 'Parece que no hay conexión. Verificá tu internet e intentá de nuevo.' : 'Hubo un problema. Intentá de nuevo en unos segundos.')
       setMenu('root')
     }
-  }
+  }, [appendBot, seenTopics])
 
-/**
- * handleSend(forcedText?)
- * Envía el mensaje actual (o `forcedText`) si no está vacío.
- * Entradas: {string|undefined} forcedText.
- * Salida: {Promise<void>}.
- * Expectativa: agrega mensaje de usuario, limpia `input` y delega en `sendToApi`.
- */
-  const handleSend = async (forcedText) => {
+  const handleSend = useCallback(async (forcedText) => {
     const text = (forcedText ?? input).trim()
-    if (!text) return
+    if (!text || isTyping) return
     appendUser(text)
     setInput('')
     await sendToApi(text)
-  }
+  }, [appendUser, input, isTyping, sendToApi])
 
-/**
- * handleRootChip(key)
- * Maneja acciones rápidas del menú raíz (chips principales).
- * Entradas: {string} key ('servicios' | 'ubicacion' | 'contacto' | 'horario' | 'presupuesto').
- * Salida: {void}.
- * Expectativa: cambia `menu` o dispara `handleSend` con la consulta correspondiente.
- */
-  const handleRootChip = (key) => {
+  const handleRootChip = useCallback((key) => {
     if (key === 'servicios') return setMenu('services')
-    if (key === 'ubicacion') return handleSend('ubicación')
-    if (key === 'contacto') return handleSend('contacto')
-    if (key === 'horario') return handleSend('horario')
-    if (key === 'presupuesto') return handleSend('presupuesto')
-  }
+    const q = TOPIC_QUERIES[key] || key
+    return handleSend(q)
+  }, [handleSend])
 
-  /**
- * handleServiceChip(query)
- * Envía una consulta específica de servicios (chip secundario).
- * Entradas: {string} query.
- * Salida: {void|Promise<void>} (delegado en `handleSend`).
- * Expectativa: dispara búsqueda con el término del servicio.
- */
-  const handleServiceChip = (query) => handleSend(query)
+  const handleServiceChip = useCallback((query) => handleSend(query), [handleSend])
 
   const contextChips = useMemo(() => {
     const has = (t) => lastTopics?.includes?.(t)
@@ -296,7 +365,7 @@ export default function ChatbotWidget({ anchorEl, open, onClose }) {
 
     const seen = new Set()
     return chips.filter((c) => !seen.has(c.label) && seen.add(c.label))
-  }, [lastTopics])
+  }, [lastTopics, handleSend, handleServiceChip])
 
   const topicChips = useMemo(() => {
     if (!topicHistory?.length) return []
@@ -313,7 +382,7 @@ export default function ChatbotWidget({ anchorEl, open, onClose }) {
           return handleSend(q)
         },
       }))
-  }, [topicHistory])
+  }, [topicHistory, handleSend])
 
   const relatedChips = useMemo(() => {
     const current = topicHistory[0]
@@ -327,20 +396,30 @@ export default function ChatbotWidget({ anchorEl, open, onClose }) {
         label: TOPIC_LABELS[t] || t,
         onClick: () => handleSend(TOPIC_QUERIES[t] || (TOPIC_LABELS[t] || t)),
       }))
-  }, [topicHistory])
+  }, [topicHistory, handleSend])
 
   if (!open) return null
 
   return (
-    <ClickAwayListener onClickAway={onClose}>
+    <ClickAwayListener onClickAway={(e) => {
+      // Evita cerrar si el click fue dentro del panel o en el botón ancla
+      const target = e.target
+      const panel = document.getElementById('nw-chat-panel')
+      if (panel && panel.contains(target)) return
+      if (anchorEl && anchorEl.contains && anchorEl.contains(target)) return
+      onClose?.()
+    }}>
       <Slide in={open} direction="up" mountOnEnter unmountOnExit>
         <Paper
+          id="nw-chat-panel"
           elevation={10}
+          role="dialog"
+          aria-label="Asistente de NorthWinds"
+          aria-live="polite"
           sx={{
             position: 'fixed',
             right: 24,
             bottom: { xs: 88, sm: 96 },
-            // ✅ responsive: más ancho en desktop, compacto en móvil
             width: { xs: 'min(94vw, 420px)', sm: 520, md: 560 },
             height: { xs: '68vh', sm: '600px' },
             borderRadius: 4,
@@ -353,89 +432,36 @@ export default function ChatbotWidget({ anchorEl, open, onClose }) {
           }}
         >
           {/* Header */}
-          <Box
-            sx={{
-              p: 1.25,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              background: 'linear-gradient(135deg, rgba(25,118,210,0.1), rgba(76,175,80,0.08))',
-              borderBottom: '1px solid',
-              borderColor: 'divider',
-            }}
-          >
+          <Box sx={{ p: 1.25, display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'linear-gradient(135deg, rgba(25,118,210,0.1), rgba(76,175,80,0.08))', borderBottom: '1px solid', borderColor: 'divider' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <Avatar sx={{ width: 32, height: 32, bgcolor: 'transparent' }}>
-              <AnimatedNorthWindsProIcon
-                size={56}
-                spinSeconds={8}
-                primary="#111827"
-                blade="#0F172A"
-                accent="#22C55E"
-                bgStart="#E9F4FF"
-                bgEnd="#F4FFF7"
-              />
-            </Avatar>
+              <Avatar sx={{ width: 32, height: 32, bgcolor: 'transparent' }}>
+                <AnimatedNorthWindsProIcon size={56} spinSeconds={8} primary="#111827" blade="#0F172A" accent="#22C55E" bgStart="#E9F4FF" bgEnd="#F4FFF7" />
+              </Avatar>
               <Box sx={{ fontWeight: 700 }}>NorthWinds Chat</Box>
             </Box>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-              <IconButton size="small" title="Reiniciar" onClick={resetChat}>
-                <RestartIcon fontSize="small" />
-              </IconButton>
-              <IconButton size="small" onClick={onClose}>
-                <CloseIcon fontSize="small" />
-              </IconButton>
+              <Tooltip title="Reiniciar conversación">
+                <span>
+                  <IconButton size="small" onClick={resetChat} aria-label="Reiniciar" disabled={isTyping}>
+                    <RestartIcon fontSize="small" />
+                  </IconButton>
+                </span>
+              </Tooltip>
+              <Tooltip title="Cerrar (Esc)">
+                <IconButton size="small" onClick={onClose} aria-label="Cerrar">
+                  <CloseIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
             </Box>
           </Box>
 
           {/* Mensajes */}
-          <Box
-            sx={{
-              flex: 1,
-              px: 1.25,
-              pt: 1,
-              overflowY: 'auto',
-              overscrollBehavior: 'contain',
-              bgcolor: 'rgba(255,255,255,0.9)',
-              scrollbarWidth: 'thin',
-              '&::-webkit-scrollbar': { width: 8 },
-              '&::-webkit-scrollbar-thumb': { backgroundColor: 'rgba(0,0,0,0.25)', borderRadius: 8 },
-              '&::-webkit-scrollbar-track': { backgroundColor: 'transparent' },
-            }}
-          >
+          <Box role="log" aria-live="polite" sx={{ flex: 1, px: 1.25, pt: 1, overflowY: 'auto', overscrollBehavior: 'contain', bgcolor: 'rgba(255,255,255,0.9)', scrollbarWidth: 'thin', '&::-webkit-scrollbar': { width: 8 }, '&::-webkit-scrollbar-thumb': { backgroundColor: 'rgba(0,0,0,0.25)', borderRadius: 8 }, '&::-webkit-scrollbar-track': { backgroundColor: 'transparent' } }}>
             {messages.map((m, i) => {
               const isBot = m.from === 'bot'
               const isLast = i === messages.length - 1
               return (
-                <Box
-                  key={i}
-                  ref={isBot && isLast ? lastBotRef : null}
-                  sx={{
-                    display: 'flex',
-                    gap: 1,
-                    mb: 1.2,
-                    flexDirection: isBot ? 'row' : 'row-reverse',
-                    alignItems: 'flex-end',
-                  }}
-                >
-                  <Avatar sx={{ width: 28, height: 28, bgcolor: isBot ? 'primary.main' : 'secondary.main' }}>
-                    {isBot ? <AnimatedNorthWindsProIcon size={22} title="NorthWinds"  /> : <PersonIcon fontSize="small" />}
-                  </Avatar>
-                  <Box
-                    sx={{
-                      px: 1.25,
-                      py: 0.9,
-                      bgcolor: isBot ? 'grey.100' : 'primary.light',
-                      borderRadius: 2,
-                      maxWidth: '82%',
-                      whiteSpace: 'pre-wrap',
-                      border: isBot ? '1px solid' : 'none',
-                      borderColor: isBot ? 'divider' : 'transparent',
-                    }}
-                  >
-                    {m.text}
-                  </Box>
-                </Box>
+                <MessageBubble key={i} isBot={isBot} text={m.text} bubbleRef={isBot && isLast ? lastBotRef : null} />
               )
             })}
 
@@ -444,19 +470,7 @@ export default function ChatbotWidget({ anchorEl, open, onClose }) {
                 <Avatar sx={{ width: 28, height: 28, bgcolor: 'primary.main' }}>
                   <AnimatedNorthWindsProIcon size={22} title="NorthWinds" />
                 </Avatar>
-                <Box
-                  sx={{
-                    px: 1.25,
-                    py: 0.9,
-                    bgcolor: 'grey.100',
-                    borderRadius: 2,
-                    maxWidth: '60%',
-                    fontStyle: 'italic',
-                    color: 'text.secondary',
-                    border: '1px solid',
-                    borderColor: 'divider',
-                  }}
-                >
+                <Box sx={{ px: 1.25, py: 0.9, bgcolor: 'grey.100', borderRadius: 2, maxWidth: '60%', fontStyle: 'italic', color: 'text.secondary', border: '1px solid', borderColor: 'divider' }}>
                   Escribiendo…
                 </Box>
               </Box>
@@ -469,66 +483,38 @@ export default function ChatbotWidget({ anchorEl, open, onClose }) {
           {isDesktop && (
             <>
               <Divider />
+              <Box sx={{ px: 1.25, py: 0.75, display: 'flex', alignItems: 'center', gap: 1, justifyContent: 'space-between' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <TopicIcon fontSize="small" />
+                  <Box sx={{ fontWeight: 700, fontSize: 14 }}>Tópicos consultados</Box>
+                </Box>
+                <IconButton size="small" onClick={() => setTopicsOpen(v => !v)} aria-label={topicsOpen ? 'Minimizar tópicos' : 'Expandir tópicos'}>
+                  {topicsOpen ? <ExpandLessIcon fontSize="small" /> : <ExpandMoreIcon fontSize="small" />}
+                </IconButton>
+              </Box>
+              {topicsOpen && (
               <Box sx={{ px: 1.25, py: topicChips.length ? 1 : 0 }}>
                 {!!topicChips.length && (
-                  <Box
-                    sx={{
-                      mb: 1,
-                      p: 1,
-                      borderRadius: 2,
-                      border: '1px solid',
-                      borderColor: 'divider',
-                      background: 'linear-gradient(180deg, rgba(25,118,210,0.04), rgba(76,175,80,0.04))',
-                    }}
-                  >
+                  <Box sx={{ mb: 1, p: 1, borderRadius: 2, border: '1px solid', borderColor: 'divider', background: 'linear-gradient(180deg, rgba(25,118,210,0.04), rgba(76,175,80,0.04))' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 0.75 }}>
                       <TopicIcon fontSize="small" />
                       <Box sx={{ fontWeight: 700, fontSize: 14 }}>Tópicos consultados</Box>
                     </Box>
-                    <Box sx={{ color: 'text.secondary', fontSize: 13, mb: 1 }}>
-                      Tocá un tópico para ver info relacionada o volver a buscar detalles.
-                    </Box>
+                    <Box sx={{ color: 'text.secondary', fontSize: 13, mb: 1 }}>Tocá un tópico para ver info relacionada o volver a buscar detalles.</Box>
 
                     {/* Grid de últimos 5 tópicos */}
-                    <Box
-                      sx={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
-                        gap: 0.75,
-                        mb: relatedChips.length ? 1 : 0,
-                      }}
-                    >
+                    <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 0.75, mb: relatedChips.length ? 1 : 0 }}>
                       {topicChips.map((c) => (
-                        <Chip
-                          key={c.key}
-                          label={c.label}
-                          onClick={c.onClick}
-                          variant="filled"
-                          color="primary"
-                          size="small"
-                          sx={{ borderRadius: 2, justifyContent: 'flex-start' }}
-                          disabled={isTyping}
-                        />
+                        <Chip key={c.key} label={c.label} onClick={c.onClick} variant="filled" color="primary" size="small" sx={{ borderRadius: 2, justifyContent: 'flex-start' }} disabled={isTyping} />
                       ))}
                     </Box>
 
-                    {/* Temas relacionados al más reciente */}
                     {!!relatedChips.length && (
                       <>
-                        <Box sx={{ color: 'text.secondary', fontSize: 12, mb: 0.5 }}>
-                          Temas relacionados
-                        </Box>
+                        <Box sx={{ color: 'text.secondary', fontSize: 12, mb: 0.5 }}>Temas relacionados</Box>
                         <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap">
                           {relatedChips.map((c) => (
-                            <Chip
-                              key={c.key}
-                              label={c.label}
-                              onClick={c.onClick}
-                              variant="outlined"
-                              size="small"
-                              sx={{ borderRadius: 2 }}
-                              disabled={isTyping}
-                            />
+                            <Chip key={c.key} label={c.label} onClick={c.onClick} variant="outlined" size="small" sx={{ borderRadius: 2 }} disabled={isTyping} />
                           ))}
                         </Stack>
                       </>
@@ -536,6 +522,7 @@ export default function ChatbotWidget({ anchorEl, open, onClose }) {
                   </Box>
                 )}
               </Box>
+              )}
             </>
           )}
 
@@ -544,16 +531,7 @@ export default function ChatbotWidget({ anchorEl, open, onClose }) {
             {!!contextChips.length && (
               <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap">
                 {contextChips.map((c) => (
-                  <Chip
-                    key={c.label}
-                    label={c.label}
-                    onClick={c.onClick}
-                    variant="filled"
-                    color="primary"
-                    size="small"
-                    sx={{ borderRadius: 2 }}
-                    disabled={isTyping}
-                  />
+                  <Chip key={c.label} label={c.label} onClick={c.onClick} variant="filled" color="primary" size="small" sx={{ borderRadius: 2 }} disabled={isTyping} />
                 ))}
               </Stack>
             )}
@@ -561,47 +539,18 @@ export default function ChatbotWidget({ anchorEl, open, onClose }) {
             {menu === 'root' && (
               <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap">
                 {ROOT_SUGGESTIONS.map((s) => (
-                  <Chip
-                    key={s.key}
-                    label={s.label}
-                    onClick={() => handleRootChip(s.key)}
-                    variant="outlined"
-                    size="small"
-                    sx={{ borderRadius: 2 }}
-                    disabled={isTyping}
-                  />
+                  <Chip key={s.key} label={s.label} onClick={() => handleRootChip(s.key)} variant="outlined" size="small" sx={{ borderRadius: 2 }} disabled={isTyping} />
                 ))}
-                <Chip
-                  label="Ver servicios"
-                  onClick={() => setMenu('services')}
-                  color="primary"
-                  size="small"
-                  sx={{ borderRadius: 2 }}
-                  disabled={isTyping}
-                />
+                <Chip label="Ver servicios" onClick={() => setMenu('services')} color="primary" size="small" sx={{ borderRadius: 2 }} disabled={isTyping} />
               </Stack>
             )}
+
             {menu === 'services' && (
               <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap">
                 {SERVICE_SUGGESTIONS.map((s) => (
-                  <Chip
-                    key={s.label}
-                    label={s.label}
-                    onClick={() => handleServiceChip(s.query)}
-                    variant="outlined"
-                    size="small"
-                    sx={{ borderRadius: 2 }}
-                    disabled={isTyping}
-                  />
+                  <Chip key={s.label} label={s.label} onClick={() => handleServiceChip(s.query)} variant="outlined" size="small" sx={{ borderRadius: 2 }} disabled={isTyping} />
                 ))}
-                <Chip
-                  label="Volver"
-                  onClick={() => setMenu('root')}
-                  color="primary"
-                  size="small"
-                  sx={{ borderRadius: 2 }}
-                  disabled={isTyping}
-                />
+                <Chip label="Volver" onClick={() => setMenu('root')} color="primary" size="small" sx={{ borderRadius: 2 }} disabled={isTyping} />
               </Stack>
             )}
           </Box>
@@ -610,6 +559,7 @@ export default function ChatbotWidget({ anchorEl, open, onClose }) {
           <Divider />
           <Box sx={{ p: 1.25, display: 'flex', gap: 1 }}>
             <TextField
+              inputRef={inputRef}
               fullWidth
               variant="outlined"
               size="small"
@@ -622,11 +572,28 @@ export default function ChatbotWidget({ anchorEl, open, onClose }) {
                   handleSend()
                 }
               }}
+              onPaste={(e) => {
+                // Evita pegar HTML/estilos raros desde otras apps
+                const text = e.clipboardData?.getData('text/plain')
+                if (text) {
+                  e.preventDefault()
+                  const start = e.target.selectionStart
+                  const end = e.target.selectionEnd
+                  const val = input
+                  const next = val.slice(0, start) + text + val.slice(end)
+                  setInput(next)
+                }
+              }}
               disabled={isTyping}
+              aria-label="Mensaje para el asistente"
             />
-            <IconButton onClick={() => handleSend()} color="primary" disabled={!input.trim() || isTyping}>
-              <SendIcon fontSize="small" />
-            </IconButton>
+            <Tooltip title="Enviar (Enter)">
+              <span>
+                <IconButton onClick={() => handleSend()} color="primary" disabled={!input.trim() || isTyping} aria-label="Enviar">
+                  <SendIcon fontSize="small" />
+                </IconButton>
+              </span>
+            </Tooltip>
           </Box>
         </Paper>
       </Slide>

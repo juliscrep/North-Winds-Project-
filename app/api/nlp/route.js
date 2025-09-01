@@ -2,18 +2,45 @@ import { faqsAll } from '../../../components/FloatingButtons/ChatBot/config/chat
 import { NextResponse } from 'next/server'
 import { SYNONYMS, WEIGHTS, SERVICE_HINT_STEMS, CONVERSATIONAL_TOPICS } from './const.js'
 
+/* ──────────────────────────────────────────────────────────────────────────
+   0) ENLACES CENTRALES (quedan disponibles por si los usa el front,
+      PERO el backend no agrega ningún bloque de “Enlaces útiles”)
+   ------------------------------------------------------------------------- */
+const WA_NUM = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.replace(/\D/g, '')
+const LINKS = {
+  servicios: '/servicios',
+  contacto: '/contacto',
+  ubicacion: '/contacto#mapa',
+  rrhh_postulaciones: '/rrhh',
+  ambito_geografico: '/#experiencia',
+  exterior: '/#proyectos-internacionales',
+  equipo_certificaciones: '/#equipo',
+  obras: '/obras',
+  empresa: '/empresa',
+  whatsapp: WA_NUM ? `https://wa.me/${WA_NUM}` : null,
+  instagram: process.env.NEXT_PUBLIC_INSTAGRAM_URL || 'https://www.instagram.com/north.winds.sa/',
+  email: 'mailto:northwinds1223@gmail.com'
+}
 
-// Mapa de intenciones “duras” (stems → topic) para overrides confiables
+/* ──────────────────────────────────────────────────────────────────────────
+   1) INTENCIONES DURAS (stems → topic) EXTENDIDAS
+   ------------------------------------------------------------------------- */
 const HARD_INTENTS = new Map([
   ['horari','horario'],
   ['presupuest','presupuesto'],
+
   ['contact','contacto'], ['contacto','contacto'],
   ['whatsapp','contacto'], ['email','contacto'], ['correo','contacto'], ['telefon','contacto'], ['llam','contacto'],
-  ['ubic','ubicacion'], ['direccion','ubicacion'], ['mapa','ubicacion'],
+
+  ['ubic','ubicacion'], ['direccion','ubicacion'], ['mapa','ubicacion'], ['map','ubicacion'],
+
   ['hola','saludo'], ['buen','saludo'], ['hello','saludo'], ['hi','saludo'],
   ['gracia','gracias'],
+
   ['ayud','ayuda_menu'], ['menu','ayuda_menu'], ['opcion','ayuda_menu'],
+
   ['humano','humano'], ['asesor','humano'], ['persona','humano'], ['ventas','humano'],
+
   ['chau','despedida'], ['adios','despedida'], ['hasta','despedida'], ['luego','despedida']
 ])
 
@@ -24,35 +51,42 @@ const HARD_INTENTS = new Map([
   .forEach(s => HARD_INTENTS.set(s, 'contacto'))
 
 // ubicación
-;['dond','ubicad','encuentr','quedan','queda','direccion','map','estan']
+;['dond','ubicad','encuentr','quedan','queda','direccion','map','estan','están','localizacion','localización']
   .forEach(s => HARD_INTENTS.set(s, 'ubicacion'))
 
-// ✅ EMPLEO / RRHH: cubre “quiero trabajar”, “busco empleo”, “enviar CV”, etc.
+// Ámbito geográfico (Argentina)
+;['argentin','pais','provinc','zona','ambit','nacional','donde trabaj','trabajan','operan','region','región','bahia','rio','chubut','madryn','cordob','pomona','achiras']
+  .forEach(s => HARD_INTENTS.set(s, 'ambito_geografico'))
+
+// Exterior / internacional
+;['exterior','internacional','afuera','uruguay','brasil','venezuela','caracoles','acarau','itarema','guajira']
+  .forEach(s => HARD_INTENTS.set(s, 'exterior'))
+
+// Disponibilidad
+;['disponibil','agenda','cuando','turno','fecha','plazo','urgente','cuand','podrian','podrán','pueden']
+  .forEach(s => HARD_INTENTS.set(s, 'disponibilidad'))
+
+// RRHH / postulaciones
 ;[
-  // formas completas
   'trabajar','trabajo','empleo','postular','postulacion','postulaciones','postulando',
-  'cv','curriculum','curriculo','curriculum','rrhh','recursos','humanos','talento',
+  'cv','curriculum','curriculo','rrhh','recursos','humanos','talento',
   'contratar','contratacion','vacante','vacantes','oferta','ofertas','equipo',
-  // stems que produce el lightStem
   'busc','busqueda','sumarme','recurso','human'
 ].forEach(s => HARD_INTENTS.set(s, 'rrhh_postulaciones'))
 
+// Equipo / certificaciones
+;['equipo','personal','formacion','formación','certificacion','certificación','wtc','capacitacion','capacitación']
+  .forEach(s => HARD_INTENTS.set(s, 'equipo_certificaciones'))
 
+/* Alias de tópicos */
 const TOPIC_ALIASES = new Map([
   ['redes_web','contacto'],
   ['humano','contacto']
 ])
 
-// —————————— Utilidades ——————————
-/**
- * @function normalize
- * @description Normaliza texto (minúsculas, sin tildes/ signos, espacios colapsados).
- * @param {string | any} str - Texto de entrada.
- * @returns {string} Texto normalizado.
- * @example normalize('¡Ubicación & Horarios!') // 'ubicacion horarios'
- * @remarks Idempotente; tolera null/undefined.
- */
-
+/* ──────────────────────────────────────────────────────────────────────────
+   2) HELPERS NLP
+   ------------------------------------------------------------------------- */
 const normalize = (str) =>
   String(str || '')
     .toLowerCase()
@@ -62,14 +96,6 @@ const normalize = (str) =>
     .replace(/\s+/g, ' ')
     .trim()
 
-/**
- * @function lightStem
- * @description Stemmer liviano en español: recorta sufijos frecuentes.
- * @param {string} w - Token ya normalizado.
- * @returns {string} Stem aproximado.
- * @example lightStem('inspecciones') // 'inspeccion'
- * @remarks Heurístico y barato; prioriza recall sobre precisión.
- */
 const lightStem = (w) =>
   w
     .replace(/(ciones|ciones?)$/, 'cion')
@@ -79,26 +105,8 @@ const lightStem = (w) =>
     .replace(/(icas|icos|ica|ico)$/, 'ic')
     .replace(/(adas|ados|ada|ado)$/, 'ad')
 
-    /**
- * @function tokenize
- * @description Normaliza, divide por espacios y aplica lightStem a cada token.
- * @param {string} str - Texto bruto.
- * @returns {string[]} Lista de tokens stem.
- * @example tokenize('Revisión y reparación de palas') // ['revision','y','reparacion','de','pal']
- * @remarks Sin tokens vacíos; base para matching/scoring.
- */
 const tokenize = (str) => normalize(str).split(' ').filter(Boolean).map(lightStem)
 
-/**
- * @function levenshtein
- * @description Distancia Levenshtein con corte temprano por umbral.
- * @param {string} a - Cadena A.
- * @param {string} b - Cadena B.
- * @param {number} [max=Infinity] - Umbral de poda; si se supera, retorna max+1.
- * @returns {number} Distancia mínima de edición.
- * @example levenshtein('palas','palos',1) // 1
- * @remarks O(m·n) peor caso; se poda por fila si no puede mejorar.
- */
 const levenshtein = (a, b, max = Infinity) => {
   a = String(a); b = String(b)
   const m = a.length, n = b.length
@@ -121,20 +129,65 @@ const levenshtein = (a, b, max = Infinity) => {
   return dp[n]
 }
 
-/**
- * @function preprocessFaqs
- * @description Expande keywords por FAQ a variantes normalizadas, tokens, stems y sinónimos.
- * @param {{keywords: string[], topic?: string, answer?: string}[]} faqs - Lista de FAQs crudas.
- * @returns {({keywords: string[], topic?: string, answer?: string, _expanded: string[]})[]} FAQs con campo `_expanded`.
- * @example preprocessFaqs([{ keywords: ['torqueo y tensionado'] }])
- * @remarks No muta el input; usa normalize, tokenize, lightStem y SYNONYMS.
- */
+/* ──────────────────────────────────────────────────────────────────────────
+   3) SUPLEMENTO DE FAQs DESDE EL DOCUMENTO (se agrega, no pisa nada)
+   ------------------------------------------------------------------------- */
+const DOC_SUPPLEMENT_FAQS = [
+  {
+    topic: 'ambito_geografico',
+    keywords: [
+      'donde trabajan', 'ambito geografico', 'zonas', 'provincias',
+      'operan en argentina', 'alcance nacional', 'bahia blanca', 'rio negro', 'pomona',
+      'cordoba', 'achiras', 'chubut', 'puerto madryn', 'la rioja'
+    ],
+    answer:
+      'Operamos en **todo el territorio argentino**. Experiencia en parques de La Rioja, Bahía Blanca, Río Negro (Pomona), Córdoba (Achiras), Chubut y Puerto Madryn.'
+  },
+  {
+    topic: 'exterior',
+    keywords: [
+      'trabajan en el exterior', 'internacional', 'otros paises', 'uruguay', 'brasil', 'venezuela',
+      'sierra de los caracoles', 'acarau', 'itarema', 'la guajira'
+    ],
+    answer:
+      'Sí, también trabajamos en el **exterior**. Participamos en proyectos en **Venezuela (La Guajira), Brasil (Acarau e Itarema) y Uruguay (Sierra de los Caracoles)**.'
+  },
+  {
+    topic: 'disponibilidad',
+    keywords: ['disponibilidad', 'agenda', 'plazos', 'cuando pueden', 'urgente'],
+    answer:
+      'Contamos con **disponibilidad nacional e internacional**, adaptándonos a la necesidad y cronograma de cada proyecto.'
+  },
+  {
+    topic: 'rrhh_postulaciones',
+    keywords: ['empleo', 'trabajo', 'postulacion', 'enviar cv', 'rrhh', 'vacantes', 'sumarme al equipo'],
+    answer:
+      'Estamos **ampliando el equipo** de forma continua. Si tu perfil se alinea, podés **enviar tu CV** a nuestro correo y te contactamos.'
+  },
+  {
+    topic: 'equipo_certificaciones',
+    keywords: ['equipo', 'personal', 'formacion', 'certificaciones', 'wtc', 'wind training center'],
+    answer:
+      'Nuestro equipo está integrado por **técnicos y profesionales con experiencia desde 2010**, con **certificaciones WTC (Wind Training Center)** en calidad, seguridad y procedimientos del sector eólico.'
+  }
+]
 
+/* Merge por topic (no pisa; solo agrega si el topic no existe) */
+const mergeFaqsByTopic = (base, extras) => {
+  const hasTopic = new Set((base || []).map(f => f.topic).filter(Boolean))
+  const toAdd = (extras || []).filter(f => f.topic && !hasTopic.has(f.topic))
+  return Array.isArray(base) ? base.concat(toAdd) : toAdd
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   4) PREPROC + SCORING
+   ------------------------------------------------------------------------- */
 const preprocessFaqs = (faqs) => {
   return faqs.map((f) => {
     const expanded = new Set()
-    for (const kw of f.keywords) {
+    for (const kw of f.keywords || []) {
       const nk = normalize(kw)
+      if (!nk) continue
       expanded.add(nk)
       tokenize(nk).forEach(t => expanded.add(t))
       nk.split(' ').forEach(w => {
@@ -151,42 +204,39 @@ const preprocessFaqs = (faqs) => {
   })
 }
 
-/**
- * @function scoreFaq
- * @description Puntúa similitud entre la consulta y una FAQ.
- * @param {string} inputRaw - Texto de usuario (bruto).
- * @param {{keywords: string[], _expanded: string[]}} faq - FAQ preprocesada.
- * @returns {number} Puntuación total.
- * @example scoreFaq('hacen torqueo?', faq) // número > 0
- * @remarks Suma: frase exacta, token exacto/sinónimo/difuso y hits por keyword; usa WEIGHTS y levenshtein.
- */
 const scoreFaq = (inputRaw, faq) => {
   const inputNorm = normalize(inputRaw)
   const inputTokens = tokenize(inputNorm)
   let score = 0
 
-  for (const kw of faq.keywords) {
+  // Frase exacta dentro del input
+  for (const kw of faq.keywords || []) {
     const nkw = normalize(kw)
     if (nkw && inputNorm.includes(nkw)) score += WEIGHTS.exactPhrase
   }
 
+  // Coincidencias por token
   for (const t of inputTokens) {
     if (!t) continue
-    if (faq._expanded.includes(t)) { score += WEIGHTS.tokenExact; continue }
+    if (faq._expanded?.includes(t)) { score += WEIGHTS.tokenExact; continue }
     const syns = SYNONYMS[t] || []
     if (syns.length) score += WEIGHTS.tokenSynonym
 
-    const maxDist = t.length <= 4 ? 1 : 2
+    // Fuzzy más estricto (solo palabras ≥5 letras, distancia 1)
+    const maxDist = 1
     let matchedFuzzy = false
-    for (const e of faq._expanded) {
-      const d = levenshtein(t, e, maxDist)
-      if (d <= maxDist) { matchedFuzzy = true; break }
+    if (t.length >= 5 && faq._expanded?.length) {
+      for (const e of faq._expanded) {
+        const d = levenshtein(t, e, maxDist)
+        if (d <= maxDist) { matchedFuzzy = true; break }
+      }
     }
     if (matchedFuzzy) score += WEIGHTS.tokenFuzzy
   }
 
+  // Hits por keyword (coincidencia o semejanza global)
   let hits = 0
-  for (const kw of faq.keywords) {
+  for (const kw of faq.keywords || []) {
     const nkw = normalize(kw)
     const d = levenshtein(inputNorm, nkw, Math.ceil(nkw.length * 0.2))
     if (inputNorm.includes(nkw) || d <= Math.max(2, Math.floor(nkw.length * 0.2))) hits++
@@ -196,41 +246,16 @@ const scoreFaq = (inputRaw, faq) => {
   return score
 }
 
-/**
- * @function getPreprocessedFaqs
- * @description Devuelve FAQs preprocesadas con memoización a nivel de módulo.
- * @returns {({keywords: string[], topic?: string, answer?: string, _expanded: string[]})[]} Arreglo memoizado.
- * @example const faqs = getPreprocessedFaqs()
- * @remarks Inicializa desde `faqsAll` la primera vez; luego reutiliza `_faqsPre`.
- */
-
 let _faqsPre = null
 const getPreprocessedFaqs = () => {
-  if (!_faqsPre) _faqsPre = preprocessFaqs(faqsAll)
+  if (!_faqsPre) {
+    const fused = mergeFaqsByTopic(faqsAll, DOC_SUPPLEMENT_FAQS)
+    _faqsPre = preprocessFaqs(fused)
+  }
   return _faqsPre
 }
 
-
-/**
- * @function collapseTopic
- * @description Colapsa alias de tópico a su forma canónica.
- * @param {string} t - Tópico detectado.
- * @returns {string} Tópico canónico.
- * @example collapseTopic('humano') // 'contacto'
- * @remarks Usa `TOPIC_ALIASES`; retorna `t` si no hay alias.
- */
 const collapseTopic = (t) => TOPIC_ALIASES.get(t) || t
-
-/**
- * @function detectExplicitTopics
- * @description Detecta tópicos explícitos por stems “duros” y frases exactas presentes en FAQs.
- * @param {string} inputNorm - Texto normalizado del usuario.
- * @param {string[]} inputTokens - Tokens (stems) del usuario.
- * @param {{keywords:string[], topic?:string}[]} faqs - FAQs (sin o con _expanded).
- * @returns {string[]} Lista de tópicos (deduplicados).
- * @example detectExplicitTopics('horario y ubicación', ['horari','y','ubicacion'], faqs)
- * @remarks Prioriza HARD_INTENTS; también incluye coincidencias por keyword normalizada.
- */
 
 const detectExplicitTopics = (inputNorm, inputTokens, faqs) => {
   const topics = new Set()
@@ -239,7 +264,7 @@ const detectExplicitTopics = (inputNorm, inputTokens, faqs) => {
     if (topic) topics.add(topic)
   }
   for (const f of faqs) {
-    for (const kw of f.keywords) {
+    for (const kw of f.keywords || []) {
       const k = normalize(kw)
       if (!k) continue
       if (inputNorm.includes(k)) { topics.add(f.topic || 'no_topic'); break }
@@ -248,20 +273,32 @@ const detectExplicitTopics = (inputNorm, inputTokens, faqs) => {
   return Array.from(topics)
 }
 
-/**
- * @function composeAnswer
- * @description Ensambla la respuesta final con orden “humano” y deduplicación.
- * @param {{
- *   items: Array<{ f: { topic?: string, answer?: string }, score: number }>,
- *   explicitTopics?: string[],
- *   hasServiceHint?: boolean,
- *   seen: Set<string>
- * }} args - Parámetros de composición.
- * @returns {string} Texto final a mostrar.
- * @example composeAnswer({ items, explicitTopics: ['horario'], hasServiceHint: true, seen: new Set() })
- * @remarks Orden: saludo (si aplica) → directos → servicios → específicos (máx 2) → CTA; colapsa alias; quita duplicados.
- */
+/* ──────────────────────────────────────────────────────────────────────────
+   5) COBERTURA DE DOMINIO (para cortar fuera-de-dominio)
+   ------------------------------------------------------------------------- */
+const getDomainTokens = (() => {
+  let memo = null
+  return () => {
+    if (memo) return memo
+    const faqs = getPreprocessedFaqs()
+    memo = new Set(
+      faqs.flatMap(f => (f._expanded || []))
+          .filter(w => w && w.length >= 3)
+    )
+    return memo
+  }
+})()
 
+const domainCoverage = (inputTokens) => {
+  const DOMAIN = getDomainTokens()
+  const uniq = Array.from(new Set(inputTokens))
+  const hits = uniq.filter(t => DOMAIN.has(t)).length
+  return hits / Math.max(1, uniq.length)
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   6) ENSAMBLA RESPUESTA (sin anexar links)
+   ------------------------------------------------------------------------- */
 const composeAnswer = ({ items, explicitTopics = [], hasServiceHint, seen }) => {
   const normItems = items.map(x => ({ ...x, topic: collapseTopic(x.f.topic || 'no_topic') }))
   const byTopic = (t) => normItems.find(x => x.topic === t)?.f?.answer
@@ -269,13 +306,13 @@ const composeAnswer = ({ items, explicitTopics = [], hasServiceHint, seen }) => 
   const parts = []
   const explicitSet = new Set(explicitTopics.map(collapseTopic))
 
-  // 1) Saludo primero SOLO si fue explícito y no se saludó antes
+  // Saludo
   if (explicitSet.has('saludo') && !seen.has('saludo')) {
     const saludo = byTopic('saludo')
     if (saludo) parts.push(saludo)
   }
 
-  // 2) Intenciones directas (ordenadas de más “concreto” a menos)
+  // Directos
   const DIRECT_ORDER = [
     'ubicacion','horario','presupuesto','contacto',
     'rrhh_postulaciones','equipo_certificaciones',
@@ -286,18 +323,18 @@ const composeAnswer = ({ items, explicitTopics = [], hasServiceHint, seen }) => 
     if (a) parts.push(a)
   }
 
-  // 3) Servicios generales
+  // Servicios gen.
   const servicios = byTopic('servicios')
   if (servicios) parts.push(servicios)
 
-  // 4) Específicos (máx 2): eólico/solar
+  // Específicos (máx 2)
   const especificos = normItems
     .filter(x => /^eolico_|^solar_/.test(x.topic))
     .slice(0, 2)
     .map(x => x.f.answer)
   parts.push(...especificos)
 
-  // 5) Si el usuario no mostró intención de negocio, cerramos con una vía de acción
+  // CTA suave si no hubo hint de servicio
   if (!hasServiceHint) {
     const contacto = byTopic('contacto')
     const presupuesto = byTopic('presupuesto')
@@ -305,23 +342,13 @@ const composeAnswer = ({ items, explicitTopics = [], hasServiceHint, seen }) => 
     else if (presupuesto) parts.push(presupuesto)
   }
 
-  // Si aún no hay nada, devolvemos lo que haya
-  if (!parts.length) parts.push(...normItems.map(x => x.f.answer))
-
+  // Devolver deduplicado
   return Array.from(new Set(parts.filter(Boolean))).join('\n\n')
 }
 
-/**
- * @function POST
- * @description Handler de Next.js (route) para /api/nlp.
- * @param {Request} request - Request con body JSON: { text: string, seenTopics?: string[] }.
- * @returns {Promise<import('next/server').NextResponse<{
- *   answer: string, isFallback: boolean, topics: string[]
- * }>>} Respuesta JSON.
- * @example // fetch('/api/nlp', { method:'POST', body: JSON.stringify({ text:'horario' }) })
- * @remarks Pipeline: política anti-números → cacheo de FAQs → scoring → overrides explícitos → heurística (longitud, pistas de servicio, vistos) → umbral → fallback.
- */
-
+/* ──────────────────────────────────────────────────────────────────────────
+   7) HANDLER POST
+   ------------------------------------------------------------------------- */
 export async function POST(request) {
   const { text, seenTopics = [] } = await request.json()
   const input = typeof text === 'string' ? text : ''
@@ -329,7 +356,7 @@ export async function POST(request) {
   const inputTokens = tokenize(inputNorm)
   const seen = new Set(Array.isArray(seenTopics) ? seenTopics : [])
 
-  // 1) No números
+  // Política anti-números
   if (/\d/u.test(inputNorm)) {
     return NextResponse.json({
       answer:
@@ -341,11 +368,11 @@ export async function POST(request) {
     })
   }
 
-  // 2) Puntuar
+  // Scoring base
   const faqs = getPreprocessedFaqs()
   const scored = faqs.map((f) => ({ f, score: scoreFaq(input, f) }))
 
-  // best por topic
+  // Mejor por topic
   const bestByTopic = new Map()
   for (const item of scored) {
     const topic = item.f.topic || 'no_topic'
@@ -353,7 +380,7 @@ export async function POST(request) {
     if (!prev || item.score > prev.score) bestByTopic.set(topic, item)
   }
 
-  // 3) Overrides explícitos
+  // Overrides explícitos
   const explicitTopics = detectExplicitTopics(inputNorm, inputTokens, faqs)
   if (explicitTopics.length) {
     const explicitItems = explicitTopics
@@ -369,17 +396,29 @@ export async function POST(request) {
         hasServiceHint: true,
         seen
       })
+      const topics = Array.from(new Set(explicitItems.map(x => collapseTopic(x.f.topic || 'no_topic'))))
       return NextResponse.json({
         answer,
         isFallback: false,
-        topics: Array.from(new Set(explicitItems.map(x => collapseTopic(x.f.topic || 'no_topic'))))
+        topics
       })
     }
   }
 
-  // 4) Heurística general
+  // Heurística general + cobertura de dominio
   const isVeryShort = inputTokens.length <= 3
   const hasServiceHint = inputTokens.some(t => SERVICE_HINT_STEMS.has(t))
+  const coverage = domainCoverage(inputTokens)
+
+  // Gate: fuera de dominio (sin hints ni explícitos)
+  if (!explicitTopics.length && !hasServiceHint && coverage < 0.18) {
+    return NextResponse.json({
+      answer: 'Disculpá, no te entendí 🤔. Puedo ayudarte con *Servicios*, *Ubicación*, *Contacto*, *Horario*, *Presupuesto* o *Empleo*.',
+      isFallback: true,
+      topics: ['fallback']
+    })
+  }
+
   let winners = Array.from(bestByTopic.values()).sort((a, b) => b.score - a.score)
 
   if (isVeryShort && !hasServiceHint) {
@@ -393,30 +432,39 @@ export async function POST(request) {
     winners = winners.filter(w => !(CONVERSATIONAL_TOPICS.has(w.f.topic) && seen.has(w.f.topic)))
   }
 
-  // 5) Umbral + respuesta final
+  // Umbral y respuesta
   const top = winners.slice(0, 5)
   const maxScore = top[0]?.score ?? 0
   const threshold = Math.max(2.6, maxScore * 0.5)
 
   const selected = top.filter(x => x.score >= threshold)
   if (selected.length) {
+    // Si tampoco hay hints y la cobertura sigue baja, devolvemos fallback
+    if (!hasServiceHint && coverage < 0.18) {
+      return NextResponse.json({
+        answer: 'Disculpá, no te entendí 🤔. Puedo ayudarte con *Servicios*, *Ubicación*, *Contacto*, *Horario*, *Presupuesto* o *Empleo*.',
+        isFallback: true,
+        topics: ['fallback']
+      })
+    }
+
     const answer = composeAnswer({
       items: selected,
       explicitTopics,
       hasServiceHint,
       seen
     })
+    const topics = Array.from(new Set(selected.map(x => collapseTopic(x.f.topic || 'no_topic'))))
     return NextResponse.json({
       answer,
       isFallback: false,
-      topics: Array.from(new Set(selected.map(x => collapseTopic(x.f.topic || 'no_topic'))))
+      topics
     })
   }
 
-  // 6) Fallback
+  // Fallback final
   return NextResponse.json({
-    answer:
-      'No estoy seguro de haber entendido 🤔. ¿Querés ver opciones rápidas de *Servicios*, *Ubicación*, *Contacto*, *Horario*, *Disponibilidad* o *Búsqueda de personal*?',
+    answer: 'Disculpá, no te entendí 🤔. Puedo ayudarte con *Servicios*, *Ubicación*, *Contacto*, *Horario*, *Presupuesto* o *Empleo*.',
     isFallback: true,
     topics: ['fallback']
   })
