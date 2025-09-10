@@ -1,120 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans&display=swap');
 
 .carouselContainer {
-  margin-top: 110px;
+  margin-top: 76px;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 .imageContainer {
   position: relative;
   overflow: hidden; 
-
+  width: 100%;
 }
 
 .imageOverlay {
-  position:relative;
+  position: relative;
 }
 
-.images{
-  width: 2000px;
-  height: 700px;
+
+.imageOverlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.3),
+    rgba(0, 0, 0, 0.6)
+  );
+  z-index: 1;
+}
+
+.images {
+  width: 100%;
+  height: 615px;
+  object-fit: cover;
 }
 
 .descriptionOverlay {
   position: absolute;
-  top: 50%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: #fff; 
-  font-size: 140px; 
   text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
+  z-index: 2;
+  padding: 0 15px;
+  max-width: 100%;
+}
+
+.descriptionOverlay h1 {
+  font-size: 80px;
   text-transform: uppercase;
   font-weight: bold;
+  margin: 0;
+  line-height: 1.1;
 }
 
+.descriptionOverlay p {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 25px;
+  margin: 10px 0 20px;
+}
 
-
-.customNextArrow,
-.customPrevArrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 120px;
-  color:white; 
-  background-color: transparent;
-  padding: 10px;
-  cursor: pointer;
+.ctaButton {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 28px;
   border: none;
-  outline: none;
-  transition: color 0.3s ease;
+  border-radius: 30px;
+  font-size: 16px;
+  font-family: 'Montserrat', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.customNextArrow:hover,
-.customPrevArrow:hover {
-  color: #990000; 
-}
-
-.customNextArrow::before,
-.customPrevArrow::before {
-  font-family: 'Arial', sans-serif; 
+.ctaButton:hover {
+  background-color: #0077B6;
 }
 
 
-
-.customNextArrow {
-  right: 10px;
-}
-
-.customPrevArrow {
-  left: 10px;
-  z-index: 1; 
-}
 
 @media (max-width: 1200px) {
-
-  .descriptionOverlay {
-    font-size:110px;  ;
-  }
- 
-  .images{
-    width: 100%;
-    height:600px;
-  }
+  .descriptionOverlay h1 { font-size: 60px; }
 }
 
-
-@media (min-width: 601px) and (max-width: 992px) {
-  .descriptionOverlay {
-    font-size:70px;  ;
-  }
-
-  .images{
-    width: 100%;
-    height:600px;
-  }
-
+@media (max-width: 992px) {
+  .descriptionOverlay h1 { font-size: 42px; }
+  .descriptionOverlay p { font-size: 18px; }
 }
 
-@media (min-width: 300px) and (max-width:601px) {
-
-  .descriptionOverlay {
-    font-size:32px;  
-  }
+@media (max-width: 600px) {
 
   .images{
     width: 100%;
     height:260px;
   }
   
-  .customNextArrow,
-  .customPrevArrow {
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 5px;
-    padding: 2px;
+  .descriptionOverlay {
+    top: 60%; 
+    transform: translate(-50%, -50%);
+    padding: 0 10px;
   }
- 
-  .customNextArrow:hover,
-  .customPrevArrow:hover {
-  color: #990000 !important; 
+
+  .imageOverlay::after {
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.4),
+      rgba(0, 0, 0, 0.8)
+    );
+  }
+
+  .descriptionOverlay h1 { 
+    font-size: 18px;
+    line-height: 1.2;
+  }
+
+  .descriptionOverlay p { 
+    font-size: 12px; 
+    margin: 5px 0 10px;
+  }
+
+  .ctaButton {
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  
+.carouselContainer {
+  margin-top: 60px;
 }
 
 }

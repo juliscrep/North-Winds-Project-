@@ -18,7 +18,7 @@ function Header() {
       <nav className={styles.navegacion}>
         <div className={styles.logo}>
           <Link href="/">
-            <Image alt="Logo North Winds" src="/img/logo.jpeg" width={160} height={105} />
+            <Image alt="Logo North Winds" src="/img/logo1.png" width={150} height={115} />
           </Link>
         </div>
 
