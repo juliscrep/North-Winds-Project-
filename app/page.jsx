@@ -4,28 +4,28 @@ import Objectives from '@/components/objectives';
 import Card from '@/components/card';
 import cardData from '@/components/cardData';
 
-function Home (){
-
+function Home() {
   return (
-    <main className={styles.main}>
-
-       <div className={styles.carouselSt}>
-      <Carousel/>
-      </div>     
-
-
-      <Objectives></Objectives>
-
-      <div className={styles.container}>
-        <h1 className={styles.title}>Nos especializamos en</h1>
-        <div className={styles.cardContainer}>
-          
-        {cardData.map((card, index) => (
-            <Card key={index} image={card.image} title={card.title} slug={card.slug} />
-          ))}        
-        
+    <main className={`${styles.theme} ${styles.main}`}>
+      <div className={styles.carouselSt}>
+        <Carousel />
       </div>
-    </div>  
+
+      <Objectives />
+
+      <section className={styles.servicesSection} aria-labelledby="services-heading">
+        <div className={styles.container}>
+          <h2 id="services-heading" className={styles.sectionTitle}>
+            Nos especializamos en
+          </h2>
+
+          <div className={styles.grid}>
+            {cardData.map((card, index) => (
+              <Card key={index} image={card.image} title={card.title} slug={card.slug} />
+            ))}
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
