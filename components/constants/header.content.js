@@ -3,16 +3,18 @@ export const navLinks = [
   { href: '/about', key: 'about' },
   { href: '/work', key: 'work' },
   { href: '/services', key: 'services' },
+  { href: '/rrhh', key: 'rrhh' },
   { href: '/contact', key: 'contact' },
 ];
 
 export const navLabels = {
   es: {
-    home: 'INICIO',
-    about: 'QUIÉNES SOMOS',
-    work: 'PROYECTOS',
-    services: 'SERVICIOS',
-    contact: 'CONTACTO',
+    home: 'Inicio',
+    about: 'Quiénes somos',
+    work: 'Proyectos',
+    services: 'Servicios',
+    contact: 'Contacto',
+    rrhh: 'Trabaja con Nosotros',
     openMenu: 'Abrir menú de navegación',
   },
 };

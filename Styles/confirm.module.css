@@ -1,0 +1,35 @@
+.backdrop{
+  position: fixed; inset: 0; background: rgba(0,0,0,.35);
+  display: grid; place-items: center; z-index: 10000;
+  padding: 16px;
+}
+.card{
+  width: min(520px, 100%);
+  background: var(--surface-100, #1e1f22);
+  color: var(--text-100, #fff);
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.35);
+  padding: 16px;
+}
+.title{ margin: 2px 0 8px; font-size: 16px; font-weight: 700; }
+.msg{ opacity: .9; font-size: 14px; }
+.row{ display:flex; justify-content:flex-end; gap:10px; margin-top:14px; }
+
+/* Botones con clases equivalentes a rrhh.module.css */
+.btnPrimary{
+  background: var(--brand-500,#5b8b8e);
+  color: #fff; border: 0; border-radius: 10px;
+  padding: 10px 14px; cursor: pointer;
+}
+.btnPrimary:disabled{ opacity:.6; cursor:not-allowed; }
+.btnGhost{
+  background: transparent; color: inherit; border: 1px solid rgba(255,255,255,.15);
+  border-radius: 10px; padding: 10px 14px; cursor: pointer;
+}
+.btnGhost:disabled{ opacity:.6; cursor:not-allowed; }
+
+@media (max-width: 640px){
+  .card{ padding: 14px; }
+  .title{ font-size: 15px; }
+  .msg{ font-size: 13px; }
+}
