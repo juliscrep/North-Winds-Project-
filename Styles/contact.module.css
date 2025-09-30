@@ -1,72 +1,95 @@
+/* Paleta local aplicada al contenedor principal (sin :root) */
+.twoColumnsContainer{
+  --brand: #4CAF50;
+  --brand-alt: #0077B6;
+  --ink: #0f172a;
+  --ink-2: #475569;
+  --bg: #f7f9fb;
 
-.twoColumnsContainer {
   display: flex;
   margin-top: 76px;
-  background-color: rgb(247, 247, 247);
+  background-color: var(--bg);
 }
 
-.image {
-  border-radius: 5px; 
+/* Imagen (si la usaras en esta vista) */
+.image{
+  border-radius: 5px;
 }
 
-
-.bn39 {
-  background-color:transparent;
-  box-sizing: border-box;
-  color: rgb(13, 37, 54);
-  display:flex;
-  height: 35px;
-  font-size: 1.4em;
-  font-weight: 600;
-  padding: 4px;
-  position: relative;
-  text-decoration: none;
-  width: 8em;
-  border: 2px solid rgb(13, 37, 54);
-  align-items: center;
-}
-
-.contactSection:hover {
-  color:#990000;
-}
-
-
+/* ===== Título con línea degradé inferior ===== */
 .title{
   text-align: center;
   margin-bottom: 60px;
   margin-top: 70px;
-  font-size:55px;
+  font-size: 45px;
   font-weight: bold;
-  color:#990000;
+  color: var(--ink);
+  position: relative;
+  letter-spacing: .2px;
+}
+.title::after{
+  content:"";
+  display:block;
+  width:140px;
+  height:4px;
+  border-radius:4px;
+  margin:14px auto 0;
+  background: linear-gradient(90deg, var(--brand), var(--brand-alt));
 }
 
-
-.textColumn {
+/* ===== Columna de texto ===== */
+.textColumn{
   padding-left: 40px;
-  padding-right: 40px; 
+  padding-right: 40px;
 }
 
-.contactSection {
-  flex-direction: column; 
-  align-items: flex-start;  
+/* ===== Fila de cada item (no cambio posiciones) ===== */
+.contactSection{
+  /* se conserva la disposición actual (columna) */
+  flex-direction: column;
+  align-items: flex-start;
   margin-left: 20px;
-  color: black;
-  margin-bottom:30px;
+  color: var(--ink);
+  margin-bottom: 30px;
 }
 
-.contactSection2 {
-  display: flex;
-  flex-direction: column; 
-  align-items: flex-start; 
-  gap: 0.001rem; 
+/* hover sutil (ya no rojo) */
+.contactSection:hover{
+  color: var(--brand-alt);
 }
 
+/* ===== Icono con anillo degradé fino ===== */
+.icon{
+  /* círculo con borde degradé (white interior) */
+  width: 40px;
+  height: 40px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(#ffffff,#ffffff) padding-box,
+    linear-gradient(135deg, var(--brand), var(--brand-alt)) border-box;
+  color: var(--brand-alt);           /* color del glifo FA */
+  font-size: 16px;                   /* tamaño del glifo dentro del círculo */
+  box-shadow: 0 10px 24px rgba(0,0,0,.08);
+  margin-bottom: 12px;               /* respeta la columna (icono arriba, texto abajo) */
+}
+
+/* ===== Textos de cada línea ===== */
+.iconBoxTitle{
+  margin-left: 30px;
+  font-size: 16px;  
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 25px;
+}
 
 .iconBoxTitle2{
-  font-size: medium;
-  color: black;
-  font-weight: 500; 
-  display: inline-flex; 
+  font-size: 16px;  
+  color: var(--ink);
+  font-weight: 500;
+  display: inline-flex;
   margin-left: 32px;
   align-items: center;
   text-align: justify;
@@ -75,11 +98,11 @@
 }
 
 .iconBoxTitle5{
-  font-size: medium;
-  color: black;
-  font-weight: 500; 
-  display: inline-flex; 
-  margin-left: 45px;
+  font-size: 16px;   
+  color: var(--ink);
+  font-weight: 500;
+  display: inline-flex;
+  margin-left: 75px;
   align-items: center;
   text-align: justify;
   margin-bottom: 25px;
@@ -88,125 +111,117 @@
 
 .iconBoxTitle4{
   margin-left: 30px;
-  font-size: medium;
-  color: black;
-  font-weight: 500; 
+  font-size: 16px;  
+  color: var(--ink);
+  font-weight: 500;
   text-align: justify;
-  display: inline-flex; 
+  display: inline-flex;
   align-items: center;
   width: 75%;
   margin-bottom: 25px;
 }
 
-.bn39 .bn39span {
+/* ===== Botón decorativo existente (borde degradé) ===== */
+.bn39{
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  height: 35px;
+  font-size: 1.4em;
+  font-weight: 600;
+  padding: 4px;
+  position: relative;
+  text-decoration: none;
+  width: 8em;
+
+  border: 2px solid transparent;
+  background:
+    linear-gradient(#ffffff,#ffffff) padding-box,
+    linear-gradient(90deg, var(--brand), var(--brand-alt)) border-box;
+  color: var(--ink);
+}
+.bn39 .bn39span{
   align-items: center;
   background: transparent;
   border-radius: 6px;
   display: flex;
   justify-content: center;
   height: 100%;
-  transition: background 0.5s ease;
+  transition: background .3s ease, color .3s ease;
   width: 100%;
 }
-
-.bn39:hover .bn39span {
-  background: transparent;
+.bn39:hover .bn39span{
+  background: linear-gradient(90deg, var(--brand), var(--brand-alt));
+  color: #fff;
 }
 
-.iconBoxTitle{
-  margin-left: 30px;
-  font-size: medium;
-  font-weight: 500;
-  color: black;
-  margin-bottom: 25px;
-}
-
-
+/* ===== Sección de botones / texto adicional ===== */
 .btnSection{
   margin-top: 30px;
-  text-align: justify;  
+  text-align: justify;
   margin-bottom: 10px;
   line-height: 1.5;
 }
-
 .btn{
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-
+/* ===== Responsivo (sin mover estructura) ===== */
 @media (max-width: 1200px){
- 
-  .contactSection i {
-    margin-bottom: 20px;
-   
-  }
-  .iconBoxTitle{
-    text-align: justify;
-  }
-   
+  .contactSection i{ margin-bottom: 20px; }
+
+  .iconBoxTitle{ text-align: justify; }
+
   .iconBoxTitle2{
     font-size: medium;
-    color: black;
-    font-weight: 500; 
-    display: inline-flex; 
+    color: var(--ink);
+    font-weight: 500;
+    display: inline-flex;
     margin-left: 30px;
     align-items: center;
     text-align: justify;
     width: 75%;
   }
-  
+
   .iconBoxTitle4{
     margin-left: 30px;
     font-size: medium;
-    color: black;
-    font-weight: 500; 
+    color: var(--ink);
+    font-weight: 500;
     text-align: justify;
     width: 75%;
-    margin-top: 0px;
+    margin-top: 0;
   }
-  
+
   .iconBoxTitle3{
     margin-left: 45px;
     font-size: medium;
-    color: black;
-    font-weight: 500; 
+    color: var(--ink);
+    font-weight: 500;
   }
 
   .title{
-    text-align: center;
     margin-bottom: 60px;
     margin-top: 70px;
-    font-size:45px;
-    font-weight: bold;
-    color:#990000;
+    font-size: 45px;
+    color: var(--ink);
   }
- 
-
 }
 
-
 @media (min-width: 300px) and (max-width: 700px){
-
-  .twoColumnsContainer {
+  .twoColumnsContainer{
     flex-direction: column;
     display: flex;
     align-items: center;
   }
-
   .title{
     text-align: center;
     margin-bottom: 30px;
     margin-top: 30px;
-    font-size:35px;
-    font-weight: bold;
-    color:#990000;
+    font-size: 35px;
+    color: var(--ink);
   }
-
-  .contactSection{
-    font-size: 15px;
-  }
-
-
+  .contactSection{ font-size: 15px; }
 }
