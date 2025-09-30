@@ -1,4 +1,4 @@
-/* Paleta local aplicada al contenedor principal (sin :root) */
+
 .twoColumnsContainer{
   --brand: #4CAF50;
   --brand-alt: #0077B6;
@@ -11,12 +11,12 @@
   background-color: var(--bg);
 }
 
-/* Imagen (si la usaras en esta vista) */
+
 .image{
   border-radius: 5px;
 }
 
-/* ===== Título con línea degradé inferior ===== */
+
 .title{
   text-align: center;
   margin-bottom: 60px;
@@ -37,15 +37,14 @@
   background: linear-gradient(90deg, var(--brand), var(--brand-alt));
 }
 
-/* ===== Columna de texto ===== */
+
 .textColumn{
   padding-left: 40px;
   padding-right: 40px;
 }
 
-/* ===== Fila de cada item (no cambio posiciones) ===== */
-.contactSection{
-  /* se conserva la disposición actual (columna) */
+
+.contactSection{  
   flex-direction: column;
   align-items: flex-start;
   margin-left: 20px;
@@ -53,14 +52,13 @@
   margin-bottom: 30px;
 }
 
-/* hover sutil (ya no rojo) */
+
 .contactSection:hover{
   color: var(--brand-alt);
 }
 
-/* ===== Icono con anillo degradé fino ===== */
+
 .icon{
-  /* círculo con borde degradé (white interior) */
   width: 40px;
   height: 40px;
   display: inline-grid;
@@ -70,13 +68,12 @@
   background:
     linear-gradient(#ffffff,#ffffff) padding-box,
     linear-gradient(135deg, var(--brand), var(--brand-alt)) border-box;
-  color: var(--brand-alt);           /* color del glifo FA */
-  font-size: 16px;                   /* tamaño del glifo dentro del círculo */
+  color: var(--brand-alt);           
+  font-size: 16px;                   
   box-shadow: 0 10px 24px rgba(0,0,0,.08);
-  margin-bottom: 12px;               /* respeta la columna (icono arriba, texto abajo) */
+  margin-bottom: 12px;               
 }
 
-/* ===== Textos de cada línea ===== */
 .iconBoxTitle{
   margin-left: 30px;
   font-size: 16px;  
@@ -121,7 +118,7 @@
   margin-bottom: 25px;
 }
 
-/* ===== Botón decorativo existente (borde degradé) ===== */
+
 .bn39{
   box-sizing: border-box;
   display: flex;
@@ -155,7 +152,7 @@
   color: #fff;
 }
 
-/* ===== Sección de botones / texto adicional ===== */
+
 .btnSection{
   margin-top: 30px;
   text-align: justify;
@@ -168,7 +165,7 @@
   align-items: center;
 }
 
-/* ===== Responsivo (sin mover estructura) ===== */
+
 @media (max-width: 1200px){
   .contactSection i{ margin-bottom: 20px; }
 
@@ -210,18 +207,45 @@
   }
 }
 
-@media (min-width: 300px) and (max-width: 700px){
-  .twoColumnsContainer{
-    flex-direction: column;
-    display: flex;
-    align-items: center;
+
+@media (max-width: 700px){
+ 
+  .contactSection{
+    display: grid;
+    grid-template-columns: 44px 1fr;  
+    column-gap: 12px;
+    row-gap: 6px;
+    align-items: start;
+    margin: 0 0 22px 0;              
   }
-  .title{
-    text-align: center;
-    margin-bottom: 30px;
-    margin-top: 30px;
-    font-size: 35px;
-    color: var(--ink);
+
+  .icon{
+    margin: 0;
+    justify-self: start;
   }
-  .contactSection{ font-size: 15px; }
+
+ 
+  .iconBoxTitle,
+  .iconBoxTitle2,
+  .iconBoxTitle4,
+  .iconBoxTitle5{
+    margin-left: 0 !important;
+    width: 100% !important;
+    text-align: left !important;      
+    line-height: 1.5;
+    word-break: break-word;
+    hyphens: auto;
+  }
+
+  
+  .contactSection2{
+    grid-column: 2 / -1;             
+    display: grid;
+    gap: 6px;
+  }
+  .contactSection2 .iconBoxTitle5{
+    margin-left: 0 !important;
+    text-align: left !important;
+  }
 }
+
