@@ -1,4 +1,4 @@
-/* =======================
+/* ======================= 
    Paleta (solo local al módulo)
    ======================= */
 .container{
@@ -132,25 +132,43 @@
   .btn{ margin-top:15px; display:flex; justify-content:center; align-items:center; }
 }
 
+/* ===== SOLO MOBILE: ocupar TODO el ancho (full-bleed) ===== */
 @media (min-width: 300px) and (max-width: 700px){
   .container{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
     background: #ffffff;
     color: var(--ink);
-    padding-top: 30px;
-    width: 80%;
-    border-radius: 16px;
-    padding-right: 40px;
-    padding-left: 40px;
+
+    /* Full-bleed: el ancho real debe ser el del viewport */
+    width: 100vw;
+    max-width: 100vw;
+    /* Empujamos los bordes a los límites del viewport
+       aunque el padre tenga padding */
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+
+    /* Padding interno parejo y sin radios para que toque bordes */
+    padding: 20px 16px 24px;
+    border-radius: 0;
+    box-sizing: border-box;
   }
+
+  .form{ width: 100%; }
+
   .input{
     width: 100%;
     margin-bottom: 15px;
     padding: 5px 12px;
     border-radius: 14px;
     border: 1.5px solid var(--muted);
+    box-sizing: border-box;
   }
-  .title{ width:100%; margin-bottom:30px; text-align: justify; }
+
+  .title{
+    width: 100%;
+    margin-bottom: 30px;
+    text-align: justify;
+  }
 }

@@ -1,27 +1,23 @@
-
 .twoColumnsContainer{
   --brand: #4CAF50;
   --brand-alt: #0077B6;
   --ink: #0f172a;
   --ink-2: #475569;
   --bg: #f7f9fb;
-
   display: flex;
-  margin-top: 76px;
+  margin-top: 30px;
   background-color: var(--bg);
 }
-
 
 .image{
   border-radius: 5px;
 }
 
-
 .title{
   text-align: center;
-  margin-bottom: 60px;
-  margin-top: 70px;
-  font-size: 45px;
+  margin-bottom: 55px;
+  margin-top: 75px;
+  font-size: 35px;
   font-weight: bold;
   color: var(--ink);
   position: relative;
@@ -37,12 +33,10 @@
   background: linear-gradient(90deg, var(--brand), var(--brand-alt));
 }
 
-
 .textColumn{
   padding-left: 40px;
   padding-right: 40px;
 }
-
 
 .contactSection{  
   flex-direction: column;
@@ -52,11 +46,9 @@
   margin-bottom: 30px;
 }
 
-
 .contactSection:hover{
   color: var(--brand-alt);
 }
-
 
 .icon{
   width: 40px;
@@ -69,21 +61,21 @@
     linear-gradient(#ffffff,#ffffff) padding-box,
     linear-gradient(135deg, var(--brand), var(--brand-alt)) border-box;
   color: var(--brand-alt);           
-  font-size: 16px;                   
+  font-size: 14px;                   
   box-shadow: 0 10px 24px rgba(0,0,0,.08);
   margin-bottom: 12px;               
 }
 
 .iconBoxTitle{
   margin-left: 30px;
-  font-size: 16px;  
+  font-size: 14px;   
   font-weight: 500;
   color: var(--ink);
   margin-bottom: 25px;
 }
 
 .iconBoxTitle2{
-  font-size: 16px;  
+  font-size: 14px;     
   color: var(--ink);
   font-weight: 500;
   display: inline-flex;
@@ -95,7 +87,7 @@
 }
 
 .iconBoxTitle5{
-  font-size: 16px;   
+  font-size: 14px;    
   color: var(--ink);
   font-weight: 500;
   display: inline-flex;
@@ -108,7 +100,7 @@
 
 .iconBoxTitle4{
   margin-left: 30px;
-  font-size: 16px;  
+  font-size: 14px;   
   color: var(--ink);
   font-weight: 500;
   text-align: justify;
@@ -117,7 +109,6 @@
   width: 75%;
   margin-bottom: 25px;
 }
-
 
 .bn39{
   box-sizing: border-box;
@@ -130,13 +121,13 @@
   position: relative;
   text-decoration: none;
   width: 8em;
-
   border: 2px solid transparent;
   background:
     linear-gradient(#ffffff,#ffffff) padding-box,
     linear-gradient(90deg, var(--brand), var(--brand-alt)) border-box;
   color: var(--ink);
 }
+
 .bn39 .bn39span{
   align-items: center;
   background: transparent;
@@ -152,7 +143,6 @@
   color: #fff;
 }
 
-
 .btnSection{
   margin-top: 30px;
   text-align: justify;
@@ -164,7 +154,6 @@
   justify-content: center;
   align-items: center;
 }
-
 
 @media (max-width: 1200px){
   .contactSection i{ margin-bottom: 20px; }
@@ -207,9 +196,24 @@
   }
 }
 
-
+/* ========= SOLO MOBILE (modificado) ========= */
 @media (max-width: 700px){
- 
+  .twoColumnsContainer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;              
+    padding: 0 16px;               /* padding simétrico */
+    box-sizing: border-box;        /* evitar overflow lateral */
+  }
+
+  .textColumn{
+    padding: 0 16px;               /* simétrico en mobile */
+    box-sizing: border-box;
+  }
+
   .contactSection{
     display: grid;
     grid-template-columns: 44px 1fr;  
@@ -223,8 +227,12 @@
     margin: 0;
     justify-self: start;
   }
+  
 
- 
+  .title{
+    font-size: 30px;
+  }
+
   .iconBoxTitle,
   .iconBoxTitle2,
   .iconBoxTitle4,
@@ -235,17 +243,12 @@
     line-height: 1.5;
     word-break: break-word;
     hyphens: auto;
+    font-size: 16px;
   }
 
-  
   .contactSection2{
     grid-column: 2 / -1;             
     display: grid;
     gap: 6px;
   }
-  .contactSection2 .iconBoxTitle5{
-    margin-left: 0 !important;
-    text-align: left !important;
-  }
 }
-
