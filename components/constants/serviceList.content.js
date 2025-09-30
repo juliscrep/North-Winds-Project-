@@ -10,14 +10,14 @@ export const serverListContent = {
     },
     correctivos: {
       title2: 'Grandes correctivos',
-      image: { src: '/img/background2.jpg', alt: 'Imagen', width: 750, height: 550 },
+      image: { src: '/img/trabajo9.jpeg', alt: 'Imagen',  width: 300, height: 550},
       paragraphs: [
         'Nos especializamos en llevar a cabo cambios de componentes críticos como la multiplicadora, generadores, palas, entre otros. Implementamos soluciones eficientes para mantener la integridad y funcionalidad de los aerogeneradores a largo plazo.',
       ],
     },
     torqueo: {
       title2: 'Torqueo y tensionado',
-      image: { src: '/img/maquina1.jpeg', alt: 'Imagen', width: 400, height: 600 },
+      image: { src: '/img/maquina1.jpeg', alt: 'Imagen', width: 150, height: 300 },
       paragraphs: [
         'Cambio de Aceite Flushin: realizamos el cambio de aceite Flushin para garantizar el óptimo funcionamiento de los componentes mecánicos.',
         'Limpieza Exterior de Torre: llevamos a cabo limpiezas exteriores para mantener las torres en condiciones óptimas.',
@@ -26,7 +26,7 @@ export const serverListContent = {
     },
     palas: {
       title2: 'Revisión y reparación de palas',
-      image: { src: '/img/maquina2.jpeg', alt: 'Imagen', width: 400, height: 600 },
+      image: { src: '/img/maquina2.jpeg', alt: 'Imagen', width: 200, height: 300 },
       paragraphs: [
         'Inspección con Drone en Palas o en Torre: implementamos tecnología de vanguardia para llevar a cabo inspecciones precisas y detalladas mediante drones, garantizando una evaluación exhaustiva de las palas y torres.',
         'Inspección con Cámaras Fotográficas de Alta Resolución en Palas o Torres: utilizamos cámaras de alta resolución para capturar imágenes detalladas, facilitando la identificación de posibles problemas y la planificación de intervenciones.',
@@ -68,7 +68,7 @@ export const serverListContent = {
     },
     turbina: {
       title2: 'Control de calidad en montaje de turbinas eólicas',
-      image: { src: '/img/montajeTurbina.jpeg', alt: 'Imagen', width: 400, height: 600 },
+      image: { src: '/img/montajeTurbina.jpeg', alt: 'Imagen', width: 200, height: 300 },
       paragraphs: [
         'Verificamos en el montaje el torqueo y tensionado de todo el ensamblaje de la turbina eolica. Realizamos inspecciones, pruebas y mediciones para garantizar el buen funcionamiento de la turbina.',
         'Posteriormente, realizamos un informe para que el cliente tenga en su conocimiento la trazabilidad de las tareas que se ejecutaron.',

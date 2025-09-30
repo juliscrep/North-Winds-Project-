@@ -64,51 +64,51 @@ path: "M15.5 14h-.79l-.28-.27c.72-1.02 1.17-2.26 1.17-3.57 0-3.31-2.69-6-6-6S4 7
 export const svgIcons = {
   mantenimiento: {
     viewBox: '0 0 167.73 167.51',
-    width: 49,
-    height: 49,
+    width: 39,
+    height: 39,
     paths: [manttoSvg1.path, manttoSvg2.path]
   },
   correctivos: {
     viewBox: '0 0 162.44 172.48',
-    width: 49,
-    height: 49,
+    width: 39,
+    height: 39,
     paths: [aeroSvg1.path, aeroSvg2.path, aeroSvg3.path]
   },
   torqueo: {
     viewBox: '0 0 176.38 167.03',
-    width: 49,
-    height: 49,
+    width: 39,
+    height: 39,
     paths: [torqueSvg1.path]
   },
   palas: {
     viewBox: '0 0 160.01 159.98',
-    width: 49,
-    height: 49,
+    width: 39,
+    height: 39,
     paths: [palasSvg1.path]
   },
   inspeccion: {
     viewBox: '0 0 167.73 167.51',
-    width: 49,
-    height: 49,
+    width: 39,
+    height: 39,
     paths: [manttoSvg1.path, manttoSvg2.path]
   },
   calidad: {
     viewBox: '-16 0 512 512',
-    width: 60,
-    height: 60,
+    width: 39,
+    height: 39,
     paths: calidadPaths
   },
   obra: {
     viewBox: '0 0 24 24',
-    width: 49,
-    height: 49,
+    width: 39,
+    height: 39,
     extraDefs: <path fill="none" d="M0 0h24v24H0z" />,
     paths: [turbinaSvg.path]
   },
   turbina: {
     viewBox: '-16 0 512 512',
-    width: 60,
-    height: 60,
+    width: 39,
+    height: 39,
     paths: calidadPaths
   }
 };
