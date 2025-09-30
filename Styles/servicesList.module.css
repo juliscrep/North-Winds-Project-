@@ -1,389 +1,227 @@
-
-.section{
-  background-color: rgb(247, 247, 247);
-  padding-bottom: 5%;
+/* =======================
+   Variables de tema (locales)
+   ======================= */
+.theme{
+  --brand: #4CAF50;
+  --brand-alt: #0077B6;
+  --ink: #0f172a;
+  --ink-2: #475569;
+  --card: #ffffff;
+  --bg: #f7f7f7;
 }
 
-
-.twoColumnsContainer {
-  display: flex;
-  margin-top: 5px;
-}
-.twoColumnsContainer2{
-  display: flex;
-  margin-top: 10px;
-}
-
-.column {
-  padding: 40px;
-}
-
-.expanded{
-  padding-top: 75px;
-}
-
-.image {
-  border-radius: 2px; 
-}
-
-.image2{
-  border-radius: 2px; 
-}
-
-.image3{
-  border-radius: 2px;
-  height: 95%;
-}
-
-.icon {
-  font-size: 3em; 
-  margin: 0;  
-  color:rgb(183, 16, 16); 
-}
-
-
-.textColumn {
-  padding: 20px; 
-  color: black;
+/* Contenedor ancho consistente */
+.wrap{
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 0 16px;
 }
 
-
-.text {
-  font-size:22px;
-  text-align: justify;
-  margin-right: 30px;
-  margin-left: 30px;
-  margin-bottom: 65px;
-  line-height: 1.6;
+/* Sección solar (fondo gris muy suave) */
+.section{
+  background-color: var(--bg);
+  padding: clamp(28px, 5vw, 56px) 0 5%;
 }
 
-.text1 {
-  font-size:22px;
-  text-align: justify;
-  margin-right: 30px;
-  margin-left: 30px;
-  margin-bottom: 25px;
-  line-height: 1.6;
-}
-
-.text2{
-  font-size:22px;
-  text-align: justify;
-  margin-bottom: 45px;
-  padding-right: 6%;
-  padding-left: 6%;
-  padding-top: 3%;
-  line-height: 1.6;
-}
-
-.lista{
-  padding-right: 7%;
-  padding-left: 7%;
-}
-
-.text3{
-  font-size:22px;
-  text-align: justify;
-  margin-bottom: 45px;
-  line-height: 1.6;
-}
-
-.text4{
-  font-size:22px;
-  text-align: justify;
-  margin-bottom: 25px;
-  line-height: 1.6;
-}
-
-
+/* =======================
+   Títulos
+   ======================= */
 .title{
-  margin-top: 120px;
+  margin: 120px 0 6px 0;
   text-align: center;
-  font-size: 35px;
+  font-size: clamp(22px, 4vw, 32px);
+  font-weight: 900;
+  color: var(--ink);
+  letter-spacing: -.01em;
+  position: relative;
+}
+.title::after{
+  content:"";
+  display:block;
+  width:120px;
+  height:4px;
+  border-radius:4px;
+  margin:12px auto 0;
+  background: linear-gradient(90deg, var(--brand), var(--brand-alt));
 }
 
 .title3{
-  padding-top: 5%;
+  margin: 0 0 6px 0;
   text-align: center;
-  font-size: 35px;
+  font-size: clamp(18px, 3.6vw, 24px);
+  font-weight: 900;
+  color: var(--ink);
+}
+.title3::after{
+  content:"";
+  display:block;
+  width:110px;
+  height:4px;
+  border-radius:4px;
+  margin:12px auto 0;
+  background: linear-gradient(90deg, var(--brand), var(--brand-alt));
+}
+
+/* =======================
+   Bloques de servicio
+   ======================= */
+.expanded{
+  position: relative;
+  margin: clamp(18px, 3vw, 28px) auto;
+  padding: clamp(18px, 3vw, 26px) 0;
+  background: var(--card);
+}
+
+/* Fila de 2 columnas (alternamos el orden en JSX para desktop) */
+.twoColumnsContainer{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(14px, 2.2vw, 22px);
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(12px, 2vw, 18px);
+}
+
+/* Variante “reverse” (imagen a la derecha en desktop) */
+.twoColumnsContainer2{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(14px, 2.2vw, 22px);
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(12px, 2vw, 18px);
+}
+
+.column{ padding: 0; }
+
+/* ===== Media con altura uniforme ===== */
+.media{
+  position: relative;
+  width: 100%;
+  aspect-ratio: 30 / 22;          /* Misma altura visual para todas */
+  border-radius: 16px;
+  overflow: hidden;
+  background: #f5f7fb;
+  box-shadow: 0 12px 28px rgba(0,0,0,.08);
+}
+.img{
+  object-fit: cover;              /* sin bandas negras */
+}
+
+/* ===== Texto ===== */
+.textColumn{
+  padding: clamp(6px, 1.2vw, 12px);
+  color: var(--ink);
+  margin: 0 auto;
+}
+
+/* Icono con anillo degradé fino */
+.svgContainer{
+  width: 54px;
+  height: 54px;
+  border-radius: 999px;
+  padding: 1.5px;                 /* anillo más fino */
+  background: linear-gradient(135deg, var(--brand), var(--brand-alt));
+  box-shadow: 0 10px 24px rgba(0,0,0,.08);
+  display: grid;
+  place-items: center;
+  margin-bottom: 10px;
 }
 .icon{
-  fill:#a80a0a;
-  margin-top: 20px;
+  background: #fff;
+  border-radius: 999px;
+  padding: 9px;
+  color: var(--brand-alt);
 }
-
 
 .title2{
+  margin: 4px 0 12px 0;
+  color: var(--ink);
+  font-size: clamp(18px, 2.2vw, 22px);
+  font-weight: 800;
+  letter-spacing: .002em;
+}
+
+.text{
+  font-size: clamp(15.5px, 1.35vw, 16px);
+  line-height: 1.75;
   text-align: justify;
-  margin-top: 15px;
-  margin-bottom: 40px;
-  font-size: 30px;
-  margin-left: 50px;
-  color: black; 
-  font-weight: bolder;
+  margin: 0 0 14px 0;
+  color: var(--ink-2);
+}
+.text2{
+  font-size: clamp(15.5px, 1.35vw, 16px);
+  line-height: 1.75;
+  text-align: justify;
+  margin: 26px auto 24px;
+  padding: 0 clamp(16px, 6vw, 64px);
+  color: var(--ink-2);
+}
+.text4{
+  font-size: clamp(15px, 1.3vw, 15.5px);
+  line-height: 1.7;
+  text-align: justify;
+  margin: 0 0 12px 0;
+  color: var(--ink-2);
 }
 
-
-@media (max-width: 992px) {
-  .title2{
-    text-align: center;
-    margin-top: 35px;
-    margin-bottom: 30px;
-    margin-right: 40px;
-    font-size: 25px;
-    margin-left: 50px;
-    color:black; 
-  }
-
-  .text {
-    font-size:18px;
-    text-align: justify;
-    margin-right: 30px;
-    margin-bottom: 65px;
-    line-height: 1.5;
-    margin-left: 20px;
-  }
-
-  .text1 {
-    font-size:18px;
-    text-align: justify;
-    margin-right: 30px;
-    margin-left: 30px;
-    margin-bottom: 25px;
-    line-height: 1.6;
-    margin-left: 20px;
-  }
-
-  .text2{
-    font-size:18px;
-    text-align: justify;
-    margin-bottom: 30px;
-    padding-right: 6%;
-    padding-left: 6%;
-    padding-top: 3%;
-    line-height: 1.6;
-  }
-  
-  .text3{
-    font-size:18px;
-    text-align: justify;
-    margin-bottom: 30px;
-    line-height: 1.6;
-  }
-
-  .text4{
-    font-size:18px;
-    text-align: justify;
-    margin-bottom: 20px;
-    line-height: 1.6;
-  }
-
-  .svgContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .twoColumnsContainer{
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-  }
-  
-  .image2{
-    width: 700px;
-  }
-
-
+/* Listas */
+.lista{
+  list-style: none;
+  padding: 0 clamp(16px, 6vw, 64px);
+  margin: 0;
+}
+.listaTight{ padding-top: 6px; }
+.lista li{
+  position: relative;
+  padding-left: 16px;
+}
+.lista li::before{
+  content:"";
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--brand), var(--brand-alt));
+  position: absolute;
+  left: 0;
+  top: .55em;
+  box-shadow: 0 2px 8px rgba(0,0,0,.16);
 }
 
-@media (max-width: 768px) {
-   
-  .image2{
-    width: 700px;
-  }
-
-  .twoColumnsContainer{
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
-  }
-
+/* =======================
+   Responsivo
+   ======================= */
+@media (max-width: 992px){
+  /* Una sola columna en ambos layouts */
+  .twoColumnsContainer,
   .twoColumnsContainer2{
-    flex-direction:column-reverse;
-    display: flex;
-    align-items: center !important;
-    justify-content: center;
-    margin-top: 20px;
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
 
-  .svgContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  /* 💡 Fuerzo el orden en mobile:
+     Primero la imagen (.column), luego el texto (.textColumn) */
+  .twoColumnsContainer .column,
+  .twoColumnsContainer2 .column{
+    grid-row: 1;
+  }
+  .twoColumnsContainer .textColumn,
+  .twoColumnsContainer2 .textColumn{
+    grid-row: 2;
   }
 
-
-  .column {
-    padding:5px;
-  
-  }
-  
-  .expanded{
-    padding-top: 25px;
-  }
-
-
-  .textColumn{
-    padding:0px;
-  }
-
-  .title{
-    margin-bottom: 20px;
-  }
+  .media{ aspect-ratio: 16 / 10; }
+  .svgContainer{ margin: 6px 0 8px 0; }
+  .title2{ text-align: center; }
 }
 
-@media (min-width: 601px) and (max-width: 1200px) {
- 
-  .twoColumnsContainer{
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
-  }
-
-  .expanded{
-    padding-bottom: 25px;
-  }
-
-  .twoColumnsContainer2{
-    flex-direction:column-reverse;
-    display: flex;
-    align-items:center;
-    margin-top: 20px;
-  }
-
-  .svgContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
- 
-  .title2{
-    text-align: center;
-    margin-top: 35px;
-    margin-bottom: 20px;
-    color:black; 
-  }
-
-  .image2{
-    height: 900px;
-  }
+@media (max-width: 768px){
+  .title{ margin-top: 100px; }
 }
 
-@media (min-width: 300px) and (max-width: 600px){
-
-  .image {
-    width: 100%;
-    height: 350px;
-    margin: 0px;
-  }
-
-  .image3 {
-    width: 100%;
-    height: 350px;
-    margin: 0px;
-  }
-
-
-  .image2{
-    width: 100%;
-    background-size:cover;
-  }
-
-
-  .twoColumnsContainer{
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    margin-top: 20px;
-  }
-
-  .twoColumnsContainer2{
-    flex-direction:column-reverse;
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
-  }
- 
-   .svgContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .expanded{
-    padding-bottom: 25px;
-  }
-
-  .title{
-    font-size: 25px;
-  }
-
-  .title3{
-    font-size: 25px;
-    margin-bottom: 20px;
-    padding-top: 12%;
-  }
-
-  
-  .title2{
-    text-align: center;
-    margin-top: 35px;
-    margin-bottom: 20px;
-    font-size: 20px;
-    color:black; 
-  }
-
-  .text {
-    font-size:15px;
-    text-align: justify;
-    margin-bottom: 35px;
-    line-height: 1.5;
-  }
-
-  .text1 {
-    font-size:15px;
-    text-align: justify;
-    margin-bottom: 25px;
-    line-height: 1.5;
-  }  
-
-  .text2{
-    font-size:15px;
-    text-align: justify;
-    margin-bottom: 35px;
-    padding-right: 6%;
-    padding-left: 6%;
-    padding-top: 3%;
-    line-height: 1.6;
-  }
-  
-  .text3{
-    font-size:15px;
-    text-align: justify;
-    margin-bottom: 35px;
-    line-height: 1.6;
-  }
-
-  .text4{
-    font-size:15px;
-    text-align: justify;
-    margin-bottom: 25px;
-    line-height: 1.6;
-  }
-  
+@media (max-width: 600px){
+  .title{ font-size: 25px; }
+  .title3{ font-size: 25px; }
 }
