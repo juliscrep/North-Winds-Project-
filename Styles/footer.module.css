@@ -16,6 +16,16 @@
         flex-direction: row;
     }
 
+    
+
+
+}
+
+
+@media (max-width: 700px){
+    .footer{
+        font-size: 12px;
+    }
 }
 
 .navegacion {

@@ -253,4 +253,6 @@
   .image { height: 230px; }
   .thumb { max-height: 170px; }
   .thumbTall { max-height: 220px; }
+
+  .colorTitle {font-size: 14px;}
 }

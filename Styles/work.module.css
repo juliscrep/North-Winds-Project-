@@ -298,10 +298,18 @@
 @media (max-width: 560px) {
   .header { margin-top: 100px; }
   .badge { font-size: 11px; padding: 5px 9px; }
-  .cardTitle { font-size: 15px; }
-  .cardDesc { font-size: 12.5px; }
+  .cardTitle { font-size: 14px; }
+  .cardDesc { font-size: 12px; }
   .navLB { width: 40px; height: 40px; }
   .prevLB { left: 10px; } .nextLB { right: 10px; }
   .lbDot { width: 9px; height: 9px; }
   .activeDot { width: 18px; }
+}
+
+@media (max-width: 560px) {
+
+  .cardTitle { font-size: 13px; }
+  .cardDesc { font-size: 12px; }
+  .title{font-size: 16px;}
+  .subtitle {font-size: 12px;}
 }

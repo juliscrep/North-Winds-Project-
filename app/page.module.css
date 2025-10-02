@@ -64,6 +64,10 @@
   .container {
     padding-top: 28px;
   }
+
+    .sectionTitle {
+    font-size: 18px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -71,4 +75,9 @@
     grid-template-columns: 1fr;  
     gap: 20px;                   
   }
+
+  .sectionTitle {
+    font-size: 17px;
+  }
+
 }

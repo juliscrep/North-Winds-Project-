@@ -141,7 +141,9 @@
   .image { width: 220px; }
   .divider { margin-left: auto; margin-right: auto; }
   .btn { justify-content: center; }
-  .text { margin-left: auto; margin-right: auto; }
+  .title { font-size: 16px;  }
+  .subtitle { font-size: 14px; }
+  .text { font-size: 12px; line-height: 1.65;  margin-left: auto; margin-right: auto; }
 }
 
 
@@ -149,16 +151,15 @@
   .wrap { background: #ffffff; }         
   .twoColumnsContainer { padding: 24px 16px 36px; }
   .image { width: 190px; }
-
   .kicker { font-size: 11px; padding: 5px 9px; }
-  .title { font-size: 28px; line-height: 1.2; }
-  .subtitle { font-size: 14px; }
-  .text { font-size: 15.5px; line-height: 1.65; }
+  .title { font-size: 16px; }
+  .subtitle { font-size: 13px; }
+  .text { font-size: 12px; line-height: 1.65; }
 
   .bn39 {
     height: 46px;
-    padding: 0 18px;
-    font-size: 14.5px;
+    padding: 0 16px;
+    font-size: 12px;
   }
 }
 
@@ -168,13 +169,13 @@
   .image { width: 165px; }
 
   .kicker { font-size: 10px; padding: 5px 8px; }
-  .title { font-size: 22px; }
-  .subtitle { font-size: 14px; }
-  .text { font-size: 14.5px; }
+  .title { font-size:16px; }
+  .subtitle { font-size: 13px; }
+  .text { font-size: 12px; }
 
   .bn39 {
-    width: 60%;           
-    height: 44px;
-    font-size: 14px;
+    width: 50%;           
+    height: 40px;
+    font-size: 12px;
   }
 }
