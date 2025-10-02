@@ -125,7 +125,7 @@ const AboutPage = () => {
                   width={560}
                   height={740}
                 />
-                <span className={styles.thumbLabel}>Ver documento</span>
+                <span className={styles.thumbLabel}>Ver certificado</span>
               </a>
             ))}
           </div>
@@ -140,7 +140,7 @@ const AboutPage = () => {
                   width={560}
                   height={740}
                 />
-                <span className={styles.thumbLabel}>Ver documento</span>
+                <span className={styles.thumbLabel}>Ver certificado</span>
               </a>
             ))}
           </div>
