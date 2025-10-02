@@ -37,14 +37,14 @@
 }
 .hero h1{
   margin:0 0 8px;
-  font-size: clamp(24px, 4vw, 32px);
+  font-size: clamp(22px, 4vw, 28px);
   font-weight: 900;
   letter-spacing:-.01em;
 }
 .hero p{
   margin:0;
   color: var(--ink-2);
-  font-size: clamp(14px, 2.5vw, 16px);
+  font-size: clamp(14px, 2.5vw, 14px);
 }
 
 /* ---------- Tarjeta base (usada dentro del interactivo) ---------- */
@@ -85,7 +85,6 @@
 @media (min-width:900px){ .grid2{ grid-template-columns: 1fr 1fr; } }
 
 /* ---------- Labels ---------- */
-
 .field label{
   display:inline-block;
   font-size: 13px;
@@ -198,8 +197,50 @@
 
 /* ---------- Mobile ---------- */
 @media (max-width: 768px){
-  .hero{ padding:18px; border-radius:16px; }
+  
+  .wrapper{
+    padding: 90px 12px 48px;
+  }
+
+  /* menos aire dentro del hero arriba */
+  .hero{
+    padding: 12px 14px 12px;
+    border-radius: 16px;
+  }
+
   .card{ padding:14px; border-radius:14px; }
+
+  /* Título 19px */
+  .hero h1,
+  .sectionTitle{
+    font-size: 19px;
+    line-height: 1.25;
+  }
+
+  /* Descripciones / labels / botones / campos a 12px */
+  .hero p,
+  .field label,
+  .btnPrimary,
+  .btnGhost,
+  .tabBtn,
+  .readList,
+  .error,
+  .success,
+  .footer{
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  /* Campos del formulario (texto interno) a 12px */
+  .input,
+  .select,
+  .textarea{
+    font-size: 12px;
+  }
+  .input::placeholder,
+  .textarea::placeholder{
+    font-size: 12px;
+  }
 
   /* Botoneras full width para touch */
   .row[data-actions] > * { width:100%; }
