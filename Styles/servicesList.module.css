@@ -72,7 +72,7 @@
   background: var(--card);
 }
 
-/* Fila de 2 columnas (alternamos el orden en JSX para desktop) */
+/* Fila de 2 columnas */
 .twoColumnsContainer{
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -83,7 +83,6 @@
   padding: 0 clamp(12px, 2vw, 18px);
 }
 
-/* Variante “reverse” (imagen a la derecha en desktop) */
 .twoColumnsContainer2{
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -100,15 +99,13 @@
 .media{
   position: relative;
   width: 100%;
-  aspect-ratio: 30 / 22;          /* Misma altura visual para todas */
+  aspect-ratio: 30 / 22;
   border-radius: 16px;
   overflow: hidden;
   background: #f5f7fb;
   box-shadow: 0 12px 28px rgba(0,0,0,.08);
 }
-.img{
-  object-fit: cover;              /* sin bandas negras */
-}
+.img{ object-fit: cover; }
 
 /* ===== Texto ===== */
 .textColumn{
@@ -122,7 +119,7 @@
   width: 54px;
   height: 54px;
   border-radius: 999px;
-  padding: 1.5px;                 /* anillo más fino */
+  padding: 1.5px; /* anillo fino */
   background: linear-gradient(135deg, var(--brand), var(--brand-alt));
   box-shadow: 0 10px 24px rgba(0,0,0,.08);
   display: grid;
@@ -134,6 +131,7 @@
   border-radius: 999px;
   padding: 9px;
   color: var(--brand-alt);
+  /* el width/height del SVG se sobreescriben en mobile abajo */
 }
 
 .title2{
@@ -194,34 +192,72 @@
    Responsivo
    ======================= */
 @media (max-width: 992px){
-  /* Una sola columna en ambos layouts */
   .twoColumnsContainer,
   .twoColumnsContainer2{
     grid-template-columns: 1fr;
     gap: 12px;
   }
-
-  /* 💡 Fuerzo el orden en mobile:
-     Primero la imagen (.column), luego el texto (.textColumn) */
   .twoColumnsContainer .column,
-  .twoColumnsContainer2 .column{
-    grid-row: 1;
-  }
+  .twoColumnsContainer2 .column{ grid-row: 1; }
   .twoColumnsContainer .textColumn,
-  .twoColumnsContainer2 .textColumn{
-    grid-row: 2;
-  }
+  .twoColumnsContainer2 .textColumn{ grid-row: 2; }
 
   .media{ aspect-ratio: 16 / 10; }
   .svgContainer{ margin: 6px 0 8px 0; }
   .title2{ text-align: center; }
 }
 
+/* ===== Mobile: títulos 20px, textos 12px, íconos más chicos ===== */
 @media (max-width: 768px){
   .title{ margin-top: 100px; }
+
+  .title,
+  .title3,
+  .title2{
+    font-size: 20px; /* títulos mobile */
+  }
+
+  .text,
+  .text2,
+  .text4{
+    font-size: 12px; /* texto mobile */
+    line-height: 1.65;
+  }
+
+  /* Íconos más chicos */
+  .svgContainer{
+    width: 44px;
+    height: 44px;
+    padding: 1px;         /* anillo más fino en mobile */
+  }
+  .icon{
+    width: 28px;          /* sobrescribe atributos width/height del SVG */
+    height: 28px;
+    padding: 6px;         /* menos relleno interno */
+  }
 }
 
 @media (max-width: 600px){
-  .title{ font-size: 25px; }
-  .title3{ font-size: 25px; }
+  .title,
+  .title3,
+  .title2{
+    font-size: 19px; /* mantener 20px en pantallas más chicas */
+  }
+  .text,
+  .text2,
+  .text4{
+    font-size: 12px; /* mantener 12px */
+  }
+
+  /* Íconos aún más chicos en pantallas muy pequeñas */
+  .svgContainer{
+    width: 40px;
+    height: 40px;
+    padding: 0.8px;
+  }
+  .icon{
+    width: 24px;
+    height: 24px;
+    padding: 5px;
+  }
 }

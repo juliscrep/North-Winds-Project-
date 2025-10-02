@@ -88,7 +88,6 @@ export default function ServicesList() {
         return (
           <section id={key} className={styles.expanded} key={key}>
             <div className={styles.twoColumnsContainer}>
-              {/* Alterna orden con `reverse` sin trucos de CSS */}
               {reverse ? (
                 <>
                   {Text}
