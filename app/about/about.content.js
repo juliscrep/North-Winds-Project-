@@ -41,6 +41,7 @@ export const certificationDocs = [
   "/img/fotoCertificado3.png",
   "/img/fotoCertificado4.png",
   "/img/fotoCertificado5.png",
+  "/img/certificado6.jpeg",
 ];
 
 export const certificationPDFs = [
@@ -49,6 +50,7 @@ export const certificationPDFs = [
   "/img/certificado3.pdf",
   "/img/certificado4.pdf",
   "/img/certificado5.pdf",
+  "/img/certificado6.jpeg",
 ];
 
 export const inspectionDocs = [
