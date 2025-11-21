@@ -20,7 +20,7 @@ const Objectives = () => {
         </div>
 
         <div className={styles.textColumn}>
-          <span className={styles.kicker}>North Winds S.A.</span>
+          <span className={styles.kicker}>North Winds S.A</span>
 
           <h2 id="objectives-heading" className={styles.title}>
             {content.title1} <strong>{content.title2}</strong>
