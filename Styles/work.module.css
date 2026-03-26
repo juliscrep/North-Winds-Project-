@@ -1,16 +1,15 @@
 .page {
-  min-height: 90dvh;      
+  min-height: 92vh;      
   display: flex;
   flex-direction: column;
 }
 
-
 .section {
   width: 100%;
   background: #fff;
-  flex: 1;
 }
 
+/* ================= HEADER ================= */
 
 .header {
   max-width: 1200px;
@@ -18,6 +17,7 @@
   padding: 0 16px;
   text-align: center;
 }
+
 .title {
   margin: 0;
   color: #0f172a;
@@ -26,6 +26,7 @@
   font-size: clamp(21px, 4vw, 34px);
   position: relative;
 }
+
 .title::after {
   content: "";
   display: block;
@@ -35,28 +36,26 @@
   margin: 12px auto 0;
   background: linear-gradient(90deg, var(--brand, #4CAF50), var(--brand-alt, #0077B6));
 }
+
 .subtitle {
   margin: 20px auto 0;
   color: #475569;
   font-size: clamp(14px, 1.4vw, 15px);
-  
   text-align: justify;
   text-justify: inter-word;
   hyphens: auto;
-  -webkit-hyphens: auto;
-  -ms-hyphens: auto;
 }
 
+/* ================= GRID ================= */
 
 .grid {
   max-width: 1200px;
-  margin: 26px auto 64px;
+  margin: 26px auto 0;
   padding: 0 16px;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   gap: 18px;
 }
-
 
 .card {
   grid-column: span 12;
@@ -68,19 +67,24 @@
   transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
   position: relative;
 }
+
 .card:hover {
   transform: translateY(-4px);
   box-shadow: 0 16px 34px rgba(0,0,0,.10);
   filter: saturate(1.02);
 }
 
+/* Responsive */
+@media (min-width: 560px) { 
+  .card { grid-column: span 6; } 
+}
 
-/*  ≥ 560px: 2 columnas  */
-@media (min-width: 560px) { .card { grid-column: span 6; } }
-/*  ≥ 900px: 3 columnas  */
-@media (min-width: 900px) { .card { grid-column: span 4; } }
+@media (min-width: 900px) { 
+  .card { grid-column: span 4; } 
+}
 
-/* ====== Mini carrusel dentro de la card ====== */
+/* ================= MEDIA ================= */
+
 .media {
   position: relative;
   width: 100%;
@@ -88,29 +92,34 @@
   background: #f5f7fb;
   cursor: zoom-in; 
 }
+
 .miniCarousel { overflow: hidden; }
+
 .trackMini {
   display: flex;
   height: 100%;
   transition: transform .6s cubic-bezier(.22,.61,.36,1);
-  will-change: transform;
 }
+
 .slideMini {
   min-width: 100%;
   height: 100%;
   position: relative;
 }
+
 .slidePhoto {
   position: relative;
   width: 100%;
   height: 100%;
 }
+
 .img {
   object-fit: cover;
   object-position: center;
 }
 
-/* Badge ubicación (card) */
+/* ================= BADGE ================= */
+
 .badge {
   position: absolute;
   top: 12px;
@@ -122,34 +131,31 @@
   font-size: 12px;
   padding: 6px 10px;
   border-radius: 999px;
-  border: 1px solid rgba(15,23,42,.08);
-  box-shadow: 0 6px 18px rgba(0,0,0,.08);
 }
 
-/* Caption sobre imagen (card) */
+/* ================= CAPTION ================= */
+
 .caption {
   position: absolute;
   left: 0; right: 0; bottom: 0;
   padding: 14px 16px;
   color: #ffffff;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.55) 70%, rgba(0,0,0,.75) 100%);
-  min-height: 76px;
-  display: grid;
-  gap: 4px;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.75) 100%);
 }
+
 .cardTitle {
   margin-top: 45px;
   font-weight: 800;
   font-size: 14px;
-  letter-spacing: .005em;
 }
+
 .cardDesc {
   margin: 0;
   font-size: 12px;
-  opacity: .95;
 }
 
-/* ====== Lightbox ====== */
+/* ================= LIGHTBOX ================= */
+
 .lightbox {
   position: fixed;
   inset: 0;
@@ -158,158 +164,16 @@
   margin-top: 40px;
   place-items: center;
   z-index: 70;
-  padding: 16px;
-}
-.lightboxInner {
-  position: relative;
-  margin-top: 40px;
-  width: min(96vw, 1400px);
-  height: min(92vh, 900px);
-  display: grid;
-  grid-template-rows: 1fr auto;
-  gap: 10px;
 }
 
-/* Botones navegación */
-.navLB {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 3;
-  width: 34px;
-  height: 34px;
-  border-radius: 999px;
-  border: 0;
-  display: grid;
-  place-items: center;
-  color: #fff;
-  background: rgba(0,0,0,.38);
-  backdrop-filter: blur(2px);
-  box-shadow: 0 10px 24px rgba(0,0,0,.22);
-  cursor: pointer;
-  transition: transform .2s ease, background .2s ease, opacity .2s ease;
-}
-.navLB:hover { transform: translateY(-50%) scale(1.05); }
-.prevLB { left: 14px; }
-.nextLB { right: 14px; }
-
-/* Cerrar */
-.closeLB {
-  position: absolute;
-  top: 8px;
-  right: 10px;
-  width: 36px;
-  height: 36px;
-  border: 0;
-  border-radius: 8px;
-  background: rgba(255,255,255,.14);
-  color: #fff;
-  font-size: 24px;
-  line-height: 1;
-  cursor: pointer;
-  transition: background .2s ease;
-  z-index: 3;
-}
-.closeLB:hover { background: rgba(255,255,255,.22); }
-
-/* Viewport del lightbox */
-.lbViewport {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-.lbTrack {
-  display: flex;
-  height: 100%;
-  transition: transform .6s cubic-bezier(.22,.61,.36,1);
-  will-change: transform;
-}
-.lbSlide {
-  min-width: 100%;
-  height: 100%;
-  position: relative;
-  display: grid;
-  grid-template-rows: 1fr auto;
-}
-.lbFrame {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
 .lbImg {
-  object-fit: contain; /* imagen completa en visor */
-  border-radius: 10px;
-  box-shadow: 0 20px 60px rgba(0,0,0,.35);
-  background: #000;
+  object-fit: contain;
 }
 
-/* Meta inferior del lightbox */
-.lbMeta {
-  display: grid;
-  gap: 6px;
-  padding: 12px 8px 0;
-  color: #fff;
-  text-align: center;
-}
-.lbBadge {
-  display: inline-block;
-  background: linear-gradient(90deg, var(--brand, #4CAF50), var(--brand-alt, #0077B6));
-  color: #fff;
-  font-weight: 700;
-  font-size: 10px;
-  padding: 6px 10px;
-  border-radius: 999px;
-}
-.lbTitle {
-  margin: 0;
-  font-weight: 800;
-  font-size: clamp(14px, 2.2vw, 10px);
-}
-.lbDesc {
-  margin: 0;
-  font-size: clamp(12px, 1.6vw, 14px);
-  opacity: .95;
-}
+/* ================= RESPONSIVE ================= */
 
-/* Dots en lightbox */
-.lbDots {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  padding-bottom: 4px;
-}
-.lbDot {
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  border: 0;
-  background: #d1d5db;
-  box-shadow: inset 0 0 0 1px rgba(0,0,0,.06);
-  cursor: pointer;
-  transition: background .2s ease, width .2s ease;
-}
-.activeDot {
-  width: 22px;
-  background: linear-gradient(90deg, var(--brand, #4CAF50), var(--brand-alt, #0077B6));
-}
-
-/* ====== Responsivo ====== */
 @media (max-width: 560px) {
   .header { margin-top: 100px; }
-  .badge { font-size: 11px; padding: 5px 9px; }
-  .cardTitle { font-size: 14px; }
-  .cardDesc { font-size: 12px; }
-  .navLB { width: 40px; height: 40px; }
-  .prevLB { left: 10px; } .nextLB { right: 10px; }
-  .lbDot { width: 9px; height: 9px; }
-  .activeDot { width: 18px; }
-}
-
-@media (max-width: 560px) {
-
-  .cardTitle { font-size: 13px; }
-  .cardDesc { font-size: 12px; }
-  .title{font-size: 20px;}
-  .subtitle {font-size: 12px;}
+  .title { font-size: 20px; }
+  .subtitle { font-size: 12px; }
 }
