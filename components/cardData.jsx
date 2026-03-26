@@ -1,22 +1,22 @@
 
 const cardData = [
     {
-      image: "/img/maquina6.jpeg",
+      image: "/img/mantenimiento.jpeg",
       title: "Operación y mantenimiento en general",
       slug: "mantenimiento",
     },
     {
-      image: "/img/parque1.jpg",
+      image: "/img/trabajo9.jpeg",
       title: "Grandes correctivos",
       slug: "correctivos",
     },
     {
-      image: "/img/maquina1.jpeg",
+      image: "/img/trabajosRealizados/maquina12.jpeg",
       title: "Torqueo y tensionado",
       slug: "torqueo",
     },
     {
-      image: "/img/maquina2.jpeg",
+      image: "/img/palas.jpeg",
       title: "Revisión y reparación de palas",
       slug: "palas",
     },
@@ -26,7 +26,7 @@ const cardData = [
       slug: "inspeccion",
     },
     {
-      image: "/img/control.jpeg",
+      image: "/img/controlcalidad.jpeg",
       title: "Control de calidad",
       slug: "calidad",
     },
@@ -36,9 +36,14 @@ const cardData = [
       slug: "obra",
     },
     {
-      image: "/img/montajeTurbina.jpeg",
+      image: "/img/montajeturb.jpeg",
       title: "Control en montaje de turbinas eólicas",
       slug: "turbina",
+    },
+     {
+      image: "/img/dron.jpg",
+      title: "Inspección de aerogeneradores con drones",
+      slug: "drones",
     },
 ];
 
