@@ -24,7 +24,7 @@ export const sections = [
   {
     key: 'palas',
     data: wind.palas,
-    img: { src: '/img/maquina2.jpeg', alt: 'Máquina palas', width: 200, height: 300 },
+    img: { src: '/img/palas.jpeg', alt: 'Máquina palas', width: 200, height: 300 },
     reverse: true
   },
   {
@@ -36,19 +36,25 @@ export const sections = [
   {
     key: 'calidad',
     data: wind.calidad,
-    img: { src: '/img/control.jpeg', alt: 'Control de calidad', width: 650, height: 770 },
+    img: { src: '/img/controlcalidad.jpeg', alt: 'Control de calidad', width: 650, height: 770 },
     reverse: true
   },
   {
     key: 'obra',
     data: wind.obra,
-    img: { src: '/img/turbina.jpg', alt: 'Obra de turbina', width: 650, height: 550 },
+    img: { src: '/img/turbina.jpg', alt: 'Obra de turbina', width: 560, height: 900 },
     reverse: false
   },
   {
     key: 'turbina',
     data: wind.turbina,
-    img: { src: '/img/montajeTurbina.jpeg', alt: 'Montaje de turbina', width: 200, height: 300 },
+    img: { src: '/img/montajeturb.jpeg', alt: 'Montaje de turbina', width: 200, height: 300 },
     reverse: true
+  },
+  {
+    key: 'drones',
+    data: wind.drones,
+    img: { src: '/img/dron.jpg', alt: 'Inspeccion con drones', width: 200, height: 300 },
+    reverse: false
   }
 ];

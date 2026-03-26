@@ -110,5 +110,11 @@ export const svgIcons = {
     width: 39,
     height: 39,
     paths: calidadPaths
-  }
+  },
+  drones: {
+    viewBox: '0 0 167.73 167.51',
+    width: 39,
+    height: 39,
+    paths: [manttoSvg1.path, manttoSvg2.path]
+  },
 };

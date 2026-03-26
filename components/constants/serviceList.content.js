@@ -3,7 +3,7 @@ export const serverListContent = {
     mainTitle: 'Servicios en parques eólicos',
     mantenimiento: {
       title2: 'Operación y mantenimiento en general',
-      image: { src: '/img/maquina11.jpeg', alt: 'Imagen', width: 750, height: 550 },
+      image: { src: '/img/mantenimiento.jpeg', alt: 'Imagen', width: 750, height: 550 },
       paragraphs: [
         'Contamos con equipos y herramientas de última tecnología que nos permiten realizar un trabajo eficiente y garantizar un funcionamiento óptimo de los aerogeneradores. Nuestra estrategia se centra en garantizar el correcto funcionamiento de los equipos, contribuyendo así a su durabilidad y rendimiento óptimo.',
       ],
@@ -26,7 +26,7 @@ export const serverListContent = {
     },
     palas: {
       title2: 'Revisión y reparación de palas',
-      image: { src: '/img/maquina2.jpeg', alt: 'Imagen', width: 200, height: 300 },
+      image: { src: '/img/palas.jpeg', alt: 'Imagen', width: 200, height: 300 },
       paragraphs: [
         'Inspección con Drone en Palas o en Torre: implementamos tecnología de vanguardia para llevar a cabo inspecciones precisas y detalladas mediante drones, garantizando una evaluación exhaustiva de las palas y torres.',
         'Inspección con Cámaras Fotográficas de Alta Resolución en Palas o Torres: utilizamos cámaras de alta resolución para capturar imágenes detalladas, facilitando la identificación de posibles problemas y la planificación de intervenciones.',
@@ -43,7 +43,7 @@ export const serverListContent = {
     },
     calidad: {
       title2: 'Control de calidad',
-      image: { src: '/img/control.jpeg', alt: 'Imagen', width: 650, height: 670 },
+      image: { src: '/img/controlcalidad.jpeg', alt: 'Imagen', width: 650, height: 670 },
       paragraphs: [
         'El control de calidad de los aerogeneradores de un parque eólico lo realizamos mediante el mantenimiento regular de las turbinas. Este mantenimiento se realiza por técnicos profesionales y tiene como objetivo garantizar que los aerogeneradores funcionen de manera eficiente y segura. Algunas de las tareas de mantenimiento de los aerogeneradores son:',
       ],
@@ -56,7 +56,7 @@ export const serverListContent = {
     },
     obra: {
       title2: 'Inspección en obra',
-      image: { src: '/img/turbina.jpg', alt: 'Imagen', width: 750, height: 550 },
+      image: { src: '/img/turbina.jpg', alt: 'Imagen', width: 100, height:100 },
       paragraphs: [
         'Las inspecciones de aerogeneradores en un parque eólico son importantes para identificar posibles peligros de seguridad, como corrosión, grietas y fallas. Se pueden realizar en cualquier etapa del ciclo de vida del proyecto, desde la fabricación hasta la operación. Las inspecciones pueden incluir:',
       ],
@@ -68,10 +68,23 @@ export const serverListContent = {
     },
     turbina: {
       title2: 'Control de calidad en montaje de turbinas eólicas',
-      image: { src: '/img/montajeTurbina.jpeg', alt: 'Imagen', width: 200, height: 300 },
+      image: { src: '/img/montajeturb.jpeg', alt: 'Imagen', width: 200, height: 300 },
       paragraphs: [
         'Verificamos en el montaje el torqueo y tensionado de todo el ensamblaje de la turbina eolica. Realizamos inspecciones, pruebas y mediciones para garantizar el buen funcionamiento de la turbina.',
         'Posteriormente, realizamos un informe para que el cliente tenga en su conocimiento la trazabilidad de las tareas que se ejecutaron.',
+      ],
+    },
+    drones: {
+      title2: 'Inspección de aerogeneradores con drones',
+      image: { src: '/img/dron.jpg', alt: 'Imagen', width: 200, height: 300 },
+      paragraphs: [
+        'Realizamos inspecciones aéreas precisas utilizando drones equipados con tecnologia de última generación. Este servicio permite detectar grietas, corrosión, desprendimientos y daños en torre, palas, góndola y buje, sin necesidad de detener el aerogenerador por largos periodos.',
+        'Beneficios principales:',
+      ],
+       listItems: [
+        'Reducción de costos y tiempos de inactividad',
+        'Detección temprana de fallas',
+        'Informes completos con imagenes en alta definición',
       ],
     },
   },
