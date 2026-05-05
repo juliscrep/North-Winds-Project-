@@ -1,5 +1,7 @@
 import Image from "next/image";
 import styles from "/Styles/about.module.css";
+import TeamSection from "../../components/TeamSection";
+
 
 import {
   aboutText,
@@ -35,6 +37,9 @@ const AboutPage = () => {
           <p className={styles.aboutText}>{aboutText.paragraph2}</p>
         </div>
       </section>
+
+
+      <TeamSection />
 
       <section className={styles.valuesSection} aria-labelledby="values-heading">
         <div className={styles.container}>
