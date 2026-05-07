@@ -11,6 +11,7 @@ const TeamSection = () => {
   return (
     <section className={styles.teamSection} aria-labelledby="team-heading">
       <div className={styles.container}>
+        
         <h2 id="team-heading" className={styles.title2}>
           {teamText.title}
         </h2>
@@ -19,6 +20,7 @@ const TeamSection = () => {
           {teamText.paragraph}
         </p>
 
+        {/* FOTO GRUPAL */}
         <div className={styles.teamGroupWrapper}>
           <Image
             src={teamGroupImage}
@@ -30,24 +32,36 @@ const TeamSection = () => {
           />
         </div>
 
+        {/* GRID */}
         <div className={styles.teamGrid}>
           {teamMembers.map((member) => (
             <article key={member.name} className={styles.teamCard}>
-              <Image
-                src={member.image}
-                alt={member.name}
-                width={400}
-                height={500}
-                className={styles.teamImage}
-              />
+              
+              {/* 🔥 NUEVO WRAPPER */}
+              <div className={styles.teamImageWrapper}>
+                <Image
+                  src={member.image}
+                  alt={member.name}
+                  width={400}
+                  height={500}
+                  className={styles.teamImageInner}
+                />
+              </div>
 
               <div className={styles.teamInfo}>
-                <h3 className={styles.teamName}>{member.name}</h3>
-                <p className={styles.teamRole}>{member.role}</p>
+                <h3 className={styles.teamName}>
+                  {member.name}
+                </h3>
+
+                <p className={styles.teamRole}>
+                  {member.role}
+                </p>
               </div>
+
             </article>
           ))}
         </div>
+
       </div>
     </section>
   );
